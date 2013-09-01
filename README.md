@@ -72,7 +72,7 @@ Equivalent of `docker run` in `dockerode`:
 
 * `image` - container image
 * `cmd` - command to be executed
-* `stream` - stream which will listens for execution output.
+* `stream` - stream which will be used for execution output.
 * `temporary` - if `true` container will be removed after execution ends.
 * `callback` - callback caled when execution ends.
 
