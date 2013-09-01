@@ -1,11 +1,16 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testContainer = '71501a8ab0f8';
+var testContainer = '';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
 describe("#container", function() {
+
+  before(function(done){
+    expect(testContainer).to.not.have.length(0);
+    done();
+  });
 
   describe("#inspect", function() {
     it("should inspect a container", function(done) {
