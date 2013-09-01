@@ -1,16 +1,15 @@
 # dockerode
 
 NOT another node.js Docker.io Remote API module.
-All you see in this document is NOT vaporware, if it is detailed in here it is implemented.
 
 Why is `dockerode` different from all the Docker node.js module out there:
 
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
 * **entities** - containers and images are defined entities and not random static methods.
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run.
-* **tests** - `dockerode` really aims to have a good test set, allowing to follow Docker changes easily and quickly.
-* **ws** - Support the new ws endpoints. (not production ready)
-* **features** - implement ALL features in remote API. (94% implemented)
+* **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painfully.
+* **ws** - New websocket endpoints introduced in 0.6 are supported. (beta, do not use in production yet)
+* **features** - implement ALL `Docker` Remote API features. (94% implemented)
 
 
 ## installation
@@ -20,7 +19,7 @@ Why is `dockerode` different from all the Docker node.js module out there:
 
 ## getting started
 
-to use `dockerode` first you need to instatiate it:
+to use `dockerode` first you need to instantiate it:
 
 ``` js
 var Docker = require('dockerode');
