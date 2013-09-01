@@ -1,0 +1,34 @@
+{
+  "name": "dockerode",
+  "description": "Docker.io remote api implementation",
+  "version": "0.1.0",
+  "author": "Pedro Dias <petermdias@gmail.com>",
+  "maintainers": [
+    "apocas <petermdias@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/apocas/dockerode.git"
+  },
+  "keywords": [
+    "containers",
+    "api",
+    "docker"
+  ],
+  "dependencies": {
+    "querystring": "*",
+    "follow-redirects": "*",
+    "ws": "*"
+  },
+  "devDependencies": {
+    "chai": "~1.6.0",
+    "mocha": "~1.9.0"
+  },
+  "main": "./lib/docker",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -R tap"
+  },
+  "engines": {
+    "node": ">= 0.8"
+  }
+}
