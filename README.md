@@ -1,6 +1,6 @@
 # dockerode
 
-NOT another node.js Docker.io Remote API module.
+Yet another node.js Docker.io Remote API module.
 
 Why is `dockerode` different from all the Docker node.js module out there:
 
