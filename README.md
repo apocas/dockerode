@@ -24,6 +24,8 @@ to use `dockerode` first you need to instantiate it:
 ``` js
 var Docker = require('dockerode');
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
+var docker2 = new Docker({host: 'http://192.168.1.10', port: 3000});
+//...
 ```
 
 Manipulating a container:
@@ -66,7 +68,7 @@ docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {
 //...
 ```
 
-Equivalent of `docker run` in node.js:
+Equivalent of `docker run` in `dockerode`:
 
 * `image` - container image
 * `cmd` - command to be executed
