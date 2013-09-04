@@ -115,6 +115,36 @@ describe("#container", function() {
     });
   });
 
+  describe("#top", function() {
+    it("should return top", function(done) {
+      this.timeout(10000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        //console.log(data);
+        done();
+      }
+
+      container.top(handler);
+    });
+  });
+
+  describe("#changes", function() {
+    it("should container changes", function(done) {
+      this.timeout(10000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        //console.log(data);
+        done();
+      }
+
+      container.changes(handler);
+    });
+  });
+
   describe("#stop", function() {
     it("should stop a container", function(done) {
       this.timeout(30000);

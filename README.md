@@ -1,6 +1,6 @@
 # dockerode
 
-Yet another node.js Docker.io Remote API module.
+Not another Node.js Docker.io Remote API module.
 
 Why is `dockerode` different from all the Docker node.js module out there:
 
@@ -9,7 +9,7 @@ Why is `dockerode` different from all the Docker node.js module out there:
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painfully.
 * **ws** - New websocket endpoints introduced in 0.6 are supported. (beta, do not use in production yet)
-* **features** - implement ALL `Docker` Remote API features. (94% implemented)
+* **features** - ALL `Docker` Remote API features implemented.
 
 
 ## installation
@@ -81,6 +81,8 @@ docker.run('ubuntu', 'uname -a', process.stdout, true, function(err, data) {
   console.log(data.StatusCode);
 });
 ```
+
+Check the tests for more examples.
 
 ## notes
 

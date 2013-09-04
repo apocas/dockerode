@@ -5,6 +5,39 @@ var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
 describe("#docker", function() {
 
+  describe("#checkAuth", function() {
+    it("should fail auth", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).not.to.be.null;
+
+        //console.log(data);
+        done();
+      }
+
+      docker.checkAuth({username: 'xpto', password: 'dang', email: 'xpto@pxpto.pt'}, handler);
+    });
+  });
+
+  describe("#buildImage", function() {
+    it("should build image from file", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+
+        stream.pipe(process.stdout, {end: true});
+        
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      docker.buildImage('./test/test.tar', {}, handler);
+    });
+  });
+
   describe("#getEvents", function() {
     it("should get events", function(done) {
       this.timeout(30000);
@@ -109,6 +142,20 @@ describe("#docker", function() {
       }
 
       docker.version(handler);
+    });
+  });
+
+  describe("#searchImages", function() {
+    it("should return search results", function(done) {
+      this.timeout(10000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        //console.log(data);
+        done();
+      }
+
+      docker.searchImages({term: 'node'}, handler);
     });
   });
 

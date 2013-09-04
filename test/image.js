@@ -36,4 +36,24 @@ describe("#image", function() {
       image.history(handler);
     });
   });
+
+  describe("#insert", function() {
+    it("should insert file", function(done) {
+      var image = docker.getImage('ubuntu');
+
+      this.timeout(5000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+
+        stream.pipe(process.stdout, {end: true});
+        
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      image.insert({path: '/usr', url: 'http://gravatar.com/avatar/c278114f8923b4b5363c363e6b22dfd2'}, handler);
+    });
+  });
 });
