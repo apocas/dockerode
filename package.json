@@ -26,7 +26,7 @@
   },
   "main": "./lib/docker",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -R tap"
+    "test": "./node_modules/mocha/bin/mocha -R spec"
   },
   "engines": {
     "node": ">= 0.8"

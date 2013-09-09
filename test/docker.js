@@ -28,7 +28,7 @@ describe("#docker", function() {
         expect(err).to.be.null;
 
         stream.pipe(process.stdout, {end: true});
-        
+
         stream.on('end', function() {
           done();
         });
