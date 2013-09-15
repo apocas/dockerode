@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker.io Remote API implementation. All features implemented.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -16,13 +16,13 @@
     "docker"
   ],
   "dependencies": {
-    "querystring": "*",
-    "follow-redirects": "*",
+    "querystring": "0.2.0",
+    "follow-redirects": "0.0.3",
     "ws": "*"
   },
   "devDependencies": {
-    "chai": "~1.6.0",
-    "mocha": "~1.9.0"
+    "chai": "~1.8.0",
+    "mocha": "~1.12.0"
   },
   "main": "./lib/docker",
   "scripts": {
