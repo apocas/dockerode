@@ -59,8 +59,16 @@ docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function(err, cont
 Streams goodness:
 
 ``` js
-container.attach({stream: true, stdout: true, stderr: true}, function(err, stream) {
+//tty:true
+container.attach({stream: true, stdout: true, stderr: true, tty:true}, function(err, stream) {
   stream.pipe(process.stdout);
+});
+
+//tty:false
+container.attach({stream: true, stdout: true, stderr: true, tty:false}, function(err, stream) {
+  //http://docs.docker.io/en/latest/api/docker_remote_api_v1.7/#post--containers-(id)-attach
+  //dockerode may demultiplex the streams for you :)
+  container.modem.demuxStream(stream, process.stdout, process.stderr);
 });
 
 docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {

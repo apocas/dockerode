@@ -53,8 +53,7 @@ describe("#container", function() {
         container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
           expect(err).to.be.null;
 
-          stream.setEncoding('utf8');
-          stream.pipe(process.stdout, {end: false});
+          container.modem.demuxStream(stream, process.stdout, process.stdout, process.stdout);
 
           container.start(function(err, data) {
             expect(err).to.be.null;
@@ -74,7 +73,7 @@ describe("#container", function() {
         'AttachStdin': false,
         'AttachStdout': true,
         'AttachStderr': true,
-        'Tty': true,
+        'Tty': false,
         'OpenStdin': false,
         'StdinOnce': false,
         'Env': null,
