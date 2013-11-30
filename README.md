@@ -1,5 +1,7 @@
 # dockerode
 
+[![NPM](https://nodei.co/npm/dockerode.png?downloads=true&stars=true)](https://nodei.co/npm/dockerode/)
+
 Not another Node.js Docker.io Remote API module.
 
 Why is `dockerode` different from all the Docker node.js module out there:
@@ -77,7 +79,7 @@ Equivalent of `docker run` in `dockerode`:
 * `callback` - callback caled when execution ends.
 
 ``` js
-docker.run('ubuntu', 'uname -a', process.stdout, true, function(err, data) {
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, function(err, data) {
   console.log(data.StatusCode);
 });
 ```

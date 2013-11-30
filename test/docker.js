@@ -62,7 +62,7 @@ describe("#docker", function() {
         done();
       }
 
-      docker.run('ubuntu', 'uname -a', process.stdout, true, handler);
+      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, handler);
     });
   });
 

@@ -49,20 +49,23 @@ describe("#container", function() {
       function handler(err, container) {
         expect(err).to.be.null;
         
+     
         container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
           expect(err).to.be.null;
 
+          stream.setEncoding('utf8');
           stream.pipe(process.stdout, {end: false});
-
-          container.wait(function(err, data) {
-            expect(err).to.be.null;
-            done();
-          });
 
           container.start(function(err, data) {
             expect(err).to.be.null;
+
+            container.wait(function(err, data) {
+              expect(err).to.be.null;
+              done();
+            });
           });
         });
+
       }
 
       var optsc = {
@@ -71,7 +74,7 @@ describe("#container", function() {
         'AttachStdin': false,
         'AttachStdout': true,
         'AttachStderr': true,
-        'Tty': false,
+        'Tty': true,
         'OpenStdin': false,
         'StdinOnce': false,
         'Env': null,
