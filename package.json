@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
-  "description": "Docker.io Remote API implementation. All features implemented.",
-  "version": "0.2.0",
+  "description": "Docker.io / Docker Remote API implementation.",
+  "version": "0.2.1",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
