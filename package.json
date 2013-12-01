@@ -16,7 +16,7 @@
     "docker"
   ],
   "dependencies": {
-    "querystring": "0.2.0",
+    "docker-modem": "*",
     "ws": "*"
   },
   "devDependencies": {
