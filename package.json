@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker.io / Docker remote API implementation.",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "docker-modem": "*",
-    "ws": "*"
+    "ws": "0.4.x"
   },
   "devDependencies": {
     "chai": "~1.7.0",
