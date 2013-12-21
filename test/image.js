@@ -53,7 +53,7 @@ describe("#image", function() {
         });
       }
 
-      image.insert({path: '/usr', url: 'http://gravatar.com/avatar/c278114f8923b4b5363c363e6b22dfd2'}, handler);
+      image.insert({path: '/test', url: 'http://gravatar.com/avatar/c278114f8923b4b5363c363e6b22dfd2'}, handler);
     });
   });
 });
