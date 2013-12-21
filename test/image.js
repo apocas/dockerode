@@ -1,7 +1,7 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testImage = 'ubuntu';
+var testImage = 'base';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
@@ -39,7 +39,7 @@ describe("#image", function() {
 
   describe("#insert", function() {
     it("should insert file", function(done) {
-      var image = docker.getImage('ubuntu');
+      var image = docker.getImage(testImage);
 
       this.timeout(5000);
 

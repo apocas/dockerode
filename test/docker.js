@@ -62,7 +62,7 @@ describe("#docker", function() {
         done();
       }
 
-      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, handler);
+      docker.run('base', ['bash', '-c', 'uname -a'], process.stdout, true, handler);
     });
   });
 
@@ -79,7 +79,7 @@ describe("#docker", function() {
         });
       }
 
-      docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, handler);
+      docker.createContainer({Image: 'base', Cmd: ['/bin/bash']}, handler);
     });
   });
 
@@ -97,7 +97,7 @@ describe("#docker", function() {
         });
       }
 
-      docker.createImage({fromImage: 'ubuntu'}, handler);
+      docker.createImage({fromImage: 'base'}, handler);
     });
   });
 

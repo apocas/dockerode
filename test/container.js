@@ -1,7 +1,7 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testContainer = '';
+var testContainer = 'e24dd7cffde7';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
@@ -79,7 +79,7 @@ describe("#container", function() {
         'Env': null,
         'Cmd': ['bash', '-c', 'uptime'],
         'Dns': ['8.8.8.8', '8.8.4.4'],
-        'Image': 'ubuntu',
+        'Image': 'base',
         'Volumes': {},
         'VolumesFrom': ''
       };
