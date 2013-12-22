@@ -1,0 +1,49 @@
+= DESCRIPTION:
+
+Installs Node.JS from source.
+
+= REQUIREMENTS:
+
+== Platform:
+
+Tested on Debian Lenny. Should work fine on Ubuntu, Centos, etc.
+
+== Cookbooks:
+
+Opscode cookbooks (http://github.com/opscode/cookbooks/tree/master)
+
+* build-essential
+
+= ATTRIBUTES:
+
+* nodejs[:version] - release version of node to install
+* nodejs[:dir] - location where node will be installed, default /usr/local
+* nodejs[:npm] - version of npm to install
+
+= USAGE:
+
+Include the nodejs recipe to install node from source on your system:
+
+  include_recipe "nodejs"
+
+Include the npm recipe to install npm:
+  
+  include_recipe "nodejs::npm"
+
+= LICENSE and AUTHOR:
+
+Author:: Marius Ducea (marius@promethost.com)
+
+Copyright:: 2010, Promet Solutions
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
