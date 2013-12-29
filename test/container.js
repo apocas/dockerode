@@ -1,7 +1,7 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testContainer = 'e24dd7cffde7';
+var testContainer = '';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
