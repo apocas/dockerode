@@ -152,7 +152,6 @@ describe("#container", function() {
         'ubuntu',
         ['/bin/bash', '-c', 'echo "xfoo" > foo.txt'],
         null,
-        false,
         function (err, result, subject) {
           // subject is the resulting container from the operation
           container = subject;

@@ -83,11 +83,10 @@ Equivalent of `docker run` in `dockerode`:
 * `image` - container image
 * `cmd` - command to be executed
 * `stream` - stream which will be used for execution output.
-* `temporary` - if `true` container will be removed after execution ends.
 * `callback` - callback called when execution ends.
 
 ``` js
-docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, function(err, data) {
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, data) {
   console.log(data.StatusCode);
 });
 ```

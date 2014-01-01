@@ -115,7 +115,6 @@ describe("#docker", function() {
         'ubuntu',
         'exit 1', // this is an invalid parameter type (it should be an array)
         process.stdout,
-        true,
         handler
       );
     });
@@ -123,12 +122,16 @@ describe("#docker", function() {
     it("should run a command", function(done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
-        // container is created
+        //container is created
         expect(container).to.be.ok;
-        done();
+
+        container.remove(function(err, data) {
+          expect(err).to.be.null;
+          done();
+        });
       }
 
-      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, handler);
+      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, handler);
     });
   });
 
