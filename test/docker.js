@@ -53,9 +53,23 @@ describe("#docker", function() {
   });
 
   describe("#run", function() {
-    it("should run a command", function(done) {
-      this.timeout(30000);
+    this.timeout(30000);
+    it('should report malformed request errors', function(done) {
+      function handler(err, data) {
+        expect(err).to.be.ok;
+        done();
+      }
 
+      docker.run(
+        'ubuntu',
+        'exit 1', // this is an invalid parameter type (it should be an array)
+        process.stdout,
+        true,
+        handler
+      );
+    });
+
+    it("should run a command", function(done) {
       function handler(err, data) {
         expect(err).to.be.null;
         console.log(data);
