@@ -144,10 +144,28 @@ describe("#container", function() {
   });
 
   describe("#changes", function() {
-    it("should container changes", function(done) {
-      this.timeout(10000);
-      var container = docker.getContainer(testContainer);
+    this.timeout(10000);
 
+    var container;
+    beforeEach(function(done) {
+      docker.run(
+        'ubuntu',
+        ['/bin/bash', '-c', 'echo "xfoo" > foo.txt'],
+        null,
+        false,
+        function (err, result, subject) {
+          // subject is the resulting container from the operation
+          container = subject;
+          done(err);
+        }
+      );
+    });
+
+    afterEach(function(done) {
+      container.remove(done);
+    });
+
+    it("should container changes", function(done) {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
