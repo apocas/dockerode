@@ -84,11 +84,25 @@ Equivalent of `docker run` in `dockerode`:
 * `cmd` - command to be executed
 * `stream` - stream which will be used for execution output.
 * `temporary` - if `true` container will be removed after execution ends.
-* `callback` - callback caled when execution ends.
+* `callback` - callback called when execution ends.
 
 ``` js
 docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, true, function(err, data) {
   console.log(data.StatusCode);
+});
+```
+
+Equivalent of `docker pull` in `dockerode`:
+
+* `repoTag` - container image name (optionally with tag)
+  `myrepo/myname:withtag`
+* `opts` - extra options passed to create image see [docker api](http://docs.docker.io/en/latest/api/docker_remote_api_v1.8/#create-an-image)
+* `callback` - callback called when execution ends.
+
+``` js
+docker.pull('myrepo/myname:tag', function(err, stream) {  
+  // streaming output from pull... 
+  // Also see: http://docs.docker.io/en/latest/api/docker_remote_api_v1.8/#create-an-image
 });
 ```
 
