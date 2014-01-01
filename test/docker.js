@@ -72,9 +72,10 @@ describe("#docker", function() {
     });
 
     it("should run a command", function(done) {
-      function handler(err, data) {
+      function handler(err, data, container) {
         expect(err).to.be.null;
-        console.log(data);
+        // container is created
+        expect(container).to.be.ok;
         done();
       }
 
