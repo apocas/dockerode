@@ -1,15 +1,27 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testContainer = '';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
 describe("#container", function() {
 
+  var testContainer;
   before(function(done){
-    expect(testContainer).to.not.have.length(0);
-    done();
+    docker.createContainer({
+      Image: 'ubuntu',
+      AttachStdin: false,
+      AttachStdout: true,
+      AttachStderr: true,
+      Tty: true,
+      Cmd: ['/bin/bash', '-c', 'exit 1'],
+      OpenStdin: false,
+      StdinOnce: false
+    }, function(err, container) {
+      if (err) done(err);
+      testContainer = container.id;
+      done();
+    });
   });
 
   describe("#inspect", function() {
