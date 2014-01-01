@@ -1,15 +1,27 @@
 var Docker = require('../lib/docker');
 var expect = require('chai').expect;
 
-var testContainer = '';
 
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
 describe("#container", function() {
 
+  var testContainer;
   before(function(done){
-    expect(testContainer).to.not.have.length(0);
-    done();
+    docker.createContainer({
+      Image: 'ubuntu',
+      AttachStdin: false,
+      AttachStdout: true,
+      AttachStderr: true,
+      Tty: true,
+      Cmd: ['/bin/bash', '-c', 'exit 1'],
+      OpenStdin: false,
+      StdinOnce: false
+    }, function(err, container) {
+      if (err) done(err);
+      testContainer = container.id;
+      done();
+    });
   });
 
   describe("#inspect", function() {
@@ -32,7 +44,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
@@ -47,7 +58,7 @@ describe("#container", function() {
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
-     
+
         container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
@@ -56,7 +67,6 @@ describe("#container", function() {
 
           container.start(function(err, data) {
             expect(err).to.be.null;
-            expect(data).to.be.ok;
 
             container.wait(function(err, data) {
               expect(err).to.be.null;
@@ -96,7 +106,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
@@ -135,10 +144,28 @@ describe("#container", function() {
   });
 
   describe("#changes", function() {
-    it("should container changes", function(done) {
-      this.timeout(10000);
-      var container = docker.getContainer(testContainer);
+    this.timeout(10000);
 
+    var container;
+    beforeEach(function(done) {
+      docker.run(
+        'ubuntu',
+        ['/bin/bash', '-c', 'echo "xfoo" > foo.txt'],
+        null,
+        false,
+        function (err, result, subject) {
+          // subject is the resulting container from the operation
+          container = subject;
+          done(err);
+        }
+      );
+    });
+
+    afterEach(function(done) {
+      container.remove(done);
+    });
+
+    it("should container changes", function(done) {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
@@ -156,7 +183,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 

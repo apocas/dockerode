@@ -11,8 +11,6 @@ describe("#docker", function() {
 
       function handler(err, data) {
         expect(err).not.to.be.null;
-        expect(data).to.be.ok;
-
         done();
       }
 
@@ -144,7 +142,6 @@ describe("#docker", function() {
 
         container.remove(function(err, data) {
           expect(err).to.be.null;
-          expect(data).to.be.ok;
           done();
         });
       }
