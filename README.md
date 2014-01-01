@@ -86,7 +86,7 @@ Equivalent of `docker run` in `dockerode`:
 * `callback` - callback called when execution ends.
 
 ``` js
-docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, data) {
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, data, container) {
   console.log(data.StatusCode);
 });
 ```
