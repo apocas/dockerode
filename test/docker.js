@@ -54,6 +54,57 @@ describe("#docker", function() {
     });
   });
 
+  describe('#pull', function() {
+    this.timeout(30000);
+
+    // one image with one tag
+    var repoTag = 'lightsofapollo/test-taskenv:fail';
+
+    // XXX: Should this be an extra abstraction in docker.js?
+    function locateImage(image, callback) {
+      docker.listImages(function(err, list) {
+        if (err) return callback(err);
+
+        // search for the image in the RepoTags
+        var image;
+        for (var i = 0, len = list.length; i < len; i++) {
+          if (list[i].RepoTags.indexOf(repoTag) !== -1) {
+            // ah ha! repo tags
+            return callback(null, docker.getImage(list[i].Id));
+          }
+        }
+
+        return callback();
+      });
+    }
+
+    beforeEach(function(done) {
+      locateImage(repoTag, function(err, image) {
+        if (err) return done(err);
+        if (image) return image.remove(done);
+        done();
+      });
+    });
+
+    it('should pull image from remote source', function(done) {
+      function handler() {
+        locateImage(repoTag, function(err, image) {
+          if (err) return done(err);
+          // found the image via list images
+          expect(image).to.be.ok;
+          done();
+        });
+      }
+
+      docker.pull(repoTag, function(err, stream) {
+        if (err) return done(err);
+        // XXX: Do we want the full stream in the test?
+        stream.pipe(process.stdout);
+        stream.once('end', handler);
+      });
+    });
+  });
+
   describe("#run", function() {
     this.timeout(30000);
     it('should report malformed request errors', function(done) {
