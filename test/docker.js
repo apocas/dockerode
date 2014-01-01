@@ -11,8 +11,8 @@ describe("#docker", function() {
 
       function handler(err, data) {
         expect(err).not.to.be.null;
+        expect(data).to.be.ok;
 
-        //console.log(data);
         done();
       }
 
@@ -26,6 +26,7 @@ describe("#docker", function() {
 
       function handler(err, stream) {
         expect(err).to.be.null;
+        expect(stream).to.be.ok;
 
         stream.pipe(process.stdout, {end: true});
 
@@ -44,6 +45,7 @@ describe("#docker", function() {
 
       function handler(err, stream) {
         expect(err).to.be.null;
+        expect(stream).to.be.ok;
         //stream.pipe(process.stdout, {end: true});
         done();
       }
@@ -86,9 +88,11 @@ describe("#docker", function() {
 
       function handler(err, container) {
         expect(err).to.be.null;
-        //console.log('created: ' + container.id);
+        expect(container).to.be.ok;
+
         container.remove(function(err, data) {
           expect(err).to.be.null;
+          expect(data).to.be.ok;
           done();
         });
       }
@@ -103,6 +107,7 @@ describe("#docker", function() {
 
       function handler(err, stream) {
         expect(err).to.be.null;
+        expect(stream).to.be.ok;
 
         stream.pipe(process.stdout, {end: true});
 
@@ -122,7 +127,6 @@ describe("#docker", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.a('array');
-        //console.log(data);
         done();
       }
 
@@ -137,7 +141,6 @@ describe("#docker", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.a('array');
-        //console.log(data);
         done();
       }
 
@@ -151,7 +154,7 @@ describe("#docker", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -165,7 +168,7 @@ describe("#docker", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.a('array');
         done();
       }
 
@@ -179,7 +182,7 @@ describe("#docker", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 

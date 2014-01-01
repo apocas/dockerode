@@ -14,7 +14,7 @@ describe("#image", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -29,7 +29,7 @@ describe("#image", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.a('array');
         done();
       }
 

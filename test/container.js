@@ -14,13 +14,11 @@ describe("#container", function() {
 
   describe("#inspect", function() {
     it("should inspect a container", function(done) {
-      //this.timeout(10000);
-
       var container = docker.getContainer(testContainer);
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -34,7 +32,7 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -48,18 +46,21 @@ describe("#container", function() {
 
       function handler(err, container) {
         expect(err).to.be.null;
-        
+        expect(container).to.be.ok;
      
         container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
           expect(err).to.be.null;
+          expect(stream).to.be.ok;
 
           container.modem.demuxStream(stream, process.stdout, process.stdout, process.stdout);
 
           container.start(function(err, data) {
             expect(err).to.be.null;
+            expect(data).to.be.ok;
 
             container.wait(function(err, data) {
               expect(err).to.be.null;
+              expect(data).to.be.ok;
               done();
             });
           });
@@ -95,7 +96,7 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -110,6 +111,7 @@ describe("#container", function() {
 
       function handler(err, stream) {
         expect(err).to.be.null;
+        expect(stream).to.be.ok;
         done();
       }
 
@@ -124,7 +126,7 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -139,7 +141,7 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
@@ -154,7 +156,7 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        //console.log(data);
+        expect(data).to.be.ok;
         done();
       }
 
