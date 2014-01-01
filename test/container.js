@@ -44,7 +44,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
@@ -59,7 +58,7 @@ describe("#container", function() {
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
-     
+
         container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
@@ -68,7 +67,6 @@ describe("#container", function() {
 
           container.start(function(err, data) {
             expect(err).to.be.null;
-            expect(data).to.be.ok;
 
             container.wait(function(err, data) {
               expect(err).to.be.null;
@@ -108,7 +106,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
@@ -168,7 +165,6 @@ describe("#container", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
