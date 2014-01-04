@@ -143,13 +143,18 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
+        container.inspect(function (err, info) {
+          expect(err).to.be.null;
+          expect(info.Name).to.equal('/test')
+        })
+
         container.remove(function(err, data) {
           expect(err).to.be.null;
           done();
         });
       }
 
-      docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, handler);
+      docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash'], name: 'test'}, handler);
     });
   });
 
