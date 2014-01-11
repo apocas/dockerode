@@ -90,7 +90,7 @@ describe("#container", function() {
         'Env': null,
         'Cmd': ['bash', '-c', 'uptime'],
         'Dns': ['8.8.8.8', '8.8.4.4'],
-        'Image': 'base',
+        'Image': 'ubuntu',
         'Volumes': {},
         'VolumesFrom': ''
       };
