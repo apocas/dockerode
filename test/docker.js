@@ -35,6 +35,24 @@ describe("#docker", function() {
 
       docker.buildImage('./test/test.tar', {}, handler);
     });
+
+    it("should build image from readable stream", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {end: true});
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      var data = fs.createReadStream('./test/test.tar');
+      docker.buildImage(data, {}, handler);
+    });
   });
 
   describe("#getEvents", function() {
