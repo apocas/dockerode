@@ -50,7 +50,7 @@ describe("#docker", function() {
         });
       }
 
-      var data = fs.createReadStream('./test/test.tar');
+      var data = require('fs').createReadStream('./test/test.tar');
       docker.buildImage(data, {}, handler);
     });
   });
