@@ -71,7 +71,7 @@ describe("#docker", function() {
   });
 
   describe('#pull', function() {
-    this.timeout(30000);
+    this.timeout(120000);
 
     // one image with one tag
     var repoTag = 'lightsofapollo/test-taskenv:fail';
@@ -239,7 +239,7 @@ describe("#docker", function() {
 
   describe("#searchImages", function() {
     it("should return search results", function(done) {
-      this.timeout(10000);
+      this.timeout(120000);
 
       function handler(err, data) {
         expect(err).to.be.null;
