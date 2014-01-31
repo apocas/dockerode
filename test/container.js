@@ -48,6 +48,22 @@ describe("#container", function() {
     });
   });
 
+  describe("#resize", function() {
+    it("should resize tty a container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handle(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      container.start(function(err, data) {
+        var opts = { h: process.stdout.rows, w: process.stdout.columns }
+        container.resize(opts, handle);
+      });
+    });
+  });
+
   describe("#attach", function() {
     it("should attach and wait for a container", function(done) {
       this.timeout(120000);
