@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "chai": "~1.7.0",
-    "mocha": "~1.12.0"
+    "mocha": "~1.12.0",
+    "memorystream": "~0.2.0"
   },
   "main": "./lib/docker",
   "scripts": {
