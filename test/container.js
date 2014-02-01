@@ -12,7 +12,7 @@ describe("#container", function() {
       AttachStdout: true,
       AttachStderr: true,
       Tty: true,
-      Cmd: ['/bin/bash', '-c', 'exit 1'],
+      Cmd: ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
       OpenStdin: false,
       StdinOnce: false
     }, function(err, container) {
@@ -38,6 +38,8 @@ describe("#container", function() {
 
   describe("#start", function() {
     it("should start a container", function(done) {
+      this.timeout(60000);
+
       var container = docker.getContainer(testContainer);
 
       function handler(err, data) {
@@ -59,7 +61,7 @@ describe("#container", function() {
       }
 
       container.start(function(err, data) {
-        var opts = { h: process.stdout.rows, w: process.stdout.columns }
+        var opts = {h: process.stdout.rows, w: process.stdout.columns};
         container.resize(opts, handle);
       });
     });
@@ -76,7 +78,7 @@ describe("#container", function() {
       'OpenStdin': false,
       'StdinOnce': false,
       'Env': null,
-      'Cmd': ['bash', '-c', 'uptime'],
+      'Cmd': ['/bin/bash', '-c', 'uptime'],
       'Dns': ['8.8.8.8', '8.8.4.4'],
       'Image': 'ubuntu',
       'Volumes': {},
@@ -98,7 +100,7 @@ describe("#container", function() {
           var memStream = new MemoryStream();
           var output    = '';
           memStream.on('data', function(data) {
-            output += data.toString()
+            output += data.toString();
           });
 
           container.modem.demuxStream(stream, memStream, memStream, memStream);
@@ -131,7 +133,7 @@ describe("#container", function() {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
-        var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true}
+        var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
@@ -139,7 +141,7 @@ describe("#container", function() {
           var memStream = new MemoryStream();
           var output    = '';
           memStream.on('data', function(data) {
-            output += data.toString()
+            output += data.toString();
           });
 
           stream.pipe(memStream);
