@@ -1,8 +1,6 @@
-var Docker = require('../lib/docker');
 var expect = require('chai').expect;
-
-
-var docker = new Docker({socketPath: '/var/run/docker.sock'});
+var docker = require('./spec_helper').docker;
+var MemoryStream = require('memorystream');
 
 describe("#container", function() {
 
@@ -51,7 +49,41 @@ describe("#container", function() {
     });
   });
 
+  describe("#resize", function() {
+    it("should resize tty a container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handle(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      container.start(function(err, data) {
+        var opts = { h: process.stdout.rows, w: process.stdout.columns }
+        container.resize(opts, handle);
+      });
+    });
+  });
+
   describe("#attach", function() {
+    var optsc = {
+      'Hostname': '',
+      'User': '',
+      'AttachStdin': false,
+      'AttachStdout': true,
+      'AttachStderr': true,
+      'Tty': false,
+      'OpenStdin': false,
+      'StdinOnce': false,
+      'Env': null,
+      'Cmd': ['bash', '-c', 'uptime'],
+      'Dns': ['8.8.8.8', '8.8.4.4'],
+      'Image': 'ubuntu',
+      'Volumes': {},
+      'VolumesFrom': ''
+    };
+
+
     it("should attach and wait for a container", function(done) {
       this.timeout(120000);
 
@@ -63,7 +95,13 @@ describe("#container", function() {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
 
-          container.modem.demuxStream(stream, process.stdout, process.stdout, process.stdout);
+          var memStream = new MemoryStream();
+          var output    = '';
+          memStream.on('data', function(data) {
+            output += data.toString()
+          });
+
+          container.modem.demuxStream(stream, memStream, memStream, memStream);
 
           container.start(function(err, data) {
             expect(err).to.be.null;
@@ -71,6 +109,7 @@ describe("#container", function() {
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
+              expect(output).to.match(/.*users.*load average.*/);
               done();
             });
           });
@@ -78,25 +117,54 @@ describe("#container", function() {
 
       }
 
-      var optsc = {
-        'Hostname': '',
-        'User': '',
-        'AttachStdin': false,
-        'AttachStdout': true,
-        'AttachStderr': true,
-        'Tty': false,
-        'OpenStdin': false,
-        'StdinOnce': false,
-        'Env': null,
-        'Cmd': ['bash', '-c', 'uptime'],
-        'Dns': ['8.8.8.8', '8.8.4.4'],
-        'Image': 'ubuntu',
-        'Volumes': {},
-        'VolumesFrom': ''
-      };
+      optsc.AttachStdin = false;
+      optsc.OpenStdin = false;
+      optsc.Cmd = ['bash', '-c', 'uptime'];
 
       docker.createContainer(optsc, handler);
     });
+
+    it("should support attach with stdin enable", function(done) {
+      this.timeout(120000);
+
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+
+        var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true}
+        container.attach(attach_opts, function handler(err, stream) {
+          expect(err).to.be.null;
+          expect(stream).to.be.ok;
+
+          var memStream = new MemoryStream();
+          var output    = '';
+          memStream.on('data', function(data) {
+            output += data.toString()
+          });
+
+          stream.pipe(memStream);
+
+          container.start(function(err, data) {
+            expect(err).to.be.null;
+
+            stream.write("uptime; exit\n");
+
+            container.wait(function(err, data) {
+              expect(err).to.be.null;
+              expect(data).to.be.ok;
+              expect(output).to.match(/.*users.*load average.*/);
+              done();
+            });
+          });
+        });
+      }
+
+      optsc.AttachStdin = true;
+      optsc.OpenStdin = true;
+      optsc.Cmd = ['bash'];
+
+      docker.createContainer(optsc, handler);
+    })
   });
 
   describe("#restart", function() {

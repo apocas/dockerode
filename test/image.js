@@ -1,9 +1,7 @@
-var Docker = require('../lib/docker');
 var expect = require('chai').expect;
+var docker = require('./spec_helper').docker;
 
 var testImage = 'ubuntu';
-
-var docker = new Docker({socketPath: '/var/run/docker.sock'});
 
 describe("#image", function() {
 
@@ -47,7 +45,7 @@ describe("#image", function() {
         expect(err).to.be.null;
 
         stream.pipe(process.stdout, {end: true});
-        
+
         stream.on('end', function() {
           done();
         });
