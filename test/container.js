@@ -103,7 +103,7 @@ describe("#container", function() {
             output += data.toString();
           });
 
-          container.modem.demuxStream(stream, memStream, memStream, memStream);
+          container.modem.demuxStream(stream, memStream, memStream);
 
           container.start(function(err, data) {
             expect(err).to.be.null;
