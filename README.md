@@ -56,7 +56,7 @@ container.remove(function (err, data) {
 ``` js
 docker.listContainers(function(err, containers) {
   containers.forEach(function(containerInfo) {
-    docker.getContainer(containerInfo.Id).stop(cb)
+    docker.getContainer(containerInfo.Id).stop(cb);
   });
 });
 ```
