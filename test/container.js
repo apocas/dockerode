@@ -259,3 +259,53 @@ describe("#container", function() {
     });
   });
 });
+
+describe("#non-responsive container", function() {
+
+  var testContainer;
+  before(function(done){
+    docker.createContainer({
+      Image: 'ubuntu',
+      AttachStdin: false,
+      AttachStdout: true,
+      AttachStderr: true,
+      Tty: true,
+      Cmd: ['/bin/sh', '-c', "trap 'echo no' TERM; while true; do sleep 1; done"],
+      OpenStdin: false,
+      StdinOnce: false
+    }, function(err, container) {
+      if (err) done(err);
+      testContainer = container.id;
+      done();
+    });
+  });
+
+  describe("#stop", function() {
+    it("forced after timeout", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      container.stop({t: 1000}, handler);
+    });
+  });
+
+  describe("#restart", function() {
+    it("forced after timeout", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      container.restart({t: 1000}, handler);
+    });
+  });
+
+});
