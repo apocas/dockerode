@@ -54,18 +54,19 @@ container.remove(function (err, data) {
 ### Stopping all containers on a host
 
 ``` js
-docker.listContainers(function(err, containers){
-  containers.forEach(function(containerInfo){
-  docker.getContainer(containerInfo.Id).stop(cb)
-})
+docker.listContainers(function(err, containers) {
+  containers.forEach(function(containerInfo) {
+    docker.getContainer(containerInfo.Id).stop(cb)
+  });
+});
 ```
 
 ### Building an Image
 
 ``` js
 docker.buildImage('archive.tar', {t: imageName}, function(err, response){
-  ...
-})
+  //...
+});
 ```
 
 ### Creating a container:
