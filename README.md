@@ -4,24 +4,29 @@
 
 Not another Node.js Docker.io Remote API module.
 
-Why is `dockerode` different from all the Docker node.js module out there:
+Why `dockerode` is different from other Docker node.js modules:
 
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
 * **stream demux** - Supports optional demultiplexing of the new attach stream system implemented in Remote API v1.6. 
 * **entities** - containers and images are defined entities and not random static methods.
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
-* **feature-rich** - ALL `Docker` Remote API features implemented.
+* **feature-rich** - **All** `Docker` Remote API features implemented.
 
 
-## installation
+## Installation
 
 `npm install dockerode`
 
+## Usage
 
-## getting started
+ * Input options are directly passed to Docker.io. Check [Docker Remote API documentation](http://docs.docker.io/en/latest/api/docker_remote_api/) for more details.
+ * Return values are unchanged from Docker, official Docker.io documentation will also apply to them.
+ * Check the tests for more examples.
 
-to use `dockerode` first you need to instantiate it:
+### Getting started
+
+To use `dockerode` first you need to instantiate it:
 
 ``` js
 var Docker = require('dockerode');
@@ -30,7 +35,7 @@ var docker2 = new Docker({host: 'http://192.168.1.10', port: 3000});
 //...
 ```
 
-Manipulating a container:
+### Manipulating a container:
 
 ``` js
 var container = docker.getContainer('71501a8ab0f8');
@@ -46,7 +51,25 @@ container.remove(function (err, data) {
 //...
 ```
 
-Creating a container:
+### Stopping all containers on a host
+
+``` js
+docker.listContainers(function(err, containers){
+  containers.forEach(function(containerInfo){
+  docker.getContainer(containerInfo.Id).stop(cb)
+})
+```
+
+### Building an Image
+
+``` js
+docker.buildImage('archive.tar', {t: imageName}, function(err, response){
+  ...
+})
+```
+
+### Creating a container:
+
 ``` js
 docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function(err, container) {
   container.start(function(err, data) {
@@ -56,7 +79,7 @@ docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function(err, cont
 //...
 ```
 
-Streams goodness:
+### Streams goodness:
 
 ``` js
 //tty:true
@@ -78,7 +101,7 @@ docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {
 //...
 ```
 
-Equivalent of `docker run` in `dockerode`:
+### Equivalent of `docker run` in `dockerode`:
 
 * `image` - container image
 * `cmd` - command to be executed
@@ -91,7 +114,7 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, d
 });
 ```
 
-Equivalent of `docker pull` in `dockerode`:
+### Equivalent of `docker pull` in `dockerode`:
 
 * `repoTag` - container image name (optionally with tag)
   `myrepo/myname:withtag`
@@ -105,30 +128,16 @@ docker.pull('myrepo/myname:tag', function(err, stream) {
 });
 ```
 
-Check the tests for more examples.
+## Tests
 
-## notes
+Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
 
-* Input options are directly passed to Docker.io check [Docker Remote API documentation](http://docs.docker.io/en/latest/api/docker_remote_api/) for more details.
-* Return values are unchanged from Docker, official Docker.io documentation will also apply to them.
-
-
-## tests
-
-Tests were implemented using `mocha` and `chai` do `npm test` to run them.
-
-## license
+## License
 
 Pedro Dias <abru.pt>
 
-licensed under the apache license, version 2.0 (the "license");
-you may not use this file except in compliance with the license.
-you may obtain a copy of the license at
+Licensed under the Apache license, version 2.0 (the "license"); You may not use this file except in compliance with the license. You may obtain a copy of the license at:
 
     http://www.apache.org/licenses/LICENSE-2.0.html
 
-unless required by applicable law or agreed to in writing, software
-distributed under the license is distributed on an "as is" basis,
-without warranties or conditions of any kind, either express or implied.
-see the license for the specific language governing permissions and
-limitations under the license.
+Unless required by applicable law or agreed to in writing, software distributed under the license is distributed on an "as is" basis, without warranties or conditions of any kind, either express or implied. See the license for the specific language governing permissions and limitations under the license.
