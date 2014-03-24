@@ -31,6 +31,11 @@ apt-get update -q
 # Install docker.  'apt-get install' is idempotent.
 apt-get install -q -y lxc-docker
 
+apt-get install -q -y python-software-properties python g++ make software-properties-common
+add-apt-repository ppa:chris-lea/node.js
+apt-get update -q
+apt-get install -q -y nodejs
+
 usermod -a -G docker "$user"
 
 tmp=`mktemp -q` && {
@@ -91,17 +96,6 @@ Vagrant::Config.run do |config|
   end
 
   config.ssh.forward_agent = true
-
-  config.vm.provision :chef_solo do |chef|
-    chef.add_recipe "nodejs"
-    chef.json = {
-      "nodejs" => {
-        "version" => "0.10.23",
-        "from_source" => true
-      }
-    }
-  end
-
 end
 
 Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
