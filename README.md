@@ -106,11 +106,19 @@ docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {
 
 * `image` - container image
 * `cmd` - command to be executed
-* `stream` - stream which will be used for execution output.
+* `stream` - stream(s) which will be used for execution output.
 * `callback` - callback called when execution ends.
 
 ``` js
 docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, data, container) {
+  console.log(data.StatusCode);
+});
+```
+
+or, if you want to split stdout and stderr (you must to pass `Tty:false` as an option for this to work)
+
+``` js
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function(err, data, container) {
   console.log(data.StatusCode);
 });
 ```
