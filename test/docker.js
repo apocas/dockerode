@@ -72,7 +72,7 @@ describe("#docker", function() {
     this.timeout(120000);
 
     // one image with one tag
-    var repoTag = 'lightsofapollo/test-taskenv:fail';
+    var repoTag = 'ubuntu:latest';
 
     // XXX: Should this be an extra abstraction in docker.js?
     function locateImage(image, callback) {
@@ -121,18 +121,29 @@ describe("#docker", function() {
 
   describe("#run", function() {
     this.timeout(30000);
-    it('should report malformed request errors', function(done) {
-      function handler(err, data) {
-        expect(err).to.be.ok;
-        done();
+
+    it("should emit partial data", function(done) {
+      function handler(err, data, container) {
+        expect(err).to.be.null;
+        //container is created
+        expect(container).to.be.ok;
+
+        container.remove(function(err, data) {
+          expect(err).to.be.null;
+        });
       }
 
-      docker.run(
-        'ubuntu',
-        'exit 1', // this is an invalid parameter type (it should be an array)
-        process.stdout,
-        handler
-      );
+      var ee = docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, handler);
+      ee.on('container', function (container) {
+        expect(container).to.be.ok;
+      });
+      ee.on('stream', function (stream) {
+        expect(stream).to.be.ok;
+      });
+      ee.on('data', function (data) {
+        expect(data).to.be.ok;
+        done();
+      });
     });
 
     it("should run a command", function(done) {
@@ -161,8 +172,8 @@ describe("#docker", function() {
 
         container.inspect(function (err, info) {
           expect(err).to.be.null;
-          expect(info.Name).to.equal('/test')
-        })
+          expect(info.Name).to.equal('/test');
+        });
 
         container.remove(function(err, data) {
           expect(err).to.be.null;

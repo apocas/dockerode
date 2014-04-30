@@ -7,7 +7,7 @@ Not another Node.js Docker.io Remote API module.
 Why `dockerode` is different from other Docker node.js modules:
 
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
-* **stream demux** - Supports optional demultiplexing of the new attach stream system implemented in Remote API v1.6. 
+* **stream demux** - Supports optional demultiplexing of the new attach stream system implemented in Remote API v1.6.
 * **entities** - containers and images are defined entities and not random static methods.
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
@@ -20,7 +20,7 @@ Why `dockerode` is different from other Docker node.js modules:
 
 ## Usage
 
- * Input options are directly passed to Docker.io. Check [Docker Remote API documentation](http://docs.docker.io/en/latest/api/docker_remote_api/) for more details.
+ * Input options are directly passed to Docker.io. Check [Docker Remote API documentation](http://docs.docker.io/reference/api/docker_remote_api/) for more details.
  * Return values are unchanged from Docker, official Docker.io documentation will also apply to them.
  * Check the tests for more examples.
 
@@ -51,11 +51,17 @@ container.remove(function (err, data) {
 //...
 ```
 
+You may also specify default options for each container's operations, which will always be used for the specified container and operation.
+
+``` js
+container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
+```
+
 ### Stopping all containers on a host
 
 ``` js
-docker.listContainers(function(err, containers) {
-  containers.forEach(function(containerInfo) {
+docker.listContainers(function (err, containers) {
+  containers.forEach(function (containerInfo) {
     docker.getContainer(containerInfo.Id).stop(cb);
   });
 });
@@ -64,7 +70,7 @@ docker.listContainers(function(err, containers) {
 ### Building an Image
 
 ``` js
-docker.buildImage('archive.tar', {t: imageName}, function(err, response){
+docker.buildImage('archive.tar', {t: imageName}, function (err, response){
   //...
 });
 ```
@@ -72,8 +78,8 @@ docker.buildImage('archive.tar', {t: imageName}, function(err, response){
 ### Creating a container:
 
 ``` js
-docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function(err, container) {
-  container.start(function(err, data) {
+docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function (err, container) {
+  container.start(function (err, data) {
     //...
   });
 });
@@ -84,18 +90,17 @@ docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function(err, cont
 
 ``` js
 //tty:true
-container.attach({stream: true, stdout: true, stderr: true, tty: true}, function(err, stream) {
+container.attach({stream: true, stdout: true, stderr: true, tty: true}, function (err, stream) {
   stream.pipe(process.stdout);
 });
 
 //tty:false
-container.attach({stream: true, stdout: true, stderr: true, tty: false}, function(err, stream) {
-  //http://docs.docker.io/en/latest/api/docker_remote_api_v1.7/#post--containers-(id)-attach
-  //dockerode may demultiplex the streams for you :)
+container.attach({stream: true, stdout: true, stderr: true, tty: false}, function (err, stream) {
+  //dockerode may demultiplex attach streams for you :)
   container.modem.demuxStream(stream, process.stdout, process.stderr);
 });
 
-docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {
+docker.createImage({fromImage: 'ubuntu'}, function (err, stream) {
   stream.pipe(process.stdout);
 });
 
@@ -107,10 +112,11 @@ docker.createImage({fromImage: 'ubuntu'}, function(err, stream) {
 * `image` - container image
 * `cmd` - command to be executed
 * `stream` - stream(s) which will be used for execution output.
+* `[create_options]` - options used for container creation.
 * `callback` - callback called when execution ends.
 
 ``` js
-docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, data, container) {
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, data, container) {
   console.log(data.StatusCode);
 });
 ```
@@ -118,8 +124,18 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function(err, d
 or, if you want to split stdout and stderr (you must to pass `Tty:false` as an option for this to work)
 
 ``` js
-docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function(err, data, container) {
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function (err, data, container) {
   console.log(data.StatusCode);
+});
+```
+
+Run also returns an EventEmitter supporting the following events: container, stream, data. Allowing stuff like this:
+
+``` js
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function (err, data, container) {
+  //...
+}).on('container', function (container) {
+  container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
 });
 ```
 
@@ -127,13 +143,12 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr
 
 * `repoTag` - container image name (optionally with tag)
   `myrepo/myname:withtag`
-* `opts` - extra options passed to create image see [docker api](http://docs.docker.io/en/latest/api/docker_remote_api_v1.8/#create-an-image)
+* `opts` - extra options passed to create image.
 * `callback` - callback called when execution ends.
 
 ``` js
-docker.pull('myrepo/myname:tag', function(err, stream) {  
-  // streaming output from pull... 
-  // Also see: http://docs.docker.io/en/latest/api/docker_remote_api_v1.8/#create-an-image
+docker.pull('myrepo/myname:tag', function (err, stream) {  
+  // streaming output from pull...
 });
 ```
 

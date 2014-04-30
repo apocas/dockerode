@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker.io / Docker remote API implementation.",
-  "version": "1.2.10",
+  "version": "1.3.0",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -29,5 +29,95 @@
   },
   "engines": {
     "node": ">= 0.8"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Pedro Dias",
+      "email": "petermdias@gmail.com",
+      "url": "https://github.com/apocas",
+      "contributions": 93
+    },
+    {
+      "name": "James Lal",
+      "email": "jlal@mozilla.com",
+      "url": "https://github.com/lightsofapollo",
+      "contributions": 12
+    },
+    {
+      "name": "Everton Ribeiro",
+      "email": "nuxlli@gmail.com",
+      "url": "https://github.com/nuxlli",
+      "contributions": 4
+    },
+    {
+      "name": "Sam Rijs",
+      "email": "srijs@airpost.net",
+      "url": "https://github.com/srijs",
+      "contributions": 3
+    },
+    {
+      "name": "Mike MacCana",
+      "email": "mike.maccana@gmail.com",
+      "url": "https://github.com/mikemaccana",
+      "contributions": 2
+    },
+    {
+      "url": "https://github.com/niclashoyer",
+      "contributions": 2
+    },
+    {
+      "name": "Alex Wolfe",
+      "email": "alexkwolfe@gmail.com",
+      "url": "https://github.com/alexkwolfe",
+      "contributions": 1
+    },
+    {
+      "name": "Vincent Woo",
+      "email": "me@vincentwoo.com",
+      "url": "https://github.com/vincentwoo",
+      "contributions": 1
+    },
+    {
+      "name": "Adam Duncan",
+      "email": "",
+      "url": "https://github.com/microadam",
+      "contributions": 1
+    },
+    {
+      "name": "Geoffrey Bachelet",
+      "email": "geoffrey.bachelet@gmail.com",
+      "url": "https://github.com/ubermuda",
+      "contributions": 1
+    },
+    {
+      "name": "Josh Matthews",
+      "email": "josh@jmatthews.us",
+      "url": "https://github.com/jmatth",
+      "contributions": 1
+    },
+    {
+      "name": "Kishore Nallan",
+      "email": "kishore@kishorelive.com",
+      "url": "https://github.com/kishorenc",
+      "contributions": 1
+    },
+    {
+      "name": "Mathias Buus",
+      "email": "mathiasbuus@gmail.com",
+      "url": "https://github.com/mafintosh",
+      "contributions": 1
+    },
+    {
+      "name": "Shannon Poole",
+      "email": "shannon.m.poole@gmail.com",
+      "url": "https://github.com/shannonmpoole",
+      "contributions": 1
+    },
+    {
+      "name": "Dan Williams",
+      "email": "me+github@deedubs.com",
+      "url": "https://github.com/deedubs",
+      "contributions": 1
+    }
+  ]
 }
