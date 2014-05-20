@@ -90,15 +90,29 @@ docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function (err, con
 
 ``` js
 //tty:true
-container.attach({stream: true, stdout: true, stderr: true, tty: true}, function (err, stream) {
-  stream.pipe(process.stdout);
-});
+docker.createContainer({ /*...*/ Tty: true /*...*/ }, function(err, container) {
+
+  /* ... */
+
+  container.attach({stream: true, stdout: true, stderr: true}, function (err, stream) {
+    stream.pipe(process.stdout);
+  });
+
+  /* ... */
+}
 
 //tty:false
-container.attach({stream: true, stdout: true, stderr: true, tty: false}, function (err, stream) {
-  //dockerode may demultiplex attach streams for you :)
-  container.modem.demuxStream(stream, process.stdout, process.stderr);
-});
+docker.createContainer({ /*...*/ Tty: false /*...*/ }, function(err, container) {
+
+  /* ... */
+
+  container.attach({stream: true, stdout: true, stderr: true}, function (err, stream) {
+    //dockerode may demultiplex attach streams for you :)
+    container.modem.demuxStream(stream, process.stdout, process.stderr);
+  });
+
+  /* ... */
+}
 
 docker.createImage({fromImage: 'ubuntu'}, function (err, stream) {
   stream.pipe(process.stdout);
