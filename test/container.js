@@ -244,6 +244,39 @@ describe("#container", function() {
       container.changes(handler);
     });
   });
+  
+  describe("#logs", function() {
+    
+    it("should get the logs for a container", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+      var logs_opts = { follow: false, stdout: true, stderr: true, timestamps: true };
+      
+      function handler(err, logs) {
+        expect(err).to.be.null;
+        expect(logs).to.be.a('string');
+        done();
+      }
+      
+      container.logs(logs_opts, handler);
+      
+    });
+    
+    it("should get the logs for a container as a stream", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+      var logs_opts = { follow: true, stdout: true, stderr: true, timestamps: true };
+      
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream.pipe).to.be.ok;
+        done();
+      }
+      
+      container.logs(logs_opts, handler);
+      
+    });
+  });
 
   describe("#stop", function() {
     it("should stop a container", function(done) {
