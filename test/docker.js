@@ -68,6 +68,19 @@ describe("#docker", function() {
     });
   });
 
+  describe("#getPing", function() {
+    it("should ping server", function(done) {
+      this.timeout(30000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      docker.ping(handler);
+    });
+  });
+
   describe('#pull', function() {
     this.timeout(120000);
 
