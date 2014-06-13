@@ -78,7 +78,7 @@ docker.buildImage('archive.tar', {t: imageName}, function (err, response){
 ### Creating a container:
 
 ``` js
-docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash']}, function (err, container) {
+docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash'], name: 'ubuntu-test'}, function (err, container) {
   container.start(function (err, data) {
     //...
   });
