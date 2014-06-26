@@ -1,10 +1,11 @@
 var Docker = require('../lib/docker');
 var fs     = require('fs');
 
-var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock'
-var stats  = fs.statSync(socket)
+var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+var stats  = fs.statSync(socket);
+
 if (!stats.isSocket()) {
-  throw new Error("Are you sure the docker is running?")
+  throw new Error("Are you sure the docker is running?");
 }
 
 var docker = new Docker({ socketPath: socket });
@@ -26,7 +27,8 @@ var optsc = {
 };
 
 function handler(err, container) {
-  var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true}
+  var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
+
   container.attach(attach_opts, function handler(err, stream) {
     // Show outputs
     stream.pipe(process.stdout);
@@ -34,7 +36,7 @@ function handler(err, container) {
     // Connect stdin
     var isRaw = process.isRaw;
     process.stdin.resume();
-    process.stdin.setRawMode(true)
+    process.stdin.setRawMode(true);
     process.stdin.pipe(stream);
 
     container.start(function(err, data) {
@@ -43,12 +45,13 @@ function handler(err, container) {
         var dimensions = {
           h: process.stdout.rows,
           w: process.stderr.columns
-        }
+        };
 
         if (dimensions.h != 0 && dimensions.w != 0) {
-          container.resize(dimensions, function() {})
+          container.resize(dimensions, function() {});
         }
-      }
+      };
+      
       resize();
       process.stdout.on('resize', resize);
 
