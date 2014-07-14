@@ -26,7 +26,7 @@ var optsc = {
   'VolumesFrom': ''
 };
 
-var previouKey,
+var previousKey,
     CTRL_P = '\u0010',
     CTRL_Q = '\u0011';
 
@@ -46,8 +46,8 @@ function handler(err, container) {
 
     process.stdin.on('data', function(key) {
       // Detects it is detaching a running container
-      if (previouKey === CTRL_P && key === CTRL_Q) exit(stream, isRaw);
-      previouKey = key;
+      if (previousKey === CTRL_P && key === CTRL_Q) exit(stream, isRaw);
+      previousKey = key;
     });
 
     container.start(function(err, data) {
