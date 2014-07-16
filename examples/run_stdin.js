@@ -26,6 +26,10 @@ var optsc = {
   'VolumesFrom': ''
 };
 
+var previousKey,
+    CTRL_P = '\u0010',
+    CTRL_Q = '\u0011';
+
 function handler(err, container) {
   var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
 
@@ -36,35 +40,47 @@ function handler(err, container) {
     // Connect stdin
     var isRaw = process.isRaw;
     process.stdin.resume();
+    process.stdin.setEncoding('utf8');
     process.stdin.setRawMode(true);
     process.stdin.pipe(stream);
 
-    container.start(function(err, data) {
-      // Resize tty
-      var resize = function() {
-        var dimensions = {
-          h: process.stdout.rows,
-          w: process.stderr.columns
-        };
+    process.stdin.on('data', function(key) {
+      // Detects it is detaching a running container
+      if (previousKey === CTRL_P && key === CTRL_Q) exit(stream, isRaw);
+      previousKey = key;
+    });
 
-        if (dimensions.h != 0 && dimensions.w != 0) {
-          container.resize(dimensions, function() {});
-        }
-      };
-      
-      resize();
+    container.start(function(err, data) {
+      resize(container);
       process.stdout.on('resize', resize);
 
       container.wait(function(err, data) {
-        process.stdout.removeListener('resize', resize);
-        process.stdin.removeAllListeners();
-        process.stdin.setRawMode(isRaw);
-        process.stdin.resume();
-        stream.end();
-        process.exit();
+        exit(stream, isRaw);
       });
     });
   });
+}
+
+// Resize tty
+function resize (container) {
+  var dimensions = {
+    h: process.stdout.rows,
+    w: process.stderr.columns
+  };
+
+  if (dimensions.h != 0 && dimensions.w != 0) {
+    container.resize(dimensions, function() {});
+  }
+}
+
+// Exit container
+function exit (stream, isRaw) {
+  process.stdout.removeListener('resize', resize);
+  process.stdin.removeAllListeners();
+  process.stdin.setRawMode(isRaw);
+  process.stdin.resume();
+  stream.end();
+  process.exit();
 }
 
 docker.createContainer(optsc, handler);
