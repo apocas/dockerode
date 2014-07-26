@@ -32,6 +32,7 @@ To use `dockerode` first you need to instantiate it:
 var Docker = require('dockerode');
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
 var docker2 = new Docker({host: 'http://192.168.1.10', port: 3000});
+var docker3 = new Docker({protocol:'http', host: '127.0.0.1', port: 3000});
 //...
 ```
 

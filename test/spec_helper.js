@@ -5,12 +5,18 @@ var fs     = require('fs');
 // socat -d -d unix-l:/tmp/docker.sock,fork tcp:<docker-host>:4243
 // DOCKER_SOCKET=/tmp/docker.sock npm test
 
+
 var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
 var stats  = fs.statSync(socket);
+var docker;
+
 if (!stats.isSocket()) {
-  throw new Error("Are you sure the docker is running?");
+  console.log('Trying TCP connection...');
+  docker = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000});
+} else {
+  docker = new Docker({ socketPath: socket });
 }
 
 module.exports = {
-  docker: new Docker({ socketPath: socket })
+  'docker': docker
 };
