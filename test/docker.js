@@ -173,6 +173,23 @@ describe("#docker", function() {
 
       docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, handler);
     });
+
+    it("should run a command with options", function(done){
+      function handler(err, data, container) {
+        expect(err).to.be.null;
+        
+        container.inspect(function(err,data){
+          expect(err).to.be.null;
+          expect(data.HostConfig.Privileged).to.be.true;
+
+          container.remove(function(err,data){
+            expect(err).to.be.null;
+            done();
+          });
+        });
+      }
+      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, {Privileged : true}, handler);
+    });
   });
 
   describe("#createContainer", function() {
