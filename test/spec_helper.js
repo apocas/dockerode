@@ -13,10 +13,13 @@ var docker;
 if (!stats.isSocket()) {
   console.log('Trying TCP connection...');
   docker = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000});
+  dockert = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000, timeout: 1});
 } else {
   docker = new Docker({ socketPath: socket });
+  dockert = new Docker({ socketPath: socket, timeout: 1 });
 }
 
 module.exports = {
-  'docker': docker
+  'docker': docker,
+  'dockert': dockert
 };

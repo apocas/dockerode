@@ -81,6 +81,19 @@ describe("#docker", function() {
     });
   });
 
+  describe("#testTimeout", function() {
+    it("should timeout", function(done) {
+      this.timeout(30000);
+
+      function handler(err, data) {
+        expect(err).to.not.be.null;
+        done();
+      }
+
+      dockert.ping(handler);
+    });
+  });
+
   describe('#pull', function() {
     this.timeout(120000);
 
