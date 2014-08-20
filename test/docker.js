@@ -90,7 +90,7 @@ describe("#docker", function() {
         done();
       }
 
-      dockert.ping(handler);
+      dockert.searchImages({term: 'node'}, handler);
     });
   });
 
