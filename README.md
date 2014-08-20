@@ -175,7 +175,8 @@ Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
 
 ## License
 
-Pedro Dias <abru.pt>
+Pedro Dias
+@pedromdias <https://twitter.com/pedromdias>
 
 Licensed under the Apache license, version 2.0 (the "license"); You may not use this file except in compliance with the license. You may obtain a copy of the license at:
 
