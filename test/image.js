@@ -35,4 +35,22 @@ describe("#image", function() {
     });
   });
 
+
+  describe("#get", function() {
+    it("should get an image", function(done) {
+      this.timeout(120000);
+
+      var image = docker.getImage(testImage);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        done();
+      }
+
+      image.get(handler);
+    });
+  });
+
 });
