@@ -128,7 +128,8 @@ docker.createImage({fromImage: 'ubuntu'}, function (err, stream) {
 * `image` - container image
 * `cmd` - command to be executed
 * `stream` - stream(s) which will be used for execution output.
-* `[create_options]` - options used for container creation.
+* `create_options` - options used for container creation. (optional)
+* `start_options` - options used for container start. (optional)
 * `callback` - callback called when execution ends.
 
 ``` js
