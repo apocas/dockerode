@@ -6,11 +6,11 @@ var fs     = require('fs');
 // DOCKER_SOCKET=/tmp/docker.sock npm test
 
 
-var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
-var stats  = fs.statSync(socket);
+var socket   = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+var isSocket = fs.existsSync(socket) ? fs.statSync(socket).isSocket() : false;
 var docker;
 
-if (!stats.isSocket()) {
+if (!isSocket) {
   console.log('Trying TCP connection...');
   docker = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000});
   dockert = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000, timeout: 1});
