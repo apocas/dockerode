@@ -40,7 +40,13 @@ var docker4 = new Docker({host: '127.0.0.1', port: 3000}); //defaults to http
 ### Manipulating a container:
 
 ``` js
+// create a container entity. does not query API
 var container = docker.getContainer('71501a8ab0f8');
+
+// query API for container info
+container.inspect(function (err, data) {
+  console.log(data);
+});
 
 container.start(function (err, data) {
   console.log(data);
