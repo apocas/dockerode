@@ -34,6 +34,15 @@ var docker = new Docker({socketPath: '/var/run/docker.sock'});
 var docker2 = new Docker({host: 'http://192.168.1.10', port: 3000});
 var docker3 = new Docker({protocol:'http', host: '127.0.0.1', port: 3000});
 var docker4 = new Docker({host: '127.0.0.1', port: 3000}); //defaults to http
+
+var docker5 = new Docker({
+  protocol: 'https',
+  host: '192.168.1.10',
+  port: process.env.DOCKER_PORT || 2375,
+  ca: fs.readFileSync(process.env.DOCKER_CERT_PATH + 'ca.pem'),
+  cert: fs.readFileSync(process.env.DOCKER_CERT_PATH + '/cert.pem'),
+  key: fs.readFileSync(process.env.DOCKER_CERT_PATH + '/key.pem')
+});
 //...
 ```
 
