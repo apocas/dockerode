@@ -39,9 +39,9 @@ var docker5 = new Docker({
   protocol: 'https',
   host: '192.168.1.10',
   port: process.env.DOCKER_PORT || 2375,
-  ca: fs.readFileSync(process.env.DOCKER_CERT_PATH + 'ca.pem'),
-  cert: fs.readFileSync(process.env.DOCKER_CERT_PATH + '/cert.pem'),
-  key: fs.readFileSync(process.env.DOCKER_CERT_PATH + '/key.pem')
+  ca: fs.readFileSync('ca.pem'),
+  cert: fs.readFileSync('cert.pem'),
+  key: fs.readFileSync('key.pem')
 });
 //...
 ```
