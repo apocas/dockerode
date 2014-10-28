@@ -280,6 +280,9 @@ describe("#container", function() {
     describe("#exec", function() {
         it("should run exec on a container", function(done) {
             this.timeout(10000);
+            var options = {
+                Cmd: ["echo", "'foo'"]
+            };
 
             var container = docker.getContainer(testContainer);
 
@@ -294,7 +297,7 @@ describe("#container", function() {
                 container.execstart(data.Id, start_handler);
             }
 
-            container.exec({Cmd: ["echo", "'foo'"]}, handler);
+            container.exec(options, handler);
         });
     });
 });
