@@ -13,8 +13,8 @@ function runExec(container) {
         "Tty": false,
         Cmd: ["env"]
     };
-    container.exec(options, function (err, opts) {
-        container.execstart(opts, function (err, stream) {
+    container.exec(options, function (err, data) {
+        container.execstart(data.Id, function (err, stream) {
             if (err != null) {
                 callback(err, null);
                 return;
