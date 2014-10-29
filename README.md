@@ -2,16 +2,16 @@
 
 [![NPM](https://nodei.co/npm/dockerode.png?downloads=true&stars=true)](https://nodei.co/npm/dockerode/)
 
-Not another Node.js Docker.io Remote API module.
+Not another Node.js Docker Remote API module.
 
 Why `dockerode` is different from other Docker node.js modules:
 
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
-* **stream demux** - Supports optional demultiplexing of the new attach stream system implemented in Remote API v1.6.
-* **entities** - containers and images are defined entities and not random static methods.
+* **stream demux** - Supports optional demultiplexing.
+* **entities** - containers, images and execs are defined entities and not random static methods.
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
-* **feature-rich** - **All** `Docker` Remote API features implemented.
+* **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
 
 
 ## Installation
@@ -20,9 +20,9 @@ Why `dockerode` is different from other Docker node.js modules:
 
 ## Usage
 
- * Input options are directly passed to Docker.io. Check [Docker Remote API documentation](http://docs.docker.io/reference/api/docker_remote_api/) for more details.
- * Return values are unchanged from Docker, official Docker.io documentation will also apply to them.
- * Check the tests for more examples.
+ * Input options are directly passed to Docker. Check [Docker Remote API documentation](https://docs.docker.com/reference/api/docker_remote_api/) for more details.
+ * Return values are unchanged from Docker, official Docker documentation will also apply to them.
+ * Check the tests and examples folder for more examples.
 
 ### Getting started
 
@@ -187,6 +187,10 @@ docker.pull('myrepo/myname:tag', function (err, stream) {
 ## Tests
 
 Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
+
+## Examples
+
+Check the examples folder for more specific use cases examples.
 
 ## License
 
