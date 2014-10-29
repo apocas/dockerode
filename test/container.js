@@ -276,6 +276,30 @@ describe("#container", function() {
       container.stop(handler);
     });
   });
+
+    describe("#exec", function() {
+        it("should run exec on a container", function(done) {
+            this.timeout(10000);
+            var options = {
+                Cmd: ["echo", "'foo'"]
+            };
+
+            var container = docker.getContainer(testContainer);
+
+            function start_handler(err, stream){
+                expect(err).to.be.null;
+                expect(stream.pipe).to.be.ok;
+                done();
+            }
+
+            function handler(err, data) {
+                expect(err).to.be.null;
+                container.execstart(data.Id, start_handler);
+            }
+
+            container.exec(options, handler);
+        });
+    });
 });
 
 describe("#non-responsive container", function() {
