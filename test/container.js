@@ -5,7 +5,7 @@ var MemoryStream = require('memorystream');
 describe("#container", function() {
 
   var testContainer;
-  before(function(done){
+  before(function(done) {
     docker.createContainer({
       Image: 'ubuntu',
       AttachStdin: false,
@@ -61,7 +61,10 @@ describe("#container", function() {
       }
 
       container.start(function(err, data) {
-        var opts = {h: process.stdout.rows, w: process.stdout.columns};
+        var opts = {
+          h: process.stdout.rows,
+          w: process.stdout.columns
+        };
         container.resize(opts, handle);
       });
     });
@@ -93,12 +96,16 @@ describe("#container", function() {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
-        container.attach({stream: true, stdout: true, stderr: true}, function handler(err, stream) {
+        container.attach({
+          stream: true,
+          stdout: true,
+          stderr: true
+        }, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
 
           var memStream = new MemoryStream();
-          var output    = '';
+          var output = '';
           memStream.on('data', function(data) {
             output += data.toString();
           });
@@ -133,13 +140,18 @@ describe("#container", function() {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
-        var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
+        var attach_opts = {
+          stream: true,
+          stdin: true,
+          stdout: true,
+          stderr: true
+        };
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
 
           var memStream = new MemoryStream();
-          var output    = '';
+          var output = '';
           memStream.on('data', function(data) {
             output += data.toString();
           });
@@ -219,10 +231,9 @@ describe("#container", function() {
     var container;
     beforeEach(function(done) {
       docker.run(
-        'ubuntu',
-        ['/bin/bash', '-c', 'echo "xfoo" > foo.txt'],
+        'ubuntu', ['/bin/bash', '-c', 'echo "xfoo" > foo.txt'],
         null,
-        function (err, result, subject) {
+        function(err, result, subject) {
           // subject is the resulting container from the operation
           container = subject;
           done(err);
@@ -250,7 +261,12 @@ describe("#container", function() {
     it("should get the logs for a container as a stream", function(done) {
       this.timeout(30000);
       var container = docker.getContainer(testContainer);
-      var logs_opts = { follow: true, stdout: true, stderr: true, timestamps: true };
+      var logs_opts = {
+        follow: true,
+        stdout: true,
+        stderr: true,
+        timestamps: true
+      };
 
       function handler(err, stream) {
         expect(err).to.be.null;
@@ -260,6 +276,30 @@ describe("#container", function() {
 
       container.logs(logs_opts, handler);
 
+    });
+  });
+
+  describe("#exec", function() {
+    it("should run exec on a container", function(done) {
+      this.timeout(10000);
+      var options = {
+        Cmd: ["echo", "'foo'"]
+      };
+
+      var container = docker.getContainer(testContainer);
+
+      function start_handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream.pipe).to.be.ok;
+        done();
+      }
+
+      function handler(err, exec) {
+        expect(err).to.be.null;
+        exec.start(start_handler);
+      }
+
+      container.exec(options, handler);
     });
   });
 
@@ -276,36 +316,12 @@ describe("#container", function() {
       container.stop(handler);
     });
   });
-
-    describe("#exec", function() {
-        it("should run exec on a container", function(done) {
-            this.timeout(10000);
-            var options = {
-                Cmd: ["echo", "'foo'"]
-            };
-
-            var container = docker.getContainer(testContainer);
-
-            function start_handler(err, stream){
-                expect(err).to.be.null;
-                expect(stream.pipe).to.be.ok;
-                done();
-            }
-
-            function handler(err, data) {
-                expect(err).to.be.null;
-                container.execstart(data.Id, start_handler);
-            }
-
-            container.exec(options, handler);
-        });
-    });
 });
 
 describe("#non-responsive container", function() {
 
   var testContainer;
-  before(function(done){
+  before(function(done) {
     docker.createContainer({
       Image: 'ubuntu',
       AttachStdin: false,
@@ -332,7 +348,9 @@ describe("#non-responsive container", function() {
         done();
       }
 
-      container.stop({t: 1000}, handler);
+      container.stop({
+        t: 1000
+      }, handler);
     });
   });
 
@@ -346,7 +364,9 @@ describe("#non-responsive container", function() {
         done();
       }
 
-      container.restart({t: 1000}, handler);
+      container.restart({
+        t: 1000
+      }, handler);
     });
   });
 
