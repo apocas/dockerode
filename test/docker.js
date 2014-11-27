@@ -118,6 +118,7 @@ describe("#docker", function() {
       });
     }
 
+    /*
     beforeEach(function(done) {
       locateImage(repoTag, function(err, image) {
         if (err) return done(err);
@@ -125,6 +126,7 @@ describe("#docker", function() {
         done();
       });
     });
+    */
 
     it('should pull image from remote source', function(done) {
       function handler() {
