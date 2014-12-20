@@ -1,6 +1,7 @@
 # dockerode
 
-[![NPM](https://nodei.co/npm/dockerode.png?downloads=true&stars=true)](https://nodei.co/npm/dockerode/)
+[![NPM](https://nodei.co/npm/dockerode.png?downloads=true&downloadRank=true)](https://nodei.co/npm/dockerode/)
+[![NPM](https://nodei.co/npm-dl/dockerode.png?months=6&height=3)](https://nodei.co/npm/dockerode/)
 
 Not another Node.js Docker Remote API module.
 
