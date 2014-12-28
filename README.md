@@ -36,8 +36,17 @@ var docker2 = new Docker({host: 'http://192.168.1.10', port: 3000});
 var docker3 = new Docker({protocol:'http', host: '127.0.0.1', port: 3000});
 var docker4 = new Docker({host: '127.0.0.1', port: 3000}); //defaults to http
 
+//protocol http vs https is automatically detected
 var docker5 = new Docker({
-  protocol: 'https',
+  host: '192.168.1.10',
+  port: process.env.DOCKER_PORT || 2375,
+  ca: fs.readFileSync('ca.pem'),
+  cert: fs.readFileSync('cert.pem'),
+  key: fs.readFileSync('key.pem')
+});
+
+var docker6 = new Docker({
+  protocol: 'https', //you can enforce a protocol
   host: '192.168.1.10',
   port: process.env.DOCKER_PORT || 2375,
   ca: fs.readFileSync('ca.pem'),

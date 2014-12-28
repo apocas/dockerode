@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 
-var testImage = 'ubuntu';
+var testImage = 'ubuntu:14.04';
 
 describe("#image", function() {
 

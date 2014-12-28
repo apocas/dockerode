@@ -1,6 +1,8 @@
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 
+var testImage = 'ubuntu:14.04';
+
 describe("#docker", function() {
 
   describe("#checkAuth", function() {
@@ -98,9 +100,8 @@ describe("#docker", function() {
     this.timeout(120000);
 
     // one image with one tag
-    var repoTag = 'ubuntu:latest';
+    var repoTag = testImage;
 
-    // XXX: Should this be an extra abstraction in docker.js?
     function locateImage(image, callback) {
       docker.listImages(function(err, list) {
         if (err) return callback(err);
@@ -161,7 +162,7 @@ describe("#docker", function() {
         });
       }
 
-      var ee = docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, handler);
+      var ee = docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
       ee.on('container', function (container) {
         expect(container).to.be.ok;
       });
@@ -186,7 +187,7 @@ describe("#docker", function() {
         });
       }
 
-      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, handler);
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
     });
 
     it("should run a command with start options", function(done){
@@ -203,7 +204,7 @@ describe("#docker", function() {
           });
         });
       }
-      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, {}, {Privileged : true}, handler);
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, {Privileged : true}, handler);
     });
 
     it("should run a command with create options", function(done){
@@ -219,7 +220,7 @@ describe("#docker", function() {
           });
         });
       }
-      docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, {}, handler);
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, handler);
     });
   });
 
@@ -242,7 +243,7 @@ describe("#docker", function() {
         });
       }
 
-      docker.createContainer({Image: 'ubuntu', Cmd: ['/bin/bash'], name: 'test'}, handler);
+      docker.createContainer({Image: testImage, Cmd: ['/bin/bash'], name: 'test'}, handler);
     });
   });
 
@@ -261,7 +262,7 @@ describe("#docker", function() {
         });
       }
 
-      docker.createImage({fromImage: 'ubuntu'}, handler);
+      docker.createImage({fromImage: testImage}, handler);
     });
   });
 
