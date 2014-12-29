@@ -1,3 +1,6 @@
+var http = require("http");
+http.globalAgent.maxSockets = 1000;
+
 var Docker = require('../lib/docker');
 var fs     = require('fs');
 
@@ -12,8 +15,8 @@ var docker;
 
 if (!isSocket) {
   console.log('Trying TCP connection...');
-  docker = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000});
-  dockert = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 3000, timeout: 1});
+  docker = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 5555});
+  dockert = new Docker({host: process.env.DOCKER_HOST || 'http://127.0.0.1', port: process.env.DOCKER_PORT || 5555, timeout: 1});
 } else {
   docker = new Docker({ socketPath: socket });
   dockert = new Docker({ socketPath: socket, timeout: 1 });
