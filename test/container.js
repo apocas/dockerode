@@ -288,15 +288,20 @@ describe("#container", function() {
 
       var container = docker.getContainer(testContainer);
 
-      function start_handler(err, stream) {
-        expect(err).to.be.null;
-        expect(stream.pipe).to.be.ok;
-        done();
-      }
-
       function handler(err, exec) {
         expect(err).to.be.null;
-        exec.start(start_handler);
+
+        exec.start(function(err, stream) {
+          expect(err).to.be.null;
+          expect(stream.pipe).to.be.ok;
+
+          exec.inspect(function(err, data) {
+            expect(err).to.be.null;
+            expect(data).to.be.ok;
+
+            done();
+          });
+        });
       }
 
       container.exec(options, handler);
