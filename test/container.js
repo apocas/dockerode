@@ -70,6 +70,18 @@ describe("#container", function() {
     });
   });
 
+  describe("#stats", function() {
+    it("should get container stats", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      container.stats(function(err, stream) {
+        expect(err).to.be.null;
+        expect(stream.pipe).to.be.ok;
+        done();
+      });
+    });
+  });
+
   describe("#attach", function() {
     var optsc = {
       'Hostname': '',
