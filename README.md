@@ -195,6 +195,24 @@ docker.pull('myrepo/myname:tag', function (err, stream) {
 });
 ```
 
+## Pull from private repos
+
+`docker-modem` already base64 encodes the necessary auth object for you.
+
+``` js
+var auth = {
+  username: "username",
+  password: "password",
+  auth: "",
+  email: "your@email.email",
+  serveraddress: "https://index.docker.io/v1"
+};
+
+docker.pull(tag, {'authconfig': auth}, function (err, cmdOutStream) {
+  //...
+});
+```
+
 ## Tests
 
 Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
