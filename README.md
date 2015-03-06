@@ -195,7 +195,7 @@ docker.pull('myrepo/myname:tag', function (err, stream) {
 });
 ```
 
-## Pull from private repos
+#### Pull from private repos
 
 `docker-modem` already base64 encodes the necessary auth object for you.
 
