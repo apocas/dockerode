@@ -208,7 +208,7 @@ var auth = {
   serveraddress: "https://index.docker.io/v1"
 };
 
-docker.pull(tag, {'authconfig': auth}, function (err, cmdOutStream) {
+docker.pull(tag, {'authconfig': auth}, function (err, stream) {
   //...
 });
 ```
