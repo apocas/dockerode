@@ -201,11 +201,11 @@ docker.pull('myrepo/myname:tag', function (err, stream) {
 
 ``` js
 var auth = {
-  username: "username",
-  password: "password",
-  auth: "",
-  email: "your@email.email",
-  serveraddress: "https://index.docker.io/v1"
+  username: 'username',
+  password: 'password',
+  auth: '',
+  email: 'your@email.email',
+  serveraddress: 'https://index.docker.io/v1'
 };
 
 docker.pull(tag, {'authconfig': auth}, function (err, stream) {
