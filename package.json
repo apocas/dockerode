@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "docker-modem": "0.1.x",
-    "extend-object": "^1.0.0"
+    "extend-object": "1.0.0"
   },
   "devDependencies": {
     "chai": "~1.7.0",
