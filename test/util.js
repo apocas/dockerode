@@ -39,4 +39,13 @@ describe('util', function() {
       tag: 'tag'
     });
   });
+
+  // https://github.com/HenrikJoreteg/extend-object/blob/v0.1.0/test.js
+  describe('.extend', function() {
+    it('accepts multiple object arguments', function () {
+      var start = {};
+      expect(util.extend(start, {name: 'test'}, {hello: 'test'})).to.deep.equal({name: 'test', hello: 'test'});
+      expect(start).to.eql(util.extend(start, {}));
+    });
+  });
 });
