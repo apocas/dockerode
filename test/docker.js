@@ -141,9 +141,40 @@ describe("#docker", function() {
 
       docker.pull(repoTag, function(err, stream) {
         if (err) return done(err);
-        // XXX: Do we want the full stream in the test?
         stream.pipe(process.stdout);
         stream.once('end', handler);
+      });
+    });
+
+    it('should pull image from remote source using followProgress', function(done) {
+      docker.pull(repoTag, function(err, stream) {
+        if (err) return done(err);
+        docker.modem.followProgress(stream, onFinished, onProgress);
+
+        function onFinished(err, output) {
+          //ouput is an array of objects, already json parsed.
+          if (err) return done(err);
+          expect(output).to.be.a('array');
+          done();
+        }
+
+        function onProgress(event) {
+          expect(event).to.be.ok;
+        }
+      });
+    });
+
+    it('should pull image from remote source using followProgress and firing only in the end', function(done) {
+      docker.pull(repoTag, function(err, stream) {
+        if (err) return done(err);
+        docker.modem.followProgress(stream, onFinished);
+
+        function onFinished(err, output) {
+          //ouput is an array of objects, already json parsed.
+          if (err) return done(err);
+          expect(output).to.be.a('array');
+          done();
+        }
       });
     });
   });
