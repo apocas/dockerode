@@ -212,6 +212,40 @@ docker.pull('tag', {'authconfig': auth}, function (err, stream) {
   //...
 });
 ```
+## Helper functions
+
+* `followProgress` - allows to fire a callback only in the end of a stream based process. (build, pull, ...)
+
+``` js
+//followProgress(stream, onFinished, [onProgress])
+docker.pull(repoTag, function(err, stream) {
+  //...
+  docker.modem.followProgress(stream, onFinished, onProgress);
+
+  function onFinished(err, output) {
+    //output is an array with output json parsed objects
+    //...
+  }
+  function onProgress(event) {
+    //...
+  }
+});
+```
+
+* `demuxStream` - demux stdout and stderr
+
+``` js
+//demuxStream(stream, stdout, stderr)
+container.attach({
+  stream: true,
+  stdout: true,
+  stderr: true
+}, function handler(err, stream) {
+  //...
+  container.modem.demuxStream(stream, process.stdout, process.stderr);
+  //...
+});
+```
 
 ## Tests
 
