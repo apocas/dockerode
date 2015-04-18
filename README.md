@@ -212,6 +212,14 @@ docker.pull('tag', {'authconfig': auth}, function (err, stream) {
   //...
 });
 ```
+
+If you already have a base64 encoded auth object, you can use it directly:
+
+```js
+var auth = { key: 'yJ1J2ZXJhZGRyZXNzIjoitZSI6Im4OCIsImF1dGgiOiIiLCJlbWFpbCI6ImZvbGllLmFkcmc2VybmF0iLCJzZX5jb2aHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdZvbGllYSIsInBhc3N3b3JkIjoiRGVjZW1icmUjEvIn0=' }
+```
+
+
 ## Helper functions
 
 * `followProgress` - allows to fire a callback only in the end of a stream based process. (build, pull, ...)
