@@ -10,10 +10,10 @@ var docker = new Docker({
  */
 function runExec(container) {
   options = {
-    "AttachStdout": true,
-    "AttachStderr": true,
-    "Tty": false,
-    Cmd: ["env"]
+    AttachStdout: true,
+    AttachStderr: true,
+    Tty: false,
+    Cmd: ['env']
   };
   container.exec(options, function(err, exec) {
     if (err) return;

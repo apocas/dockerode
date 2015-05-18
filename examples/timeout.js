@@ -5,7 +5,7 @@ var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
 var stats  = fs.statSync(socket);
 
 if (!stats.isSocket()) {
-  throw new Error("Are you sure the docker is running?");
+  throw new Error('Are you sure the docker is running?');
 }
 
 // you may specify a timeout (in ms) for all operations, allowing to make sure you don't fall into limbo if something happens in docker

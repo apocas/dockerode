@@ -7,8 +7,8 @@ var docker = new Docker({
 docker.createContainer({
   Image: 'ubuntu',
   Cmd: ['/bin/ls', '/stuff'],
-  "Volumes": {
-    "/stuff": {}
+  'Volumes': {
+    '/stuff': {}
   }
 }, function(err, container) {
   container.attach({
@@ -20,7 +20,7 @@ docker.createContainer({
     stream.pipe(process.stdout);
 
     container.start({
-      "Binds": ["/home/vagrant:/stuff"]
+      'Binds': ['/home/vagrant:/stuff']
     }, function(err, data) {
       console.log(data);
     });
