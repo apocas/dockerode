@@ -26,6 +26,7 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -R spec"
   },
+  "license": "Apache-2.0",
   "engines": {
     "node": ">= 0.8"
   },
