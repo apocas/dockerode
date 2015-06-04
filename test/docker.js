@@ -177,6 +177,24 @@ describe("#docker", function() {
         }
       });
     });
+
+    it('should pull image from remote source using followProgress and pause', function(done) {
+      docker.pull(repoTag, function(err, stream) {
+        if (err) return done(err);
+        docker.modem.followProgress(stream, onFinished, onProgress);
+
+        function onFinished(err, output) {
+          if (err) return done(err);
+          expect(output).to.be.a('array');
+        }
+
+        function onProgress(event) {
+          expect(event).to.be.ok;
+          done();
+          stream.destroy();
+        }
+      });
+    });
   });
 
   describe("#run", function() {
