@@ -82,6 +82,189 @@ describe("#container", function() {
     });
   });
 
+  describe('#stdin', function() {
+    var optsc = {
+      'Hostname': '',
+      'User': '',
+      'AttachStdin': false,
+      'AttachStdout': true,
+      'AttachStderr': true,
+      'Tty': false,
+      'OpenStdin': false,
+      'StdinOnce': false,
+      'Env': null,
+      'Cmd': ['/bin/bash', '-c', 'uptime'],
+      'Dns': ['8.8.8.8', '8.8.4.4'],
+      'Image': 'ubuntu',
+      'Volumes': {},
+      'VolumesFrom': ''
+    };
+
+    /**
+     * simple test that writes 1000 bytes to the "wc -c" command, that command 
+     * returns the number of bytes it received, so it should return 1000 for this test
+     */
+    it('should support attach with tty enable writing 1000 bytes', function(done) {
+      this.timeout(5000);
+
+      var size = 1000;
+
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+
+        var attach_opts = {
+          stream: true,
+          stdin: true,
+          stdout: true,
+          stderr: true
+        };
+        container.attach(attach_opts, function handler(err, stream) {
+          expect(err).to.be.null;
+          expect(stream).to.be.ok;
+
+          var memStream = new MemoryStream();
+          var output = '';
+          memStream.on('data', function(data) {
+            output += data.toString();
+          });
+
+          stream.pipe(memStream);
+
+          container.start(function(err, data) {
+            expect(err).to.be.null;
+
+            stream.write(randomString(size)+'\n\x04');
+            
+            container.wait(function(err, data) {
+
+              expect(err).to.be.null;
+              expect(data).to.be.ok;
+              expect(+output.slice(size+2)).to.equal(size+1);
+              done();
+            });
+          });
+        });
+      }
+
+      optsc.AttachStdin = true;
+      optsc.Tty = true;
+      optsc.OpenStdin = true;
+      optsc.Cmd = ['wc', '-c'];
+
+      docker.createContainer(optsc, handler);
+    });
+
+  /**
+   * same test but writing more than 4096 bytes, wc should return the number of bytes it received, 
+   * but it returns much less, indicating it only received the last part of the data. The data is 
+   * truncated at 4096 bytes.
+   */
+    it('should support attach with tty enable writing 5000 bytes', function(done) {
+      this.timeout(5000);
+
+      var size = 5000;
+
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+
+        var attach_opts = {
+          stream: true,
+          stdin: true,
+          stdout: true,
+          stderr: true
+        };
+        container.attach(attach_opts, function handler(err, stream) {
+          expect(err).to.be.null;
+          expect(stream).to.be.ok;
+
+          var memStream = new MemoryStream();
+          var output = '';
+          memStream.on('data', function(data) {
+            output += data.toString();
+          });
+
+          stream.pipe(memStream);
+
+          container.start(function(err, data) {
+            expect(err).to.be.null;
+
+            stream.write(randomString(size)+'\n\x04');
+            
+            container.wait(function(err, data) {
+
+              expect(err).to.be.null;
+              expect(data).to.be.ok;
+              expect(+output.slice(size+2)).to.equal(size+1);
+              done();
+            });
+          });
+        });
+      }
+
+      optsc.AttachStdin = true;
+      optsc.Tty = true;
+      optsc.OpenStdin = true;
+      optsc.Cmd = ['wc', '-c'];
+
+      docker.createContainer(optsc, handler);
+    });
+
+  /**
+   * trying to use wc without tty enabled, fails because 
+   * when stream.end is called no more data is received.
+   */
+    it('should support attach with stdin enable', function(done) {
+      this.timeout(5000);
+
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+
+        var attach_opts = {
+          stream: true,
+          stdin: true,
+          stdout: true,
+          stderr: true
+        };
+        container.attach(attach_opts, function handler(err, stream) {
+          expect(err).to.be.null;
+          expect(stream).to.be.ok;
+
+          var memStream = new MemoryStream();
+          var output = '';
+          memStream.on('data', function(data) {
+            output += data.toString();
+          });
+
+          stream.pipe(memStream);
+
+          container.start(function(err, data) {
+            expect(err).to.be.null;
+
+            stream.end(randomString(1000)+'\n\x04');
+           
+            container.wait(function(err, data) {
+
+              expect(err).to.be.null;
+              expect(data).to.be.ok;
+              expect(+output.slice(size+2)).to.equal(size+1);
+              done();
+            });
+          });
+        });
+      }
+
+      optsc.AttachStdin = true;
+      optsc.OpenStdin = true;
+      optsc.Tty = false;
+      optsc.Cmd = ['wc', '-c'];
+
+      docker.createContainer(optsc, handler);
+    });
+  });
+  
   describe("#attach", function() {
     var optsc = {
       'Hostname': '',
