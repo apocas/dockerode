@@ -23,7 +23,7 @@ var optsc = {
   'Dns': ['8.8.8.8', '8.8.4.4'],
   'Image': 'ubuntu',
   'Volumes': {},
-  'VolumesFrom': ''
+  'VolumesFrom': []
 };
 
 var previousKey,

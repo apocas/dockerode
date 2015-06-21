@@ -97,7 +97,7 @@ describe("#container", function() {
       'Dns': ['8.8.8.8', '8.8.4.4'],
       'Image': 'ubuntu',
       'Volumes': {},
-      'VolumesFrom': ''
+      'VolumesFrom': []
     };
 
 
@@ -190,7 +190,7 @@ describe("#container", function() {
       optsc.Cmd = ['bash'];
 
       docker.createContainer(optsc, handler);
-    })
+    });
   });
 
   describe("#restart", function() {
