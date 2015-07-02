@@ -12,14 +12,16 @@ if [ -z "$user" ]; then
 fi
 
 wget -q -O - https://get.docker.io/gpg | apt-key add -
-echo 'deb http://get.docker.io/ubuntu docker main' > \
-    /etc/apt/sources.list.d/docker.list
+wget -qO- https://get.docker.com/ | sh
 
 add-apt-repository ppa:chris-lea/node.js
 apt-get update -q
-apt-get install -q -y lxc-docker python-software-properties python g++ make software-properties-common nodejs
+apt-get install -q -y python-software-properties python g++ make software-properties-common nodejs
 
 usermod -a -G docker "$user"
+docker pull ubuntu
+printf "#"'!'"/bin/bash\ndocker rm -f "'$'"(docker ps -a -q)" > /usr/bin/clearcontainers
+chmod +x /usr/bin/clearcontainers
 SCRIPT
 
 Vagrant::Config.run do |config|
