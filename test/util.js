@@ -21,6 +21,11 @@ describe('util', function() {
       tag: 'tag'
     });
 
+    validate('root@sha256:1234abc', {
+      repository: 'root',
+      tag: 'sha256:1234abc'
+    });
+
     validate('user/repo', {
       repository: 'user/repo'
     });
