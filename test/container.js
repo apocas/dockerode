@@ -163,7 +163,7 @@ describe("#container", function() {
       docker.createContainer(optsc, handler);
     });
 
-    it('should support attach with tty enable writing 5000 bytes', function(done) {
+    it('should support attach with tty disabled writing 5000 bytes', function(done) {
       this.timeout(5000);
 
       var size = 5000;
