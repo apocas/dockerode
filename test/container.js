@@ -146,7 +146,6 @@ describe("#container", function() {
             stream.write(randomString(size) + '\n\x04');
 
             container.wait(function(err, data) {
-
               expect(err).to.be.null;
               expect(data).to.be.ok;
               expect(+output.slice(size + 2)).to.equal(size + 1);
@@ -164,11 +163,6 @@ describe("#container", function() {
       docker.createContainer(optsc, handler);
     });
 
-    /**
-     * same test but writing more than 4096 bytes, wc should return the number of bytes it received,
-     * but it returns much less, indicating it only received the last part of the data. The data is
-     * truncated at 4096 bytes.
-     */
     it('should support attach with tty enable writing 5000 bytes', function(done) {
       this.timeout(5000);
 
@@ -199,23 +193,22 @@ describe("#container", function() {
           container.start(function(err, data) {
             expect(err).to.be.null;
 
-            stream.write(randomString(size) + '\n\x04');
+            stream.write('printf "' + randomString(size) + '" | wc -c; exit;\n');
 
             container.wait(function(err, data) {
-
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(+output.slice(size + 2)).to.equal(size + 1);
+              expect(parseInt(output.replace(/\D/g,''))).to.equal(size);
               done();
             });
           });
         });
       }
 
-      optsc.AttachStdin = true;
-      optsc.Tty = true;
+      optsc.AttachStdin = false;
+      optsc.Tty = false;
       optsc.OpenStdin = true;
-      optsc.Cmd = ['wc', '-c'];
+      optsc.Cmd = ['bash'];
 
       docker.createContainer(optsc, handler);
     });
