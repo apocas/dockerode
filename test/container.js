@@ -212,59 +212,6 @@ describe("#container", function() {
 
       docker.createContainer(optsc, handler);
     });
-
-    /**
-     * trying to use wc without tty enabled, fails because
-     * when stream.end is called no more data is received.
-     */
-    it('should support attach with stdin enable', function(done) {
-      this.timeout(10000);
-
-      function handler(err, container) {
-        expect(err).to.be.null;
-        expect(container).to.be.ok;
-
-        var attach_opts = {
-          stream: true,
-          stdin: true,
-          stdout: true,
-          stderr: true
-        };
-        container.attach(attach_opts, function handler(err, stream) {
-          expect(err).to.be.null;
-          expect(stream).to.be.ok;
-
-          var memStream = new MemoryStream();
-          var output = '';
-          memStream.on('data', function(data) {
-            output += data.toString();
-          });
-
-          stream.pipe(memStream);
-
-          container.start(function(err, data) {
-            expect(err).to.be.null;
-
-            stream.end(randomString(1000) + '\n\x04');
-
-            container.wait(function(err, data) {
-
-              expect(err).to.be.null;
-              expect(data).to.be.ok;
-              expect(+output.slice(size + 2)).to.equal(size + 1);
-              done();
-            });
-          });
-        });
-      }
-
-      optsc.AttachStdin = true;
-      optsc.OpenStdin = true;
-      optsc.Tty = false;
-      optsc.Cmd = ['wc', '-c'];
-
-      docker.createContainer(optsc, handler);
-    });
   });
 
   describe("#attach", function() {
