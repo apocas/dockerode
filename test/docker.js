@@ -1,3 +1,5 @@
+/*jshint -W030 */
+
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 
@@ -7,7 +9,7 @@ describe("#docker", function() {
 
   describe("#checkAuth", function() {
     it("should fail auth", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
 
       function handler(err, data) {
         expect(err).not.to.be.null;

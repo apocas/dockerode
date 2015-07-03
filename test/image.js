@@ -1,3 +1,5 @@
+/*jshint -W030 */
+
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 

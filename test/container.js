@@ -1,3 +1,5 @@
+/*jshint -W030 */
+
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 var MemoryStream = require('memorystream');
@@ -97,11 +99,18 @@ describe("#container", function() {
       'Dns': ['8.8.8.8', '8.8.4.4'],
       'Image': 'ubuntu',
       'Volumes': {},
-      'VolumesFrom': ''
+      'VolumesFrom': []
     };
 
+    function randomString(length) {
+      var result = '',
+        chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+      return result;
+    }
+
     /**
-     * simple test that writes 1000 bytes to the "wc -c" command, that command 
+     * simple test that writes 1000 bytes to the "wc -c" command, that command
      * returns the number of bytes it received, so it should return 1000 for this test
      */
     it('should support attach with tty enable writing 1000 bytes', function(done) {
@@ -134,13 +143,13 @@ describe("#container", function() {
           container.start(function(err, data) {
             expect(err).to.be.null;
 
-            stream.write(randomString(size)+'\n\x04');
-            
+            stream.write(randomString(size) + '\n\x04');
+
             container.wait(function(err, data) {
 
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(+output.slice(size+2)).to.equal(size+1);
+              expect(+output.slice(size + 2)).to.equal(size + 1);
               done();
             });
           });
@@ -155,11 +164,11 @@ describe("#container", function() {
       docker.createContainer(optsc, handler);
     });
 
-  /**
-   * same test but writing more than 4096 bytes, wc should return the number of bytes it received, 
-   * but it returns much less, indicating it only received the last part of the data. The data is 
-   * truncated at 4096 bytes.
-   */
+    /**
+     * same test but writing more than 4096 bytes, wc should return the number of bytes it received,
+     * but it returns much less, indicating it only received the last part of the data. The data is
+     * truncated at 4096 bytes.
+     */
     it('should support attach with tty enable writing 5000 bytes', function(done) {
       this.timeout(5000);
 
@@ -190,13 +199,13 @@ describe("#container", function() {
           container.start(function(err, data) {
             expect(err).to.be.null;
 
-            stream.write(randomString(size)+'\n\x04');
-            
+            stream.write(randomString(size) + '\n\x04');
+
             container.wait(function(err, data) {
 
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(+output.slice(size+2)).to.equal(size+1);
+              expect(+output.slice(size + 2)).to.equal(size + 1);
               done();
             });
           });
@@ -211,12 +220,12 @@ describe("#container", function() {
       docker.createContainer(optsc, handler);
     });
 
-  /**
-   * trying to use wc without tty enabled, fails because 
-   * when stream.end is called no more data is received.
-   */
+    /**
+     * trying to use wc without tty enabled, fails because
+     * when stream.end is called no more data is received.
+     */
     it('should support attach with stdin enable', function(done) {
-      this.timeout(5000);
+      this.timeout(10000);
 
       function handler(err, container) {
         expect(err).to.be.null;
@@ -243,13 +252,13 @@ describe("#container", function() {
           container.start(function(err, data) {
             expect(err).to.be.null;
 
-            stream.end(randomString(1000)+'\n\x04');
-           
+            stream.end(randomString(1000) + '\n\x04');
+
             container.wait(function(err, data) {
 
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(+output.slice(size+2)).to.equal(size+1);
+              expect(+output.slice(size + 2)).to.equal(size + 1);
               done();
             });
           });
@@ -264,7 +273,7 @@ describe("#container", function() {
       docker.createContainer(optsc, handler);
     });
   });
-  
+
   describe("#attach", function() {
     var optsc = {
       'Hostname': '',
