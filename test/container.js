@@ -452,6 +452,21 @@ describe("#container", function() {
     });
   });
 
+  describe("#commit", function() {
+    it("should commit a container", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+        done();
+      }
+
+      container.commit({comment: 'dockerode commit test'}, handler);
+    });
+  });
+
   describe("#stop", function() {
     it("should stop a container", function(done) {
       this.timeout(30000);
