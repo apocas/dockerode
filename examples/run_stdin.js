@@ -52,7 +52,9 @@ function handler(err, container) {
 
     container.start(function(err, data) {
       resize(container);
-      process.stdout.on('resize', resize);
+      process.stdout.on('resize', function() {
+        resize(container);
+      });
 
       container.wait(function(err, data) {
         exit(stream, isRaw);
