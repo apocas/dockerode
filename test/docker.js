@@ -191,9 +191,9 @@ describe("#docker", function() {
         }
 
         function onProgress(event) {
+          stream.destroy();
           expect(event).to.be.ok;
           done();
-          stream.destroy();
         }
       });
     });

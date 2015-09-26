@@ -38,6 +38,50 @@ describe("#container", function() {
     });
   });
 
+  describe("#archive", function() {
+    it("should get an archive inside the container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.getArchive({
+        'path': '/var/log/dmesg'
+      }, handler);
+    });
+
+    it("should put an archive inside the container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.putArchive('./test/test.tar', {
+        'path': '/root'
+      }, handler);
+    });
+
+    it("should inspect an archive inside the container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.infoArchive({
+        'path': '/root/Dockerfile'
+      }, handler);
+    });
+  });
+
   describe("#start", function() {
     it("should start a container", function(done) {
       this.timeout(60000);
@@ -198,7 +242,7 @@ describe("#container", function() {
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(parseInt(output.replace(/\D/g,''))).to.equal(size);
+              expect(parseInt(output.replace(/\D/g, ''))).to.equal(size);
               done();
             });
           });
@@ -463,7 +507,9 @@ describe("#container", function() {
         done();
       }
 
-      container.commit({comment: 'dockerode commit test'}, handler);
+      container.commit({
+        comment: 'dockerode commit test'
+      }, handler);
     });
   });
 
