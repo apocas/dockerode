@@ -4,7 +4,11 @@ var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 
 var testImage = 'ubuntu:14.04';
-
+var testVolume = {
+    "Name": "tardis",
+    "Driver": "local",
+    "Mountpoint": "/var/lib/docker/volumes/tardis"
+};
 describe("#docker", function() {
 
   describe("#checkAuth", function() {
@@ -275,6 +279,29 @@ describe("#docker", function() {
     });
   });
 
+  describe("#createVolume", function() {
+    it("should create and remove a volume", function(done) {
+      this.timeout(5000);
+
+      function handler(err, volume) {
+        expect(err).to.be.null;
+        expect(volume).to.be.ok;
+
+        volume.inspect(function (err, info) {
+          expect(err).to.be.null;
+          expect(info.Name).to.equal(testVolume.Name);
+
+          volume.remove(function(err, data) {
+            expect(err).to.be.null;
+            done();
+          });
+        });
+      }
+
+      docker.createVolume(testVolume, handler);
+    });
+  });
+
   describe("#createContainer", function() {
     it("should create and remove a container", function(done) {
       this.timeout(5000);
@@ -342,6 +369,21 @@ describe("#docker", function() {
       }
 
       docker.listImages({all: 1}, handler);
+    });
+  });
+
+  describe("#listVolumes", function() {
+    it("should list volumes", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('object');
+        expect(data.Volumes).to.be.a('array');
+        done();
+      }
+
+      docker.listVolumes({}, handler);
     });
   });
 
