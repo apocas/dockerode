@@ -17,10 +17,6 @@ var testNetwork = {
       "Subnet":"172.20.0.0/16",
       "IPRange":"172.20.10.0/24",
       "Gateway":"172.20.10.11"
-/*      "Subnet": "192.168.0.0/16",
-      "IPRange": "192.168.0.0/24",
-      "Gateway": "192.168.0.11"
-      */
       }]
 }};
 describe("#docker", function() {
