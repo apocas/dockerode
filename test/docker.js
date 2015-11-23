@@ -5,20 +5,21 @@ var docker = require('./spec_helper').docker;
 
 var testImage = 'ubuntu:14.04';
 var testVolume = {
-    "Name": "tardis",
-    "Driver": "local",
-    "Mountpoint": "/var/lib/docker/volumes/tardis"
+  "Name": "tardis",
+  "Driver": "local",
+  "Mountpoint": "/var/lib/docker/volumes/tardis"
 };
 var testNetwork = {
-  "Name":"isolated_nw",
-  "Driver":"bridge",
-  "IPAM":{
-    "Config":[{
-      "Subnet":"172.20.0.0/16",
-      "IPRange":"172.20.10.0/24",
-      "Gateway":"172.20.10.11"
-      }]
-}};
+  "Name": "isolated_nw",
+  "Driver": "bridge",
+  "IPAM": {
+    "Config": [{
+      "Subnet": "172.20.0.0/16",
+      "IPRange": "172.20.10.0/24",
+      "Gateway": "172.20.10.11"
+    }]
+  }
+};
 describe("#docker", function() {
 
   describe("#checkAuth", function() {
@@ -30,7 +31,11 @@ describe("#docker", function() {
         done();
       }
 
-      docker.checkAuth({username: 'xpto', password: 'dang', email: 'xpto@pxpto.pt'}, handler);
+      docker.checkAuth({
+        username: 'xpto',
+        password: 'dang',
+        email: 'xpto@pxpto.pt'
+      }, handler);
     });
   });
 
@@ -42,7 +47,9 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(stream).to.be.ok;
 
-        stream.pipe(process.stdout, {end: true});
+        stream.pipe(process.stdout, {
+          end: true
+        });
 
         stream.on('end', function() {
           done();
@@ -59,7 +66,9 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(stream).to.be.ok;
 
-        stream.pipe(process.stdout, {end: true});
+        stream.pipe(process.stdout, {
+          end: true
+        });
 
         stream.on('end', function() {
           done();
@@ -82,7 +91,9 @@ describe("#docker", function() {
         done();
       }
 
-      docker.getEvents({since: ((new Date().getTime()/1000) - 60).toFixed(0)}, handler);
+      docker.getEvents({
+        since: ((new Date().getTime() / 1000) - 60).toFixed(0)
+      }, handler);
     });
   });
 
@@ -108,7 +119,9 @@ describe("#docker", function() {
         done();
       }
 
-      dockert.searchImages({term: 'node'}, handler);
+      dockert.searchImages({
+        term: 'node'
+      }, handler);
     });
   });
 
@@ -228,13 +241,13 @@ describe("#docker", function() {
       }
 
       var ee = docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
-      ee.on('container', function (container) {
+      ee.on('container', function(container) {
         expect(container).to.be.ok;
       });
-      ee.on('stream', function (stream) {
+      ee.on('stream', function(stream) {
         expect(stream).to.be.ok;
       });
-      ee.on('data', function (data) {
+      ee.on('data', function(data) {
         expect(data).to.be.ok;
         done();
       });
@@ -255,31 +268,33 @@ describe("#docker", function() {
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
     });
 
-    it("should run a command with start options", function(done){
+    it("should run a command with start options", function(done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
 
-        container.inspect(function(err, data){
+        container.inspect(function(err, data) {
           expect(err).to.be.null;
           expect(data.HostConfig.Privileged).to.be.true;
 
-          container.remove(function(err, data){
+          container.remove(function(err, data) {
             expect(err).to.be.null;
             done();
           });
         });
       }
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, {Privileged : true}, handler);
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, {
+        Privileged: true
+      }, handler);
     });
 
-    it("should run a command with create options", function(done){
+    it("should run a command with create options", function(done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
 
-        container.inspect(function(err, data){
+        container.inspect(function(err, data) {
           expect(err).to.be.null;
 
-          container.remove(function(err, data){
+          container.remove(function(err, data) {
             expect(err).to.be.null;
             done();
           });
@@ -297,7 +312,7 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(volume).to.be.ok;
 
-        volume.inspect(function (err, info) {
+        volume.inspect(function(err, info) {
           expect(err).to.be.null;
           expect(info.Name).to.equal(testVolume.Name);
 
@@ -320,7 +335,7 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(network).to.be.ok;
 
-        network.inspect(function (err, info) {
+        network.inspect(function(err, info) {
           expect(err).to.be.null;
           expect(info.Name).to.equal(testNetwork.Name);
           expect(info.Id).to.not.be.null;
@@ -346,7 +361,7 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
-        container.inspect(function (err, info) {
+        container.inspect(function(err, info) {
           expect(err).to.be.null;
           expect(info.Name).to.equal('/test');
 
@@ -357,7 +372,11 @@ describe("#docker", function() {
         });
       }
 
-      docker.createContainer({Image: testImage, Cmd: ['/bin/bash'], name: 'test'}, handler);
+      docker.createContainer({
+        Image: testImage,
+        Cmd: ['/bin/bash'],
+        name: 'test'
+      }, handler);
     });
   });
 
@@ -369,14 +388,18 @@ describe("#docker", function() {
         expect(err).to.be.null;
         expect(stream).to.be.ok;
 
-        stream.pipe(process.stdout, {end: true});
+        stream.pipe(process.stdout, {
+          end: true
+        });
 
         stream.on('end', function() {
           done();
         });
       }
 
-      docker.createImage({fromImage: testImage}, handler);
+      docker.createImage({
+        fromImage: testImage
+      }, handler);
     });
   });
 
@@ -390,7 +413,9 @@ describe("#docker", function() {
         done();
       }
 
-      docker.listContainers({all: 1}, handler);
+      docker.listContainers({
+        all: 1
+      }, handler);
     });
   });
 
@@ -404,7 +429,9 @@ describe("#docker", function() {
         done();
       }
 
-      docker.listImages({all: 1}, handler);
+      docker.listImages({
+        all: 1
+      }, handler);
     });
   });
 
@@ -415,7 +442,6 @@ describe("#docker", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.a('object');
-        expect(data.Volumes).to.be.a('array');
         done();
       }
 
@@ -462,7 +488,9 @@ describe("#docker", function() {
         done();
       }
 
-      docker.searchImages({term: 'node'}, handler);
+      docker.searchImages({
+        term: 'node'
+      }, handler);
     });
   });
 
