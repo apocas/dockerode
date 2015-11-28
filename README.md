@@ -21,7 +21,7 @@ Why `dockerode` is different from other Docker node.js modules:
 
 ## Usage
 
- * Input options are directly passed to Docker. Check [Docker Remote API documentation](https://docs.docker.com/reference/api/docker_remote_api/) for more details.
+ * Input options are directly passed to Docker. Check [Docker Remote API documentation](https://docs.docker.com/engine/reference/api/docker_remote_api/) for more details.
  * Return values are unchanged from Docker, official Docker documentation will also apply to them.
  * Check the tests and examples folder for more examples.
 
@@ -190,7 +190,7 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr
 * `callback` - callback called when execution ends.
 
 ``` js
-docker.pull('myrepo/myname:tag', function (err, stream) {  
+docker.pull('myrepo/myname:tag', function (err, stream) {
   // streaming output from pull...
 });
 ```
@@ -257,9 +257,8 @@ container.attach({
 
 ## Tests
 
-`docker pull ubuntu:latest` to prepare your system for the tests.
-
-Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
+ * `docker pull ubuntu:latest` to prepare your system for the tests.
+ * Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
 
 ## Examples
 
