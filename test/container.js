@@ -3,6 +3,7 @@
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 var MemoryStream = require('memorystream');
+var Socket = require('net').Socket;
 
 describe("#container", function() {
 
@@ -337,6 +338,55 @@ describe("#container", function() {
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
+          expect(stream).to.not.be.an.instanceof(Socket);
+
+          var memStream = new MemoryStream();
+          var output = '';
+          memStream.on('data', function(data) {
+            output += data.toString();
+          });
+
+          stream.pipe(memStream);
+
+          container.start(function(err, data) {
+            expect(err).to.be.null;
+
+            stream.write("uptime; exit\n");
+
+            container.wait(function(err, data) {
+              expect(err).to.be.null;
+              expect(data).to.be.ok;
+              expect(output).to.match(/.*users.*load average.*/);
+              done();
+            });
+          });
+        });
+      }
+
+      optsc.AttachStdin = true;
+      optsc.OpenStdin = true;
+      optsc.Cmd = ['bash'];
+
+      docker.createContainer(optsc, handler);
+    });
+
+    it("should support attach with hijack and stdin enable", function(done) {
+      this.timeout(120000);
+
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+
+        var attach_opts = {
+          stream: true,
+          hijack: true,
+          stdin: true,
+          stdout: true,
+          stderr: true
+        };
+        container.attach(attach_opts, function handler(err, stream) {
+          expect(err).to.be.null;
+          expect(stream).to.be.an.instanceof(Socket);
 
           var memStream = new MemoryStream();
           var output = '';
@@ -489,6 +539,48 @@ describe("#container", function() {
 
             done();
           });
+        });
+      }
+
+      container.exec(options, handler);
+    });
+
+    it("should allow exec stream hijacking on a container", function(done) {
+      this.timeout(10000);
+      var options = {
+        Cmd: ["cat"],
+        AttachStdin: true,
+        AttachStdout: true,
+      };
+      var startOpts = {
+        hijack: true,
+        stdin: true,
+      };
+
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, exec) {
+        expect(err).to.be.null;
+
+        exec.start(startOpts, function(err, stream) {
+          expect(err).to.be.null;
+          //expect(stream).to.be.ok;
+          expect(stream).to.be.an.instanceof(Socket);
+          //return done();
+
+          var SAMPLE = 'echo\nall\nof\nme\n';
+          var bufs = [];
+          stream.on('data', function(d) {
+            bufs.push(d);
+          }).on('end', function() {
+            var out = Buffer.concat(bufs);
+            expect(out.readUInt8(0)).to.equal(1);
+            expect(out.readUInt32BE(4)).to.equal(SAMPLE.length);
+            expect(out.toString('utf8', 8)).to.equal(SAMPLE);
+            done();
+          });
+          stream.end(SAMPLE);
+          //stream.end();
         });
       }
 
