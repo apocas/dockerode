@@ -421,7 +421,7 @@ describe("#docker", function() {
 
   describe("#listImages", function() {
     it("should list images", function(done) {
-      this.timeout(5000);
+      this.timeout(10000);
 
       function handler(err, data) {
         expect(err).to.be.null;
