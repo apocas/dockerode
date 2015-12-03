@@ -510,75 +510,69 @@ describe("#docker", function() {
 
   describe("#labelsAndFilters", function() {
 
-    var test_container;
-    var test_container_name = 'dockerode_test_querystring';
-    var labels = {
-      "dockerode-test": "",
-      "dockerode-test-value": "works"
-    };
+    var created_containers = [];
 
-    // cleanup querystring container after tests
+    // after fn to cleanup created containers after testsuite execution
     after(function(done){
-      if (!test_container) return done();
-      test_container.remove(function(err, data) {
-        return done(err);
+      if (!created_containers.length) return done();
+      created_containers.forEach(function(container, index){
+        container.remove(function(err, data) {
+          created_containers.splice(index);
+          if (!created_containers.length) return done(err);
+        });
       });
     });
 
-
-    it("should create a container from a map of labels", function(done){
-      this.timeout(5000);
-
+    // helper fn to create labeled containers and verify through inspection
+    var createLabledContainer = function(label_map, callback){
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
-        test_container = container;
-        done();
+        created_containers.push(container);
+
+        container.inspect(function(err, info) {
+          expect(err).to.be.null;
+          expect(info.Config.Labels).to.deep.equal(label_map);
+          callback();
+        });
       };
 
       docker.createContainer({
         "Image": testImage,
         "Cmd": ['/bin/bash'],
-        "Labels": labels,
-        "name": test_container_name
+        "Labels": label_map
       }, handler);
+    };
 
+    it("should create a container with an empty value label", function(done){
+      this.timeout(5000);
+      createLabledContainer({"dockerode-test-label": ""}, done);
     });
 
-    it("should have the same labels used to create it", function(done){
-      test_container.inspect(function(err, info) {
-        expect(err).to.be.null;
-        expect(info.Name).to.equal('/' + test_container_name);
-        expect(info.Config.Labels).to.deep.equal(labels);
-        done();
-      });
+    it("should create a container with an assigned value label", function(done){
+      this.timeout(5000);
+      createLabledContainer({"dockerode-test-label": "", "dockerode-test-value-label": "assigned"}, done);
     });
 
-    it("should appear in listings filtering by a string of labels", function(done){
+    it("should query containers filtering by valueless labels", function(done){
       docker.listContainers({
         "limit": 3,
-        "filters": '{"label": ["dockerode-test", "dockerode-test-value=works"]}'
+        "filters": '{"label": ["dockerode-test-label"]}'
       }, function(err, data){
-        expect(data.length).to.equal(1);
+        expect(data.length).to.equal(2);
         done();
       });
-
     });
 
-    /*
-     * the qs library does not serialize into the format expected by docker
-     *   commenting out until a workaround/util function is introduced
-     *
-    it("should appear in listings filtering a array of labels", function(done){
+    it("should query containers filtering by valued labels", function(done){
       docker.listContainers({
         "limit": 3,
-        "filters": {"label": ["dockerode-test"]}
+        "filters": '{"label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]}'
       }, function(err, data){
         expect(data.length).to.equal(1);
         done();
       });
     });
-    */
 
   });
 });
