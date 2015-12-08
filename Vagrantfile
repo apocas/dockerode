@@ -11,12 +11,13 @@ if [ -z "$user" ]; then
     user=vagrant
 fi
 
-wget -q -O - https://get.docker.io/gpg | apt-key add -
-wget -qO- https://get.docker.com/ | sh
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
 
 add-apt-repository ppa:chris-lea/node.js
+
 apt-get update -q
-apt-get install -q -y python-software-properties python g++ make software-properties-common nodejs
+apt-get install -q -y docker-engine python-software-properties python g++ make software-properties-common nodejs
 
 usermod -a -G docker "$user"
 docker pull ubuntu
