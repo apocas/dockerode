@@ -14,6 +14,12 @@ docker.listContainers({all: true}, function(err, containers) {
   console.log('ALL: ' + containers.length);
 });
 
-docker.listContainers({all: false}, function(err, containers) {
-  console.log('!ALL: ' + containers.length);
+// filter by labels
+var opts = {
+  "limit": 3,
+  "filters": '{"label": ["staging","env=green"]}'
+};
+
+docker.listContainers(opts, function(err, containers) {
+  console.log('Containers labeled staging + env=green : ' + containers.length);
 });
