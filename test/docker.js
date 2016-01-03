@@ -507,4 +507,70 @@ describe("#docker", function() {
       docker.info(handler);
     });
   });
+
+  describe("#labelsAndFilters", function() {
+    var created_containers = [];
+
+    // after fn to cleanup created containers after testsuite execution
+    after(function(done){
+      if (!created_containers.length) return done();
+      created_containers.forEach(function(container, index){
+        container.remove(function(err, data) {
+          created_containers.splice(index);
+          if (!created_containers.length) return done(err);
+        });
+      });
+    });
+
+    // helper fn to create labeled containers and verify through inspection
+    var createLabledContainer = function(label_map, callback){
+      function handler(err, container) {
+        expect(err).to.be.null;
+        expect(container).to.be.ok;
+        created_containers.push(container);
+
+        container.inspect(function(err, info) {
+          expect(err).to.be.null;
+          expect(info.Config.Labels).to.deep.equal(label_map);
+          callback();
+        });
+      };
+
+      docker.createContainer({
+        "Image": testImage,
+        "Cmd": ['/bin/bash'],
+        "Labels": label_map
+      }, handler);
+    };
+
+    it("should create a container with an empty value label", function(done){
+      this.timeout(5000);
+      createLabledContainer({"dockerode-test-label": ""}, done);
+    });
+
+    it("should create a container with an assigned value label", function(done){
+      this.timeout(5000);
+      createLabledContainer({"dockerode-test-label": "", "dockerode-test-value-label": "assigned"}, done);
+    });
+
+    it("should query containers filtering by valueless labels", function(done){
+      docker.listContainers({
+        "limit": 3,
+        "filters": '{"label": ["dockerode-test-label"]}'
+      }, function(err, data){
+        expect(data.length).to.equal(2);
+        done();
+      });
+    });
+
+    it("should query containers filtering by valued labels", function(done){
+      docker.listContainers({
+        "limit": 3,
+        "filters": '{"label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]}'
+      }, function(err, data){
+        expect(data.length).to.equal(1);
+        done();
+      });
+    });
+  });
 });
