@@ -76,7 +76,7 @@ describe("#docker", function() {
       }
 
       var data = require('fs').createReadStream('./test/test.tar');
-      docker.buildImage(data, {}, handler);
+      docker.buildImage(data, handler);
     });
   });
 
