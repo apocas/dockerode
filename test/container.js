@@ -37,6 +37,18 @@ describe("#container", function() {
 
       container.inspect(handler);
     });
+
+    it("should inspect a container with opts", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.inspect({}, handler);
+    });
   });
 
   describe("#archive", function() {
