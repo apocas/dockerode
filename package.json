@@ -15,7 +15,7 @@
     "docker.io"
   ],
   "dependencies": {
-    "docker-modem": "0.2.x"
+    "docker-modem": "0.3.x"
   },
   "devDependencies": {
     "chai": "~1.7.0",

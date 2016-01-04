@@ -351,8 +351,6 @@ describe("#docker", function() {
     });
   });
 
-
-
   describe("#createContainer", function() {
     it("should create and remove a container", function(done) {
       this.timeout(5000);
@@ -463,7 +461,6 @@ describe("#docker", function() {
     });
   });
 
-
   describe("#version", function() {
     it("should return version", function(done) {
       this.timeout(5000);
@@ -512,18 +509,17 @@ describe("#docker", function() {
     var created_containers = [];
 
     // after fn to cleanup created containers after testsuite execution
-    after(function(done){
+    after(function(done) {
       if (!created_containers.length) return done();
-      created_containers.forEach(function(container, index){
+      created_containers.forEach(function(container, index) {
         container.remove(function(err, data) {
-          created_containers.splice(index);
-          if (!created_containers.length) return done(err);
+          if (index === created_containers.length - 1) return done(err);
         });
       });
     });
 
     // helper fn to create labeled containers and verify through inspection
-    var createLabledContainer = function(label_map, callback){
+    var createLabledContainer = function(label_map, callback) {
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
@@ -534,7 +530,7 @@ describe("#docker", function() {
           expect(info.Config.Labels).to.deep.equal(label_map);
           callback();
         });
-      };
+      }
 
       docker.createContainer({
         "Image": testImage,
@@ -543,31 +539,36 @@ describe("#docker", function() {
       }, handler);
     };
 
-    it("should create a container with an empty value label", function(done){
+    it("should create a container with an empty value label", function(done) {
       this.timeout(5000);
-      createLabledContainer({"dockerode-test-label": ""}, done);
+      createLabledContainer({
+        "dockerode-test-label": ""
+      }, done);
     });
 
-    it("should create a container with an assigned value label", function(done){
+    it("should create a container with an assigned value label", function(done) {
       this.timeout(5000);
-      createLabledContainer({"dockerode-test-label": "", "dockerode-test-value-label": "assigned"}, done);
+      createLabledContainer({
+        "dockerode-test-label": "",
+        "dockerode-test-value-label": "assigned"
+      }, done);
     });
 
-    it("should query containers filtering by valueless labels", function(done){
+    it("should query containers filtering by valueless labels", function(done) {
       docker.listContainers({
         "limit": 3,
         "filters": '{"label": ["dockerode-test-label"]}'
-      }, function(err, data){
+      }, function(err, data) {
         expect(data.length).to.equal(2);
         done();
       });
     });
 
-    it("should query containers filtering by valued labels", function(done){
+    it("should query containers filtering by valued labels", function(done) {
       docker.listContainers({
         "limit": 3,
         "filters": '{"label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]}'
-      }, function(err, data){
+      }, function(err, data) {
         expect(data.length).to.equal(1);
         done();
       });

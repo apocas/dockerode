@@ -7,6 +7,8 @@ var MemoryStream = require('memorystream');
 describe("#networks", function() {
 
   var testContainer;
+  var testNetwork;
+
   before(function(done) {
     docker.createContainer({
       Image: 'ubuntu',
@@ -22,10 +24,26 @@ describe("#networks", function() {
       testContainer = container.id;
       container.start(function(err, result) {
         if (err) done(err);
-        done();
+
+        docker.createNetwork({
+          "Name": "isolated_nw",
+          "Driver": "bridge",
+          "IPAM": {
+            "Config": [{
+              "Subnet": "172.20.0.0/16",
+              "IPRange": "172.20.10.0/24",
+              "Gateway": "172.20.10.11"
+            }]
+          }
+        }, function(err, network) {
+          if (err) done(err);
+          testNetwork = network;
+          done();
+        });
       });
     });
   });
+
   after(function(done) {
     this.timeout(15000);
     var container = docker.getContainer(testContainer);
@@ -33,33 +51,12 @@ describe("#networks", function() {
       if (err) done(err);
       container.remove(function(err, result) {
         if (err) done(err);
-        done();
-      });
-    });
-  });
 
-  var testNetwork;
-  before(function(done) {
-    docker.createNetwork({
-      "Name": "isolated_nw",
-      "Driver": "bridge",
-      "IPAM": {
-        "Config": [{
-          "Subnet": "172.20.0.0/16",
-          "IPRange": "172.20.10.0/24",
-          "Gateway": "172.20.10.11"
-      }]
-      }
-    }, function(err, network) {
-      if (err) done(err);
-      testNetwork = network;
-      done();
-    });
-  });
-  after(function(done) {
-    testNetwork.remove(function(err, result) {
-      if (err) done(err);
-      done();
+        testNetwork.remove(function(err, result) {
+          if (err) done(err);
+          done();
+        });
+      });
     });
   });
 
