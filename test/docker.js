@@ -573,5 +573,18 @@ describe("#docker", function() {
         done();
       });
     });
+
+    it("should query containers filtering by map of valued labels", function(done){
+      docker.listContainers({
+        "limit": 3,
+        "filters": {
+          "label": ["dockerode-test-label","dockerode-test-value-label=assigned"]
+        }
+      }, function(err, data){
+        expect(data.length).to.equal(1);
+        done();
+      });
+    });
+
   });
 });
