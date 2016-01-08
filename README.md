@@ -188,59 +188,113 @@ The following list of attributes for create_options and start_options are taken 
 As much as possible, the equivalent CLI flag has been added at the end of the attribute's description:
 
 <a href="#hostname" name="hostname">#</a> <b>Hostname</b> - A string value containing the hostname to use for the container.
-<a href="Domainname" name="Domainname">#</a> <b>Domainname</b> - A string value containing the domain name to use for the container.
-<a href="User" name="User">#</a> <b>User</b> - A string value specifying the user inside the container.
-<a href="Memory" name="Memory">#</a> <b>Memory</b> - Memory limit in bytes.
-<a href="Name" name="Name">#</a> <b>Name</b> - name of the container
-<a href="MemorySwap" name="MemorySwap">#</a> <b>MemorySwap</b> - Total memory limit (memory + swap); set -1 to disable swap You must use this with memory and make the swap value larger than memory.
-<a href="CpuShares" name="CpuShares">#</a> <b>CpuShares</b> - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
-<a href="CpuPeriod" name="CpuPeriod">#</a> <b>CpuPeriod</b> - The length of a CPU period in microseconds.
-<a href="CpuQuota" name="CpuQuota">#</a> <b>CpuQuota</b> - Microseconds of CPU time that the container can get in a CPU period.
-<a href="Cpuset" name="Cpuset">#</a> <b>Cpuset</b> - Deprecated please don’t use. Use CpusetCpus instead.
-<a href="CpusetCpus" name="CpusetCpus">#</a> <b>CpusetCpus</b> - String value containing the cgroups CpusetCpus to use.
-<a href="CpusetMems" name="CpusetMems">#</a> <b>CpusetMems</b> - Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
-<a href="BlkioWeight" name="BlkioWeight">#</a> <b>BlkioWeight</b> - Block IO weight (relative weight) accepts a weight value between 10 and 1000.
-<a href="OomKillDisable" name="OomKillDisable">#</a> <b>OomKillDisable</b> - Boolean value, whether to disable OOM Killer for the container or not.
-<a href="MacAddress" name="MacAddress">#</a> <b>MacAddress</b> - the container’s MAC address in the form: 12:34:56:78:9a:bc,--mac-address
-<a href="AttachStdin" name="AttachStdin">#</a> <b>AttachStdin</b> - Boolean value, attaches to stdin.
-<a href="AttachStdout" name="AttachStdout">#</a> <b>AttachStdout</b> - Boolean value, attaches to stdout.
-<a href="AttachStderr" name="AttachStderr">#</a> <b>AttachStderr</b> - Boolean value, attaches to stderr.
-<a href="Tty" name="Tty">#</a> <b>Tty</b> - Boolean value, Attach standard streams to a tty, including stdin if it is not closed.
-<a href="OpenStdin" name="OpenStdin">#</a> <b>OpenStdin</b> - Boolean value, opens stdin,
-<a href="StdinOnce" name="StdinOnce">#</a> <b>StdinOnce</b> - Boolean value, close stdin after the 1 attached client disconnects.
-<a href="Env" name="Env">#</a> <b>Env</b> - A list of environment variables in the form of ["VAR=value"[,"VAR2=value2"]], -e
-<a href="Labels" name="Labels">#</a> <b>Labels</b> - Adds a map of labels to a container. To specify a map: {"key":"value"[,"key2":"value2"]}
-<a href="Cmd" name="Cmd">#</a> <b>Cmd</b> - Command to run specified as a string or an array of strings, e.g. ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
-<a href="Entrypoint" name="Entrypoint">#</a> <b>Entrypoint</b> - Set the entry point for the container as a string or an array of strings.
-<a href="Image" name="Image">#</a> <b>Image</b> - A string specifying the image name to use for the container.
-<a href="Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }." name="Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }.">#</a> <b>Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }.</b> -v
-<a href="WorkingDir" name="WorkingDir">#</a> <b>WorkingDir</b> - A string specifying the working directory for commands to run in.
-<a href="NetworkDisabled" name="NetworkDisabled">#</a> <b>NetworkDisabled</b> - Boolean value, when true disables networking for the container
-<a href="ExposedPorts" name="ExposedPorts">#</a> <b>ExposedPorts</b> - An object mapping ports to an empty object in the form of: "ExposedPorts": { "<port>/<tcp|udp>: {}" }, -p
-<a href="HostConfig" name="HostConfig">#</a> <b>HostConfig</b> - a branch that describes the host configuration attributes
-<a href="Binds" name="Binds">#</a> <b>Binds</b> - A list of volume bindings for this container. Each volume binding is a string in one of these forms:
+
+<a href="#domainname" name="domainname">#</a> <b>Domainname</b> - A string value containing the domain name to use for the container.
+
+<a href="#user" name="user">#</a> <b>User</b> - A string value specifying the user inside the container.
+
+<a href="#Memory" name="Memory">#</a> <b>Memory</b> - Memory limit in bytes.
+
+<a href="#Name" name="Name">#</a> <b>Name</b> - name of the container
+
+<a href="#MemorySwap" name="MemorySwap">#</a> <b>MemorySwap</b> - Total memory limit (memory + swap); set -1 to disable swap You must use this with memory and make the swap value larger than memory.
+
+<a href="#CpuShares" name="CpuShares">#</a> <b>CpuShares</b> - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
+
+<a href="#CpuPeriod" name="CpuPeriod">#</a> <b>CpuPeriod</b> - The length of a CPU period in microseconds.
+
+<a href="#CpuQuota" name="CpuQuota">#</a> <b>CpuQuota</b> - Microseconds of CPU time that the container can get in a CPU period.
+
+<a href="#Cpuset" name="Cpuset">#</a> <b>Cpuset</b> - Deprecated please don’t use. Use CpusetCpus instead.
+
+<a href="#CpusetCpus" name="CpusetCpus">#</a> <b>CpusetCpus</b> - String value containing the cgroups CpusetCpus to use.
+
+<a href="#CpusetMems" name="CpusetMems">#</a> <b>CpusetMems</b> - Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+
+<a href="#BlkioWeight" name="BlkioWeight">#</a> <b>BlkioWeight</b> - Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+
+<a href="#OomKillDisable" name="OomKillDisable">#</a> <b>OomKillDisable</b> - Boolean value, whether to disable OOM Killer for the container or not.
+
+<a href="#MacAddress" name="MacAddress">#</a> <b>MacAddress</b> - the container’s MAC address in the form: 12:34:56:78:9a:bc,--mac-address
+
+<a href="#AttachStdin" name="AttachStdin">#</a> <b>AttachStdin</b> - Boolean value, attaches to stdin.
+
+<a href="#AttachStdout" name="AttachStdout">#</a> <b>AttachStdout</b> - Boolean value, attaches to stdout.
+
+<a href="#AttachStderr" name="AttachStderr">#</a> <b>AttachStderr</b> - Boolean value, attaches to stderr.
+
+<a href="#Tty" name="Tty">#</a> <b>Tty</b> - Boolean value, Attach standard streams to a tty, including stdin if it is not closed.
+
+<a href="#OpenStdin" name="OpenStdin">#</a> <b>OpenStdin</b> - Boolean value, opens stdin,
+
+<a href="#StdinOnce" name="StdinOnce">#</a> <b>StdinOnce</b> - Boolean value, close stdin after the 1 attached client disconnects.
+
+<a href="#Env" name="Env">#</a> <b>Env</b> - A list of environment variables in the form of ["VAR=value"[,"VAR2=value2"]], -e
+
+<a href="#Labels" name="Labels">#</a> <b>Labels</b> - Adds a map of labels to a container. To specify a map: {"key":"value"[,"key2":"value2"]}
+
+<a href="#Cmd" name="Cmd">#</a> <b>Cmd</b> - Command to run specified as a string or an array of strings, e.g. ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
+
+<a href="#Entrypoint" name="Entrypoint">#</a> <b>Entrypoint</b> - Set the entry point for the container as a string or an array of strings.
+
+<a href="#Image" name="Image">#</a> <b>Image</b> - A string specifying the image name to use for the container.
+
+<a href="#Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }." name="Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }.">#</a> <b>Volumes – An object mapping mount point paths (strings) inside the container to empty objects, e.g. { '/stuff': {}   }.</b> -v
+
+<a href="#WorkingDir" name="WorkingDir">#</a> <b>WorkingDir</b> - A string specifying the working directory for commands to run in.
+
+<a href="#NetworkDisabled" name="NetworkDisabled">#</a> <b>NetworkDisabled</b> - Boolean value, when true disables networking for the container
+
+<a href="#ExposedPorts" name="ExposedPorts">#</a> <b>ExposedPorts</b> - An object mapping ports to an empty object in the form of: "ExposedPorts": { "<port>/<tcp|udp>: {}" }, -p
+
+<a href="#HostConfig" name="HostConfig">#</a> <b>HostConfig</b> - a branch that describes the host configuration attributes
+
+<a href="#Binds" name="Binds">#</a> <b>Binds</b> - A list of volume bindings for this container. Each volume binding is a string in one of these forms:
+
       * container_path to create a new volume for the container
+
       * host_path:container_path to bind-mount a host path into the container
+
       * host_path:container_path:ro to make the bind-mount read-only inside the container. -v
-<a href="Links" name="Links">#</a> <b>Links</b> - A list of links for the container. Each link entry should be in the form of container_name:alias, --link
-<a href="LxcConf" name="LxcConf">#</a> <b>LxcConf</b> - LXC specific configurations. These configurations only work when using the lxc execution driver.
-<a href="PortBindings" name="PortBindings">#</a> <b>PortBindings</b> - A map of exposed container ports and the host port they should map to. A JSON object in the form { <port>/<protocol>: [{ "HostPort": "<port>" }] } Take note that port is specified as a string and not an integer value.
-<a href="PublishAllPorts" name="PublishAllPorts">#</a> <b>PublishAllPorts</b> - Allocates a random host port for all of a container’s exposed ports. Specified as a boolean value.
-<a href="Privileged" name="Privileged">#</a> <b>Privileged</b> - Gives the container full access to the host. Specified as a boolean value.
-<a href="ReadonlyRootfs" name="ReadonlyRootfs">#</a> <b>ReadonlyRootfs</b> - Mount the container’s root filesystem as read only. Specified as a boolean value.
-<a href="Dns" name="Dns">#</a> <b>Dns</b> - A list of DNS servers for the container to use, array of strings. --dns
-<a href="DnsSearch" name="DnsSearch">#</a> <b>DnsSearch</b> - A list of DNS search domains
-<a href="ExtraHosts" name="ExtraHosts">#</a> <b>ExtraHosts</b> - A list of hostnames/IP mappings to add to the container’s /etc/hosts file. Specified in the form ["hostname:IP"].
-<a href="VolumesFrom" name="VolumesFrom">#</a> <b>VolumesFrom</b> - A list of volumes to inherit from another container. Specified in the form <container name>[:<ro|rw>], --volumes-from
-<a href="CapAdd" name="CapAdd">#</a> <b>CapAdd</b> - A list of kernel capabilities to add to the container.
-<a href="Capdrop" name="Capdrop">#</a> <b>Capdrop</b> - A list of kernel capabilities to drop from the container.
-<a href="RestartPolicy" name="RestartPolicy">#</a> <b>RestartPolicy</b> - The behavior to apply when the container exits. The value is an object with a Name property of either "always" to always restart or "on-failure" to restart only when the container exit code is non-zero. If on-failure is used, MaximumRetryCount controls the number of times to retry before giving up. The default is not to restart. (optional) An ever increasing delay (double the previous delay, starting at 100mS) is added before each restart to prevent flooding the server.
-<a href="NetworkMode" name="NetworkMode">#</a> <b>NetworkMode</b> - Sets the networking mode for the container. Supported values are: bridge, host, and container:<name|id>, --net
-<a href="Devices" name="Devices">#</a> <b>Devices</b> - A list of devices to add to the container specified as a JSON object in the form { "PathOnHost": "/dev/deviceName", "PathInContainer": "/dev/deviceName", "CgroupPermissions": "mrw"}
-<a href="Ulimits" name="Ulimits">#</a> <b>Ulimits</b> - A list of ulimits to set in the container, specified as { "Name": <name>, "Soft": <soft limit>, "Hard": <hard limit> }, for example: Ulimits: { "Name": "nofile", "Soft": 1024, "Hard": 2048 }
-<a href="SecurityOpt" name="SecurityOpt">#</a> <b>SecurityOpt</b> - A list of string values to customize labels for MLS systems, such as SELinux.
-<a href="LogConfig" name="LogConfig">#</a> <b>LogConfig</b> - Log configuration for the container, specified as a JSON object in the form { "Type": "<driver_name>", "Config": {"key1": "val1"}}. Available types: json-file, syslog, journald, none. syslog available options are: address.
-<a href="CgroupParent" name="CgroupParent">#</a> <b>CgroupParent</b> - Path to cgroups under which the cgroup for the container will be created. If the path is not absolute, the path is considered to be relative to the cgroups path of the init process. Cgroups will be created if they do not already exist.
+
+<a href="#Links" name="Links">#</a> <b>Links</b> - A list of links for the container. Each link entry should be in the form of container_name:alias, --link
+
+<a href="#LxcConf" name="LxcConf">#</a> <b>LxcConf</b> - LXC specific configurations. These configurations only work when using the lxc execution driver.
+
+<a href="#PortBindings" name="PortBindings">#</a> <b>PortBindings</b> - A map of exposed container ports and the host port they should map to. A JSON object in the form { <port>/<protocol>: [{ "HostPort": "<port>" }] } Take note that port is specified as a string and not an integer value.
+
+<a href="#PublishAllPorts" name="PublishAllPorts">#</a> <b>PublishAllPorts</b> - Allocates a random host port for all of a container’s exposed ports. Specified as a boolean value.
+
+<a href="#Privileged" name="Privileged">#</a> <b>Privileged</b> - Gives the container full access to the host. Specified as a boolean value.
+
+<a href="#ReadonlyRootfs" name="ReadonlyRootfs">#</a> <b>ReadonlyRootfs</b> - Mount the container’s root filesystem as read only. Specified as a boolean value.
+
+<a href="#Dns" name="Dns">#</a> <b>Dns</b> - A list of DNS servers for the container to use, array of strings. --dns
+
+<a href="#DnsSearch" name="DnsSearch">#</a> <b>DnsSearch</b> - A list of DNS search domains
+
+<a href="#ExtraHosts" name="ExtraHosts">#</a> <b>ExtraHosts</b> - A list of hostnames/IP mappings to add to the container’s /etc/hosts file. Specified in the form ["hostname:IP"].
+
+<a href="#VolumesFrom" name="VolumesFrom">#</a> <b>VolumesFrom</b> - A list of volumes to inherit from another container. Specified in the form <container name>[:<ro|rw>], --volumes-from
+
+<a href="#CapAdd" name="CapAdd">#</a> <b>CapAdd</b> - A list of kernel capabilities to add to the container.
+
+<a href="#Capdrop" name="Capdrop">#</a> <b>Capdrop</b> - A list of kernel capabilities to drop from the container.
+
+<a href="#RestartPolicy" name="RestartPolicy">#</a> <b>RestartPolicy</b> - The behavior to apply when the container exits. The value is an object with a Name property of either "always" to always restart or "on-failure" to restart only when the container exit code is non-zero. If on-failure is used, MaximumRetryCount controls the number of times to retry before giving up. The default is not to restart. (optional) An ever increasing delay (double the previous delay, starting at 100mS) is added before each restart to prevent flooding the server.
+
+<a href="#NetworkMode" name="NetworkMode">#</a> <b>NetworkMode</b> - Sets the networking mode for the container. Supported values are: bridge, host, and container:<name|id>, --net
+
+<a href="#Devices" name="Devices">#</a> <b>Devices</b> - A list of devices to add to the container specified as a JSON object in the form { "PathOnHost": "/dev/deviceName", "PathInContainer": "/dev/deviceName", "CgroupPermissions": "mrw"}
+
+<a href="#Ulimits" name="Ulimits">#</a> <b>Ulimits</b> - A list of ulimits to set in the container, specified as { "Name": <name>, "Soft": <soft limit>, "Hard": <hard limit> }, for example: Ulimits: { "Name": "nofile", "Soft": 1024, "Hard": 2048 }
+
+<a href="#SecurityOpt" name="SecurityOpt">#</a> <b>SecurityOpt</b> - A list of string values to customize labels for MLS systems, such as SELinux.
+
+<a href="#LogConfig" name="LogConfig">#</a> <b>LogConfig</b> - Log configuration for the container, specified as a JSON object in the form { "Type": "<driver_name>", "Config": {"key1": "val1"}}. Available types: json-file, syslog, journald, none. syslog available options are: address.
+
+<a href="#CgroupParent" name="CgroupParent">#</a> <b>CgroupParent</b> - Path to cgroups under which the cgroup for the container will be created. If the path is not absolute, the path is considered to be relative to the cgroups path of the init process. Cgroups will be created if they do not already exist.
+
 
 
 or, if you want to split stdout and stderr (you must to pass `Tty:false` as an option for this to work)
