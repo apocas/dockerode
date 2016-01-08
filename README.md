@@ -249,13 +249,13 @@ As much as possible, the equivalent CLI flag has been added at the end of the at
 
 * <a href="#HostConfig" name="HostConfig">#</a> <b>HostConfig</b> - a branch that describes the host configuration attributes
 
-* <a href="#Binds" name="Binds">#</a> <b>Binds</b> - A list of volume bindings for this container. Each volume binding is a string in one of these forms:
+  * <a href="#Binds" name="Binds">#</a> <b>Binds</b> - A list of volume bindings for this container. Each volume binding is a string in one of these forms:
 
-      * container_path to create a new volume for the container
+    * container_path to create a new volume for the container
 
-      * host_path:container_path to bind-mount a host path into the container
+    * host_path:container_path to bind-mount a host path into the container
 
-      * host_path:container_path:ro to make the bind-mount read-only inside the container. -v
+    * host_path:container_path:ro to make the bind-mount read-only inside the container. -v
 
   * <a href="#Links" name="Links">#</a> <b>Links</b> - A list of links for the container. Each link entry should be in the form of container_name:alias, --link
 
