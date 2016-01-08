@@ -187,9 +187,9 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, 
 The following list of attributes for create_options and start_options are taken from: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.19/ (Create a container).
 As much as possible, the equivalent CLI flag has been added at the end of the attribute's description:
 
-  <a href="#hostname" name="hostname">#</a> <b>Hostname</b> - A string value containing the hostname to use for the container.
+* <a href="#hostname" name="hostname">#</a> <b>Hostname</b> - A string value containing the hostname to use for the container.
 
-<a href="#domainname" name="domainname">#</a> <b>Domainname</b> - A string value containing the domain name to use for the container.
+  * <a href="#domainname" name="domainname">#</a> <b>Domainname</b> - A string value containing the domain name to use for the container.
 
 <a href="#user" name="user">#</a> <b>User</b> - A string value specifying the user inside the container.
 
