@@ -80,6 +80,30 @@ describe("#docker", function() {
     });
   });
 
+
+  describe("#loadImage", function() {
+    it("should load image from readable stream", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      // test-save.tar => 'docker save hello-world > ./test/test-save.tar
+      var data = require('fs').createReadStream('./test/test-load.tar');
+      docker.loadImage(data, {}, handler);
+    });
+  });
+
   describe("#getEvents", function() {
     it("should get events", function(done) {
       this.timeout(30000);
