@@ -215,12 +215,12 @@ describe("#docker", function() {
         function onFinished(err, output) {
           if (err) return done(err);
           expect(output).to.be.a('array');
+          done();
         }
 
         function onProgress(event) {
           stream.destroy();
           expect(event).to.be.ok;
-          done();
         }
       });
     });
@@ -401,6 +401,27 @@ describe("#docker", function() {
     });
   });
 
+  describe("#importImage", function() {
+    it("should import an image from a tar archive", function(done) {
+      this.timeout(120000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+      var data = require('fs').createReadStream('./test/empty.tar');
+      docker.importImage(data, handler);
+    });
+  });
+
   describe("#listContainers", function() {
     it("should list containers", function(done) {
       this.timeout(5000);
@@ -510,6 +531,7 @@ describe("#docker", function() {
 
     // after fn to cleanup created containers after testsuite execution
     after(function(done) {
+      this.timeout(10000)
       if (!created_containers.length) return done();
       created_containers.forEach(function(container, index) {
         container.remove(function(err, data) {
