@@ -129,6 +129,21 @@ describe("#container", function() {
     });
   });
 
+  describe("#update", function() {
+    it("should update a container", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handle(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      container.update({
+        'CpuShares': 512
+      }, handle);
+    });
+  });
+
   describe("#stats", function() {
     it("should get container stats", function(done) {
       var container = docker.getContainer(testContainer);
@@ -288,7 +303,6 @@ describe("#container", function() {
       'Volumes': {},
       'VolumesFrom': []
     };
-
 
     it("should attach and wait for a container", function(done) {
       this.timeout(120000);
