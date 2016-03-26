@@ -271,6 +271,12 @@ describe("#docker", function() {
       ee.on('stream', function(stream) {
         expect(stream).to.be.ok;
       });
+      ee.on('start', function(container) {
+        expect(container).to.be.ok;
+        container.inspect(function(err, info) {
+          expect(info.State.Status).to.equal('running')
+        })
+      })
       ee.on('data', function(data) {
         expect(data).to.be.ok;
         done();
