@@ -101,6 +101,13 @@ docker.listContainers(function (err, containers) {
 docker.buildImage('archive.tar', {t: imageName}, function (err, response){
   //...
 });
+
+docker.buildImage({
+  context: __dirname,
+  src: ['Dockerfile', 'file1', 'file2']
+}, {t: imageName}, function (err, response) {
+  //...
+});
 ```
 
 ### Creating a container:
