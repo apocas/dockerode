@@ -15,6 +15,7 @@
     "docker.io"
   ],
   "dependencies": {
+    "bluebird": "^3.3.5",
     "docker-modem": "0.3.x"
   },
   "devDependencies": {
