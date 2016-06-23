@@ -274,9 +274,9 @@ describe("#docker", function() {
       ee.on('start', function(container) {
         expect(container).to.be.ok;
         container.inspect(function(err, info) {
-          expect(info.State.Status).to.equal('running')
-        })
-      })
+          expect(info.State.Status).to.equal('running');
+        });
+      });
       ee.on('data', function(data) {
         expect(data).to.be.ok;
         done();
@@ -561,7 +561,7 @@ describe("#docker", function() {
 
     // after fn to cleanup created containers after testsuite execution
     after(function(done) {
-      this.timeout(10000)
+      this.timeout(10000);
       if (!created_containers.length) return done();
       created_containers.forEach(function(container, index) {
         container.remove(function(err, data) {
