@@ -20,6 +20,7 @@ var testNetwork = {
     }]
   }
 };
+
 describe("#docker", function() {
 
   describe("#checkAuth", function() {
@@ -296,25 +297,6 @@ describe("#docker", function() {
       }
 
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
-    });
-
-    it("should run a command with start options", function(done) {
-      function handler(err, data, container) {
-        expect(err).to.be.null;
-
-        container.inspect(function(err, data) {
-          expect(err).to.be.null;
-          expect(data.HostConfig.Privileged).to.be.true;
-
-          container.remove(function(err, data) {
-            expect(err).to.be.null;
-            done();
-          });
-        });
-      }
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, {
-        Privileged: true
-      }, handler);
     });
 
     it("should run a command with create options", function(done) {
@@ -626,13 +608,13 @@ describe("#docker", function() {
       });
     });
 
-    it("should query containers filtering by map of valued labels", function(done){
+    it("should query containers filtering by map of valued labels", function(done) {
       docker.listContainers({
         "limit": 3,
         "filters": {
-          "label": ["dockerode-test-label","dockerode-test-value-label=assigned"]
+          "label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]
         }
-      }, function(err, data){
+      }, function(err, data) {
         expect(data.length).to.equal(1);
         done();
       });

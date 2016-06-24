@@ -666,22 +666,6 @@ describe("#non-responsive container", function() {
     });
   });
 
-  describe("#stop", function() {
-    it("forced after timeout", function(done) {
-      this.timeout(30000);
-      var container = docker.getContainer(testContainer);
-
-      function handler(err, data) {
-        expect(err).not.to.be.null;
-        done();
-      }
-
-      container.stop({
-        t: 1000
-      }, handler);
-    });
-  });
-
   describe("#restart", function() {
     it("forced after timeout", function(done) {
       this.timeout(30000);
@@ -693,6 +677,22 @@ describe("#non-responsive container", function() {
       }
 
       container.restart({
+        t: 1000
+      }, handler);
+    });
+  });
+
+  describe("#stop", function() {
+    it("forced after timeout", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).not.to.be.null;
+        done();
+      }
+
+      container.stop({
         t: 1000
       }, handler);
     });
