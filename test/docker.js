@@ -20,6 +20,7 @@ var testNetwork = {
     }]
   }
 };
+
 describe("#docker", function() {
 
   describe("#checkAuth", function() {
@@ -274,9 +275,9 @@ describe("#docker", function() {
       ee.on('start', function(container) {
         expect(container).to.be.ok;
         container.inspect(function(err, info) {
-          expect(info.State.Status).to.equal('running')
-        })
-      })
+          expect(info.State.Status).to.equal('running');
+        });
+      });
       ee.on('data', function(data) {
         expect(data).to.be.ok;
         done();
@@ -296,25 +297,6 @@ describe("#docker", function() {
       }
 
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
-    });
-
-    it("should run a command with start options", function(done) {
-      function handler(err, data, container) {
-        expect(err).to.be.null;
-
-        container.inspect(function(err, data) {
-          expect(err).to.be.null;
-          expect(data.HostConfig.Privileged).to.be.true;
-
-          container.remove(function(err, data) {
-            expect(err).to.be.null;
-            done();
-          });
-        });
-      }
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, {
-        Privileged: true
-      }, handler);
     });
 
     it("should run a command with create options", function(done) {
@@ -561,7 +543,7 @@ describe("#docker", function() {
 
     // after fn to cleanup created containers after testsuite execution
     after(function(done) {
-      this.timeout(10000)
+      this.timeout(10000);
       if (!created_containers.length) return done();
       created_containers.forEach(function(container, index) {
         container.remove(function(err, data) {
@@ -626,13 +608,13 @@ describe("#docker", function() {
       });
     });
 
-    it("should query containers filtering by map of valued labels", function(done){
+    it("should query containers filtering by map of valued labels", function(done) {
       docker.listContainers({
         "limit": 3,
         "filters": {
-          "label": ["dockerode-test-label","dockerode-test-value-label=assigned"]
+          "label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]
         }
-      }, function(err, data){
+      }, function(err, data) {
         expect(data.length).to.equal(1);
         done();
       });

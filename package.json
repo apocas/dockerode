@@ -30,168 +30,140 @@
   "engines": {
     "node": ">= 0.8"
   },
-  "contributors": [
-    {
-      "name": "Pedro Dias",
-      "email": "petermdias@gmail.com",
-      "url": "https://github.com/apocas",
-      "contributions": 150
-    },
-    {
-      "name": "James Lal",
-      "email": "jlal@mozilla.com",
-      "url": "https://github.com/lightsofapollo",
-      "contributions": 12
-    },
-    {
-      "name": "Ron Waldon",
-      "email": "jokeyrhyme@gmail.com",
-      "url": "https://github.com/jokeyrhyme",
-      "contributions": 7
-    },
-    {
-      "name": "Everton Ribeiro",
-      "email": "nuxlli@gmail.com",
-      "url": "https://github.com/nuxlli",
-      "contributions": 4
-    },
-    {
-      "name": "Sam Rijs",
-      "email": "srijs@airpost.net",
-      "url": "https://github.com/srijs",
-      "contributions": 4
-    },
-    {
-      "name": "Shannon Poole",
-      "email": "shannon.m.poole@gmail.com",
-      "url": "https://github.com/shannonmpoole",
-      "contributions": 3
-    },
-    {
-      "name": "Max Claus Nunes",
-      "email": "maxcnunes@gmail.com",
-      "url": "https://github.com/maxcnunes",
-      "contributions": 2
-    },
-    {
-      "name": "Mike MacCana",
-      "email": "mike.maccana@gmail.com",
-      "url": "https://github.com/mikemaccana",
-      "contributions": 2
-    },
-    {
-      "name": "Niclas Hoyer",
-      "email": "",
-      "url": "https://github.com/niclashoyer",
-      "contributions": 2
-    },
-    {
-      "name": "Nicholas Morsman",
-      "email": "nicholas@publishlab.com",
-      "url": "https://github.com/nmorsman",
-      "contributions": 2
-    },
-    {
-      "name": "Philip Reichenberger",
-      "email": null,
-      "url": "https://github.com/preichenberger",
-      "contributions": 1
-    },
-    {
-      "name": "Anton Serdyuk",
-      "email": "anton.serdyuk@gmail.com",
-      "url": "https://github.com/m00t",
-      "contributions": 1
-    },
-    {
-      "name": "Dan Williams",
-      "email": "me+github@deedubs.com",
-      "url": "https://github.com/deedubs",
-      "contributions": 1
-    },
-    {
-      "name": "Alex Wolfe",
-      "email": "alexkwolfe@gmail.com",
-      "url": "https://github.com/alexkwolfe",
-      "contributions": 1
-    },
-    {
-      "name": "Henry Allen-Tilford",
-      "email": "htilford@gmail.com",
-      "url": "https://github.com/generalhenry",
-      "contributions": 1
-    },
-    {
-      "name": "Geoffrey Bachelet",
-      "email": "geoffrey.bachelet@gmail.com",
-      "url": "https://github.com/ubermuda",
-      "contributions": 1
-    },
-    {
-      "name": "Jacob Friis Saxberg",
-      "email": "jacob@saxberg.dk",
-      "url": "https://github.com/webjay",
-      "contributions": 1
-    },
-    {
-      "name": "Jeffrey Morgan",
-      "email": "jmorganca@gmail.com",
-      "url": "https://github.com/jeffdm",
-      "contributions": 1
-    },
-    {
-      "name": "Kishore Nallan",
-      "email": "kishore@kishorelive.com",
-      "url": "https://github.com/kishorenc",
-      "contributions": 1
-    },
-    {
-      "name": "Mathias Buus",
-      "email": "mathiasbuus@gmail.com",
-      "url": "https://github.com/mafintosh",
-      "contributions": 1
-    },
-    {
-      "name": "Matthew Gallagher",
-      "email": "mattva01@gmail.com",
-      "url": "https://github.com/mattva01",
-      "contributions": 1
-    },
-    {
-      "name": "Wojciech Kocjan",
-      "email": null,
-      "url": "https://github.com/wojciechka",
-      "contributions": 1
-    },
-    {
-      "name": "Mike Macaulay",
-      "email": "mmacaula@gmail.com",
-      "url": "https://github.com/mmacaula",
-      "contributions": 1
-    },
-    {
-      "name": "Josh Matthews",
-      "email": "josh@jmatthews.us",
-      "url": "https://github.com/jmatth",
-      "contributions": 1
-    },
-    {
-      "name": "Vincent Woo",
-      "email": "vincent@coderpad.io",
-      "url": "https://github.com/vincentwoo",
-      "contributions": 1
-    },
-    {
-      "name": "Lewis J Ellis",
-      "email": "me@lewisjellis.com",
-      "url": "https://github.com/LewisJEllis",
-      "contributions": 1
-    },
-    {
-      "name": "Adam Duncan",
-      "email": "",
-      "url": "https://github.com/microadam",
-      "contributions": 1
-    }
-  ]
+  "contributors": [{
+    "name": "Pedro Dias",
+    "email": "petermdias@gmail.com",
+    "url": "https://github.com/apocas",
+    "contributions": 150
+  }, {
+    "name": "James Lal",
+    "email": "jlal@mozilla.com",
+    "url": "https://github.com/lightsofapollo",
+    "contributions": 12
+  }, {
+    "name": "Ron Waldon",
+    "email": "jokeyrhyme@gmail.com",
+    "url": "https://github.com/jokeyrhyme",
+    "contributions": 7
+  }, {
+    "name": "Everton Ribeiro",
+    "email": "nuxlli@gmail.com",
+    "url": "https://github.com/nuxlli",
+    "contributions": 4
+  }, {
+    "name": "Sam Rijs",
+    "email": "srijs@airpost.net",
+    "url": "https://github.com/srijs",
+    "contributions": 4
+  }, {
+    "name": "Shannon Poole",
+    "email": "shannon.m.poole@gmail.com",
+    "url": "https://github.com/shannonmpoole",
+    "contributions": 3
+  }, {
+    "name": "Max Claus Nunes",
+    "email": "maxcnunes@gmail.com",
+    "url": "https://github.com/maxcnunes",
+    "contributions": 2
+  }, {
+    "name": "Mike MacCana",
+    "email": "mike.maccana@gmail.com",
+    "url": "https://github.com/mikemaccana",
+    "contributions": 2
+  }, {
+    "name": "Niclas Hoyer",
+    "email": "",
+    "url": "https://github.com/niclashoyer",
+    "contributions": 2
+  }, {
+    "name": "Nicholas Morsman",
+    "email": "nicholas@publishlab.com",
+    "url": "https://github.com/nmorsman",
+    "contributions": 2
+  }, {
+    "name": "Philip Reichenberger",
+    "email": null,
+    "url": "https://github.com/preichenberger",
+    "contributions": 1
+  }, {
+    "name": "Anton Serdyuk",
+    "email": "anton.serdyuk@gmail.com",
+    "url": "https://github.com/m00t",
+    "contributions": 1
+  }, {
+    "name": "Dan Williams",
+    "email": "me+github@deedubs.com",
+    "url": "https://github.com/deedubs",
+    "contributions": 1
+  }, {
+    "name": "Alex Wolfe",
+    "email": "alexkwolfe@gmail.com",
+    "url": "https://github.com/alexkwolfe",
+    "contributions": 1
+  }, {
+    "name": "Henry Allen-Tilford",
+    "email": "htilford@gmail.com",
+    "url": "https://github.com/generalhenry",
+    "contributions": 1
+  }, {
+    "name": "Geoffrey Bachelet",
+    "email": "geoffrey.bachelet@gmail.com",
+    "url": "https://github.com/ubermuda",
+    "contributions": 1
+  }, {
+    "name": "Jacob Friis Saxberg",
+    "email": "jacob@saxberg.dk",
+    "url": "https://github.com/webjay",
+    "contributions": 1
+  }, {
+    "name": "Jeffrey Morgan",
+    "email": "jmorganca@gmail.com",
+    "url": "https://github.com/jeffdm",
+    "contributions": 1
+  }, {
+    "name": "Kishore Nallan",
+    "email": "kishore@kishorelive.com",
+    "url": "https://github.com/kishorenc",
+    "contributions": 1
+  }, {
+    "name": "Mathias Buus",
+    "email": "mathiasbuus@gmail.com",
+    "url": "https://github.com/mafintosh",
+    "contributions": 1
+  }, {
+    "name": "Matthew Gallagher",
+    "email": "mattva01@gmail.com",
+    "url": "https://github.com/mattva01",
+    "contributions": 1
+  }, {
+    "name": "Wojciech Kocjan",
+    "email": null,
+    "url": "https://github.com/wojciechka",
+    "contributions": 1
+  }, {
+    "name": "Mike Macaulay",
+    "email": "mmacaula@gmail.com",
+    "url": "https://github.com/mmacaula",
+    "contributions": 1
+  }, {
+    "name": "Josh Matthews",
+    "email": "josh@jmatthews.us",
+    "url": "https://github.com/jmatth",
+    "contributions": 1
+  }, {
+    "name": "Vincent Woo",
+    "email": "vincent@coderpad.io",
+    "url": "https://github.com/vincentwoo",
+    "contributions": 1
+  }, {
+    "name": "Lewis J Ellis",
+    "email": "me@lewisjellis.com",
+    "url": "https://github.com/LewisJEllis",
+    "contributions": 1
+  }, {
+    "name": "Adam Duncan",
+    "email": "",
+    "url": "https://github.com/microadam",
+    "contributions": 1
+  }]
 }
