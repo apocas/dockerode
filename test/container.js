@@ -677,6 +677,7 @@ describe("#non-responsive container", function() {
       }
 
       container.restart({
+        t: 10
       }, handler);
     });
   });
@@ -692,6 +693,7 @@ describe("#non-responsive container", function() {
       }
 
       container.stop({
+        t: 10
       }, handler);
     });
   });
