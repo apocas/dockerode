@@ -677,7 +677,7 @@ describe("#non-responsive container", function() {
       }
 
       container.restart({
-        t: 1000
+        t: 10
       }, handler);
     });
   });
@@ -688,12 +688,12 @@ describe("#non-responsive container", function() {
       var container = docker.getContainer(testContainer);
 
       function handler(err, data) {
-        expect(err).not.to.be.null;
+        expect(err).to.be.null;
         done();
       }
 
       container.stop({
-        t: 1000
+        t: 10
       }, handler);
     });
   });
