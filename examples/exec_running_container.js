@@ -9,26 +9,31 @@ var docker = new Docker({
  * @param container
  */
 function runExec(container) {
-  options = {
+
+  var options = {
+    Cmd: ['env'],
     AttachStdout: true,
-    AttachStderr: true,
-    Tty: false,
-    Cmd: ['env']
+    AttachStderr: true
   };
+
   container.exec(options, function(err, exec) {
     if (err) return;
-
     exec.start(function(err, stream) {
       if (err) return;
 
-      stream.setEncoding('utf8');
-      stream.pipe(process.stdout);
+      container.modem.demuxStream(stream, process.stdout, process.stderr);
+
+      exec.inspect(function(err, data) {
+        if (err) return;
+        console.log(data);
+      });
     });
   });
 }
 
 docker.createContainer({
   Image: 'ubuntu',
+  Tty: true,
   Cmd: ['/bin/bash']
 }, function(err, container) {
   container.start({}, function(err, data) {
