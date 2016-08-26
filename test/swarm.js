@@ -222,6 +222,16 @@ describe("#swarm", function() {
         }
         node.inspect(handler);
       });
+
+      it("should remove node", function(done) {
+        function handler(err, data) {
+	  // error is [Error: (HTTP code 500) server error - rpc error: code = 9 desc = node xxxxxxxxxx is a cluster manager and is a member of the raft cluster. It must be demoted to worker before removal ] 
+          expect(err).to.not.be.null;
+          expect(data).to.be.null;
+          done();
+        }
+        node.remove(handler);
+      });
     });
   });
 
@@ -241,5 +251,4 @@ describe("#swarm", function() {
       );
     });
   });
-
 });
