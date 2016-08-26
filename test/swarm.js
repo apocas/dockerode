@@ -34,6 +34,16 @@ describe("#swarm", function() {
 
       docker.swarmInit(opts, handler);
     });
+
+    it("should inspect swarm", function(done) {
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('object');
+        done();
+      }
+      
+      docker.swarmInspect(handler);
+    });
   });
 
   describe("#Services", function() {
