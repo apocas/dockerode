@@ -43,7 +43,8 @@ var docker5 = new Docker({
   port: process.env.DOCKER_PORT || 2375,
   ca: fs.readFileSync('ca.pem'),
   cert: fs.readFileSync('cert.pem'),
-  key: fs.readFileSync('key.pem')
+  key: fs.readFileSync('key.pem'),
+  version: 'v1.25' // required when Docker >= v1.25
 });
 
 var docker6 = new Docker({
