@@ -44,7 +44,7 @@ var docker5 = new Docker({
   ca: fs.readFileSync('ca.pem'),
   cert: fs.readFileSync('cert.pem'),
   key: fs.readFileSync('key.pem'),
-  version: 'v1.25' // required when Docker >= v1.25
+  version: 'v1.25' // required when Docker >= v1.13, https://docs.docker.com/engine/api/version-history/
 });
 
 var docker6 = new Docker({
