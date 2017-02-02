@@ -1,3 +1,5 @@
+/*jshint -W030 */
+
 var expect = require('chai').expect;
 var docker = require('./spec_helper').docker;
 
@@ -41,16 +43,95 @@ describe("#swarm", function() {
         expect(data).to.be.a('object');
         done();
       }
-      
+
       docker.swarmInspect(handler);
     });
   });
+
+  describe("#Secrets", function() {
+    var secret;
+
+    it("should list secrets", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('array');
+        done();
+      }
+
+      docker.listSecrets({}, handler);
+    });
+
+    it("should create secret", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('object');
+        secret = data;
+        done();
+      }
+
+      var opts = {
+        "Name": "app-key.crt",
+        "Labels": {
+          "foo": "bar"
+        },
+        "Data": "VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg=="
+      };
+
+      docker.createSecret(opts, handler);
+    });
+
+    it("should inspect secret", function(done) {
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+      secret.inspect(handler);
+    });
+
+
+    it("should update secret", function(done) {
+      this.timeout(15000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+      var opts = {
+        "Name": "app-key.crt",
+        "version": 2,
+        "Labels": {
+          "foo": "bar",
+          "foo2": "bar2"
+        },
+        "Data": "VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg=="
+      };
+      secret.update(opts, handler);
+    });
+
+    it("should delete secret", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      secret.remove(handler);
+    });
+  });
+
 
   describe("#Services", function() {
     var service;
 
     it("should create service", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
 
       function handler(err, data) {
         expect(err).to.be.null;
@@ -118,6 +199,8 @@ describe("#swarm", function() {
     });
 
     it("should update service", function(done) {
+      this.timeout(15000);
+
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
@@ -235,7 +318,7 @@ describe("#swarm", function() {
 
       it("should remove node", function(done) {
         function handler(err, data) {
-	  // error is [Error: (HTTP code 500) server error - rpc error: code = 9 desc = node xxxxxxxxxx is a cluster manager and is a member of the raft cluster. It must be demoted to worker before removal ] 
+          // error is [Error: (HTTP code 500) server error - rpc error: code = 9 desc = node xxxxxxxxxx is a cluster manager and is a member of the raft cluster. It must be demoted to worker before removal ]
           expect(err).to.not.be.null;
           expect(data).to.be.null;
           done();
