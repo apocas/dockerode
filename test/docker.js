@@ -69,7 +69,7 @@ describe("#docker", function() {
       docker.buildImage(data, handler);
     });
 
-    it("should build image from multiple files", function() {
+    it("should build image from multiple files", function(done) {
       this.timeout(60000);
 
       function handler(err, stream) {
