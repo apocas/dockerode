@@ -131,7 +131,7 @@ describe("#swarm", function() {
     var service;
 
     it("should create service", function(done) {
-      this.timeout(15000);
+      this.timeout(30000);
 
       function handler(err, data) {
         expect(err).to.be.null;
@@ -199,7 +199,7 @@ describe("#swarm", function() {
     });
 
     it("should update service", function(done) {
-      this.timeout(15000);
+      this.timeout(30000);
 
       function handler(err, data) {
         expect(err).to.be.null;
