@@ -50,6 +50,7 @@ describe("#swarm", function() {
 
   describe("#Secrets", function() {
     var secret;
+    var d;
 
     it("should list secrets", function(done) {
       this.timeout(5000);
@@ -88,6 +89,7 @@ describe("#swarm", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
+        d = data;
         done();
       }
       secret.inspect(handler);
@@ -99,12 +101,12 @@ describe("#swarm", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
+        expect(data).to.be.empty;
         done();
       }
       var opts = {
         "Name": "app-key.crt",
-        "version": 2,
+        "version": parseInt(d.Version.Index),
         "Labels": {
           "foo": "bar",
           "foo2": "bar2"
@@ -129,9 +131,10 @@ describe("#swarm", function() {
 
   describe("#Services", function() {
     var service;
+    var d;
 
     it("should create service", function(done) {
-      this.timeout(30000);
+      this.timeout(60000);
 
       function handler(err, data) {
         expect(err).to.be.null;
@@ -193,6 +196,7 @@ describe("#swarm", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
+        d = data;
         done();
       }
       service.inspect(handler);
@@ -208,7 +212,7 @@ describe("#swarm", function() {
       }
       var opts = {
         "Name": "redis",
-        "version": 2,
+        "version": parseInt(d.Version.Index),
         "TaskTemplate": {
           "ContainerSpec": {
             "Image": "redis"
