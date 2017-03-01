@@ -21,15 +21,15 @@ describe("#plugin", function() {
   });
 
   describe("#install", function() {
+    var installed = false;
 
     it("should get plugin privileges", function(done) {
       this.timeout(15000);
-      var plugin = docker.getPlugin('sshfs', 'vieux/sshfs');
+      var plugin = docker.getPlugin('vieux/sshfs');
 
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.a('array');
-        console.log(data);
         done();
       }
 
@@ -42,35 +42,31 @@ describe("#plugin", function() {
       var plugin = docker.getPlugin('sshfs');
 
       //geezzz url, querystring and body...
-      plugin.install({
+      plugin.pull({
         '_query': {
           'remote': 'vieux/sshfs'
         },
         '_body': [{
-          'Name': 'network',
-          'Description': '',
-          'Value': [
-            'host'
-          ]
-        }, {
-          'Name': 'capabilities',
-          'Description': '',
-          'Value': [
-            'CAP_SYS_ADMIN'
-          ]
-        }, {
-          'Name': 'mount',
-          'Description': '',
-          'Value': [
-            '/var/lib/docker/plugins/'
-          ]
-        }, {
-          'Name': 'device',
-          'Description': '',
-          'Value': [
-            '/dev/fuse'
-          ]
-        }]
+            'Name': 'network',
+            'Description': 'permissions to access a network',
+            'Value': ['host']
+          },
+          {
+            'Name': 'mount',
+            'Description': 'host path to mount',
+            'Value': ['/var/lib/docker/plugins/']
+          },
+          {
+            'Name': 'device',
+            'Description': 'host device to access',
+            'Value': ['/dev/fuse']
+          },
+          {
+            'Name': 'capabilities',
+            'Description': 'list of additional capabilities required',
+            'Value': ['CAP_SYS_ADMIN']
+          }
+        ]
       }, function(err, stream) {
         if (err) return done(err);
         stream.pipe(process.stdout);
@@ -86,10 +82,13 @@ describe("#plugin", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
+        installed = true;
         done();
       }
 
-      plugin.enable(handler);
+      plugin.enable({
+        'Timeout': 5
+      }, handler);
     });
 
     it("should disable a plugin", function(done) {
@@ -97,8 +96,12 @@ describe("#plugin", function() {
       var plugin = docker.getPlugin('sshfs');
 
       function handler(err, data) {
-        expect(err).to.be.null;
-        expect(data).to.be.ok;
+        if (installed === true) {
+          expect(err).to.be.null;
+          expect(data).to.be.ok;
+        } else {
+          expect(err).to.be.ok;
+        }
         done();
       }
 
@@ -111,11 +114,12 @@ describe("#plugin", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
+        expect(data).to.be.empty;
         done();
       }
 
       plugin.remove(handler);
     });
+
   });
 });
