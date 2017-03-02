@@ -86,6 +86,43 @@ You may also specify default options for each container's operations, which will
 container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
 ```
 
+### Promises (yet to be published)
+
+There's also a promises based interface.
+
+``` js
+
+// by default callback interface is used, specify promises option in the constructor.
+var docker = new Docker({
+  'promises': true,
+});
+
+docker.createContainer({
+  Image: 'ubuntu',
+  AttachStdin: false,
+  AttachStdout: true,
+  AttachStderr: true,
+  Tty: true,
+  Cmd: ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
+  OpenStdin: false,
+  StdinOnce: false
+}).then(function(container) {
+  return container.start();
+}).then(function(container) {
+  return container.resize({
+    h: process.stdout.rows,
+    w: process.stdout.columns
+  });
+}).then(function(container) {
+  return container.stop();
+}).then(function(container) {
+  return container.remove();
+}).catch(function(err) {
+  console.log(err);
+});
+
+```
+
 ### Stopping all containers on a host
 
 ``` js
