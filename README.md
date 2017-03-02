@@ -13,6 +13,7 @@ Why `dockerode` is different from other Docker node.js modules:
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
 * **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
+* **interfaces** - Features a callback and a promises based interfaces, making everyone happy :)
 
 
 ## Installation
@@ -86,7 +87,7 @@ You may also specify default options for each container's operations, which will
 container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
 ```
 
-### Promises (yet to be published)
+### Promises (yet to be published to package managers)
 
 There's also a promises based interface.
 
