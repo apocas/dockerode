@@ -78,20 +78,7 @@ container.remove(function (err, data) {
   console.log(data);
 });
 
-//...
-```
-
-You may also specify default options for each container's operations, which will always be used for the specified container and operation.
-
-``` js
-container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
-```
-
-### Promises (yet to be published to package managers)
-
-There's also a promises based interface.
-
-``` js
+// promises are supported (to be published in v2.3.3)
 docker.createContainer({
   Image: 'ubuntu',
   AttachStdin: false,
@@ -115,6 +102,12 @@ docker.createContainer({
 }).catch(function(err) {
   console.log(err);
 });
+```
+
+You may also specify default options for each container's operations, which will always be used for the specified container and operation.
+
+``` js
+container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
 ```
 
 ### Stopping all containers on a host
