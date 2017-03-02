@@ -92,12 +92,6 @@ container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
 There's also a promises based interface.
 
 ``` js
-
-// by default callback interface is used, specify promises option in the constructor.
-var docker = new Docker({
-  'promises': true,
-});
-
 docker.createContainer({
   Image: 'ubuntu',
   AttachStdin: false,
@@ -121,7 +115,6 @@ docker.createContainer({
 }).catch(function(err) {
   console.log(err);
 });
-
 ```
 
 ### Stopping all containers on a host
