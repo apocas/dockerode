@@ -1,9 +1,11 @@
 /*jshint -W030 */
 
 var expect = require('chai').expect;
-var docker = require('./spec_helper').dockerp;
+var docker = require('./spec_helper').docker;
 var MemoryStream = require('memorystream');
 var Socket = require('net').Socket;
+
+var testImage = 'ubuntu:14.04';
 
 describe("#container promises", function() {
 
@@ -29,6 +31,18 @@ describe("#container promises", function() {
     }).then(function(container) {
       return container.stop();
     }).then(function(container) {
+      return container.remove();
+    }).then(function(data) {
+      done();
+    }).catch(function(err) {
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it("should runAsync a command", function(done) {
+    docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
+      expect(container).to.be.ok;
       return container.remove();
     }).then(function(data) {
       done();

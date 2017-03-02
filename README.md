@@ -13,7 +13,7 @@ Why `dockerode` is different from other Docker node.js modules:
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
 * **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
-* **interfaces** - Features a callback and a promises based interfaces, making everyone happy :)
+* **interfaces** - Features a **callback** and a **promise** based interfaces, making everyone happy :)
 
 
 ## Installation
@@ -208,11 +208,20 @@ docker.createContainer({Tty: false, /*... other options */}, function(err, conta
 * `stream` - stream(s) which will be used for execution output.
 * `create_options` - options used for container creation. (optional)
 * `start_options` - options used for container start. (optional)
-* `callback` - callback called when execution ends.
+* `callback` - callback called when execution ends (not needed in `runAsync`).
 
 ``` js
+//callback
 docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, data, container) {
   console.log(data.StatusCode);
+});
+
+//promise
+docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
+  return container.remove();
+}).catch(function(err) {
+  expect(err).to.be.null;
+  done();
 });
 ```
 
@@ -224,7 +233,8 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr
 });
 ```
 
-Run also returns an EventEmitter supporting the following events: container, stream, data. Allowing stuff like this:
+If you provide a callback, `run` will return an EventEmitter supporting the following events: container, stream, data.
+If a callback isn't provided a promise will be returned.
 
 ``` js
 docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function (err, data, container) {
