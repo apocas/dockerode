@@ -210,7 +210,7 @@ docker.createContainer({Tty: false, /*... other options */}, function(err, conta
 * `stream` - stream(s) which will be used for execution output.
 * `create_options` - options used for container creation. (optional)
 * `start_options` - options used for container start. (optional)
-* `callback` - callback called when execution ends (not needed in `runAsync`).
+* `callback` - callback called when execution ends (optional, promise will be returned if not used).
 
 ``` js
 //callback
