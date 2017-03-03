@@ -99,6 +99,8 @@ docker.createContainer({
   return container.stop();
 }).then(function(container) {
   return container.remove();
+}).then(function(data) {
+  console.log('container removed');
 }).catch(function(err) {
   console.log(err);
 });
@@ -218,10 +220,12 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, 
 
 //promise
 docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
+  console.log(container.output.StatusCode);
   return container.remove();
+}).then(function(data) {
+  console.log('container removed');
 }).catch(function(err) {
-  expect(err).to.be.null;
-  done();
+  console.log(err);
 });
 ```
 
