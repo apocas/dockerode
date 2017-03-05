@@ -44,7 +44,7 @@ describe("#promises", function() {
 
     it("should runAsync a command", function(done) {
       this.timeout(30000);
-      
+
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
         expect(container).to.be.ok;
         return container.remove();
@@ -61,7 +61,7 @@ describe("#promises", function() {
     it("should start->stop->remove a container with Bluebird", function(done) {
       this.timeout(60000);
 
-      docker.createContainer({
+      dockerp.createContainer({
         Image: 'ubuntu',
         AttachStdin: false,
         AttachStdout: true,
