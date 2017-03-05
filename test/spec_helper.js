@@ -1,4 +1,5 @@
-var http = require("http");
+var http = require('http'),
+  Bluebird = require('bluebird');
 http.globalAgent.maxSockets = 1000;
 
 var Docker = require('../lib/docker'),
@@ -17,12 +18,16 @@ var socket = process.env.DOCKER_SOCKET || isWin ? '//./pipe/docker_engine' : '/v
 var isSocket = fs.existsSync(socket) ? fs.statSync(socket).isSocket() : false;
 var docker;
 var dockert;
+var dockerp;
 
 if (!isSocket) {
   console.log('Trying TCP connection...');
   docker = new Docker();
   dockert = new Docker({
     'timeout': 1
+  });
+  dockerp = new Docker({
+    'Promise': Bluebird
   });
 } else {
   docker = new Docker({
@@ -32,9 +37,14 @@ if (!isSocket) {
     'socketPath': socket,
     'timeout': 1
   });
+  dockerp = new Docker({
+    'socketPath': socket,
+    'Promise': Bluebird
+  });
 }
 
 module.exports = {
   'docker': docker,
-  'dockert': dockert
+  'dockert': dockert,
+  'dockerp': dockerp
 };

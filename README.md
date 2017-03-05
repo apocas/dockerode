@@ -56,6 +56,12 @@ var docker6 = new Docker({
   cert: fs.readFileSync('cert.pem'),
   key: fs.readFileSync('key.pem')
 });
+
+//using a different promise library (default is the native one)
+var docker7 = new Docker({
+  Promise: require('bluebird')
+  //...
+});
 //...
 ```
 
