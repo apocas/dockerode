@@ -42,7 +42,7 @@ describe("#promises", function() {
       });
     });
 
-    it("should runAsync a command", function(done) {
+    it("should runPromise a command", function(done) {
       this.timeout(30000);
 
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
