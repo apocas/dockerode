@@ -1,8 +1,12 @@
 /*jshint -W030 */
 
-var expect = require('chai').expect;
+var Bluebird = require('bluebird'),
+  expect = require('chai').expect,
+  Docker = require('../lib/docker');
+
 var docker = require('./spec_helper').docker;
 var dockert = require('./spec_helper').dockert;
+
 
 var testImage = 'ubuntu:14.04';
 var testVolume = {
@@ -12,6 +16,21 @@ var testVolume = {
 };
 
 describe("#docker", function() {
+
+  describe("#constructors", function()  {
+    it("should work without options", function(done) {
+      var d = new Docker();
+      expect(d.modem.socketPath).not.to.be.null;
+      done();
+    });
+    it("should not send Promise options to docker-modem", function(done) {
+      var d = new Docker({
+        'Promise': Bluebird
+      });
+      expect(d.modem.socketPath).not.to.be.null;
+      done();
+    });
+  });
 
   describe("#checkAuth", function() {
     it("should fail auth", function(done) {
