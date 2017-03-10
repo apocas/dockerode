@@ -84,7 +84,7 @@ container.remove(function (err, data) {
   console.log(data);
 });
 
-// promises are supported (to be published in v2.3.3)
+// promises are supported
 docker.createContainer({
   Image: 'ubuntu',
   AttachStdin: false,
