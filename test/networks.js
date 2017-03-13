@@ -78,12 +78,6 @@ describe("#networks", function() {
   });
 
   describe("#inspect", function() {
-    it("should inspect a network without callback", function(done) {
-      var network = testNetwork;
-      expect(network.inspect()).to.be.a('string');
-      done();
-    });
-
     it("should inspect a network", function(done) {
       var network = testNetwork;
 

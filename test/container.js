@@ -26,12 +26,6 @@ describe("#container", function() {
   });
 
   describe("#inspect", function() {
-    it("should inspect a container without callback", function(done) {
-      var container = docker.getContainer(testContainer);
-      expect(container.inspect()).to.be.a('string');
-      done();
-    });
-
     it("should inspect a container", function(done) {
       var container = docker.getContainer(testContainer);
 

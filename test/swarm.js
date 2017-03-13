@@ -187,11 +187,6 @@ describe("#swarm", function() {
       docker.listServices(handler);
     });
 
-    it("should inspect a service without callback", function(done) {
-      expect(service.inspect()).to.be.a('string');
-      done();
-    });
-
     it("should inspect service", function(done) {
       function handler(err, data) {
         expect(err).to.be.null;
@@ -273,11 +268,6 @@ describe("#swarm", function() {
       });
 
       if (task) {
-        it("should inspect a task without callback", function(done) {
-          expect(task.inspect()).to.be.a('string');
-          done();
-        });
-
         it("should inspect task", function(done) {
           function handler(err, data) {
             expect(err).to.be.null;
@@ -304,11 +294,6 @@ describe("#swarm", function() {
         }
 
         docker.listNodes(handler);
-      });
-
-      it("should inspect a node without callback", function(done) {
-        expect(node.inspect()).to.be.a('string');
-        done();
       });
 
       it("should inspect node", function(done) {
