@@ -9,6 +9,9 @@ docker.createContainer({
   Cmd: ['/bin/ls', '/stuff'],
   'Volumes': {
     '/stuff': {}
+  },
+  'Hostconfig': {
+    'Binds': ['/home/vagrant:/stuff']
   }
 }, function(err, container) {
   container.attach({
@@ -19,9 +22,7 @@ docker.createContainer({
   }, function(err, stream) {
     stream.pipe(process.stdout);
 
-    container.start({
-      'Binds': ['/home/vagrant:/stuff']
-    }, function(err, data) {
+    container.start(function(err, data) {
       console.log(data);
     });
   });
