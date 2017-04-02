@@ -110,6 +110,17 @@ describe("#docker", function() {
         src: ['Dockerfile']
       }, {}, handler);
     });
+
+    it("should return Promise when building image", function(done) {
+      this.timeout(60000);
+      var promise = docker.buildImage({
+        context: __dirname,
+        src: ['Dockerfile']
+      });
+      expect(promise.then).to.not.be.null;
+      expect(promise.catch).to.not.be.null;
+      done();
+    });
   });
 
 
