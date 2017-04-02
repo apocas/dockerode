@@ -33,6 +33,28 @@ describe("#promises", function() {
     });
   });
 
+  it("should build image from multiple files", function(done) {
+    this.timeout(60000);
+
+    docker.buildImage({
+      context: __dirname,
+      src: ['Dockerfile']
+    }).then(function(stream) {
+      expect(stream).to.be.ok;
+
+      stream.pipe(process.stdout, {
+        end: true
+      });
+
+      stream.on('end', function() {
+        done();
+      });
+    }).catch(function(err) {
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
   describe("#container", function() {
     it("should start->resize->stop->remove a container", function(done) {
       this.timeout(60000);
