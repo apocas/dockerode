@@ -10,6 +10,29 @@ var testImage = 'ubuntu:14.04';
 
 describe("#promises", function() {
 
+  describe("#docker", function() {
+    it("should build image from readable stream", function(done) {
+      this.timeout(60000);
+
+      var data = require('fs').createReadStream('./test/test.tar');
+
+      docker.buildImage(data).then(function(stream) {
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }).catch(function(err) {
+        expect(err).to.be.null;
+        done();
+      });
+    });
+  });
+
   describe("#container", function() {
     it("should start->resize->stop->remove a container", function(done) {
       this.timeout(60000);
