@@ -13,7 +13,7 @@ function containerLogs(container) {
   // create a single stream for stdin and stdout
   var logStream = new stream.PassThrough();
   logStream.on('data', function(chunk){
-    console.log(chunk);
+    console.log(chunk.toString('utf8'));
   });
 
   container.logs({
@@ -28,12 +28,16 @@ function containerLogs(container) {
     stream.on('end', function(){
       logStream.end('!stop!');
     });
+
+    setTimeout(function() {
+      stream.destroy();
+    }, 2000);
   });
 }
 
 docker.createContainer({
   Image: 'ubuntu',
-  Cmd: ['ls']
+  Cmd: ['/bin/bash', '-c', 'ping 8.8.8.8']
 }, function(err, container) {
   container.start({}, function(err, data) {
     containerLogs(container);
