@@ -11,9 +11,10 @@ docker.run('ubuntu', [], process.stdout, {
   },
   'ExposedPorts': {
     '80/tcp': {}
+  },
+  'Hostconfig': {
+    'Binds': ['/home/vagrant:/stuff'],
   }
-}, {
-  'Binds': ['/home/vagrant:/stuff']
 }, function(err, data, container) {
   console.log(data.StatusCode);
 });
