@@ -91,6 +91,17 @@ describe("#networks", function() {
       network.inspect(handler);
     });
   });
+  describe("#get", function() {
+    it("should get a network by ID", function(done) {
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        expect(data.Id).to.not.be.null;
+        done();
+      }
+      docker.getNetwork(testNetwork.Id, handler);
+    });
+  });
 
   describe("#disconnect", function() {
     it("should disconnect a container to a network", function(done) {
