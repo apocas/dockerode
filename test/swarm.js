@@ -237,16 +237,38 @@ describe("#swarm", function() {
       service.update(opts, handler);
     });
 
-    it("should delete service", function(done) {
-      this.timeout(5000);
 
-      function handler(err, data) {
+
+    it("should get the logs for a service as a stream", function(done) {
+      this.timeout(30000);
+
+      var logs_opts = {
+        follow: true,
+        stdout: true,
+        stderr: true,
+        timestamps: true
+      };
+
+      function handler(err, stream) {
         expect(err).to.be.null;
+        expect(stream.pipe).to.be.ok;
         done();
       }
 
-      service.remove(handler);
+      service.logs(logs_opts, handler);
     });
+
+      it("should delete service", function(done) {
+        this.timeout(5000);
+
+        function handler(err, data) {
+          expect(err).to.be.null;
+          done();
+        }
+
+        service.remove(handler);
+      });
+
   });
 
   describe("#tasks", function() {
