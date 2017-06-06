@@ -16,5 +16,32 @@ docker.run('ubuntu', [], process.stdout, {
     'Binds': ['/home/vagrant:/stuff'],
   }
 }, function(err, data, container) {
+  if (err){
+    return console.error(err);
+  }
+  console.log(data.StatusCode);
+});
+
+
+
+//run and give a container a name and a label
+docker.run('redis', [], process.stdout, {
+  "Name": 'MyNamedContainer',
+  "Labels": {
+    "environment": "blueWhale"
+  },
+  "HostConfig": {
+    "PortBindings": {
+      "6379/tcp": [
+        {
+          "HostPort": "0"   //Map container to a random unused port.
+        }
+      ]
+    }
+  }
+}, function(err, data, container) {
+  if (err){
+    return console.error(err);
+  }
   console.log(data.StatusCode);
 });
