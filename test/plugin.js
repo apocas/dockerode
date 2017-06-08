@@ -81,13 +81,12 @@ describe("#plugin", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         installed = true;
         done();
       }
 
       plugin.enable({
-        'Timeout': 5
+        'timeout': 5
       }, handler);
     });
 
@@ -98,7 +97,6 @@ describe("#plugin", function() {
       function handler(err, data) {
         if (installed === true) {
           expect(err).to.be.null;
-          expect(data).to.be.ok;
         } else {
           expect(err).to.be.ok;
         }

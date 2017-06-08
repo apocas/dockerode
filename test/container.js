@@ -215,12 +215,13 @@ describe("#container", function() {
           container.start(function(err, data) {
             expect(err).to.be.null;
 
-            stream.write(randomString(size) + '\n\x04');
+            var aux = randomString(size) + '\n\x04';
+            stream.write(aux);
 
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(+output.slice(size + 2)).to.equal(size + 1);
+              expect(+output.slice(size)).to.equal(size + 1);
               done();
             });
           });
