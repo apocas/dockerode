@@ -26,7 +26,7 @@ docker.run('ubuntu', [], process.stdout, {
 
 //run and give a container a name and a label
 docker.run('redis', [], undefined, {
-  "Name": 'MyNamedContainer',
+  "name": 'MyNamedContainer',
   "Labels": {
     "environment": "blueWhale"
   },
