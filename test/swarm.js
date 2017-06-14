@@ -341,7 +341,7 @@ describe("#swarm", function() {
 
   describe("#leaveSwarm", function() {
     it("should leave swarm", function(done) {
-      this.timeout(5000);
+      this.timeout(10000);
 
       function handler(err, data) {
         expect(err).to.be.null;

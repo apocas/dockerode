@@ -21,10 +21,10 @@ describe("#networks", function() {
       OpenStdin: false,
       StdinOnce: false
     }, function(err, container) {
-      if (err) done(err);
+      if (err) return done(err);
       testContainer = container.id;
       container.start(function(err, result) {
-        if (err) done(err);
+        if (err) return done(err);
 
         docker.createNetwork({
           "Name": "isolated_nw",
@@ -37,7 +37,7 @@ describe("#networks", function() {
             }]
           }
         }, function(err, network) {
-          if (err) done(err);
+          if (err) return done(err);
           testNetwork = network;
           done();
         });
@@ -49,12 +49,12 @@ describe("#networks", function() {
     this.timeout(15000);
     var container = docker.getContainer(testContainer);
     container.kill(function(err, result) {
-      if (err) done(err);
+      if (err) return done(err);
       container.remove(function(err, result) {
-        if (err) done(err);
+        if (err) return done(err);
 
         testNetwork.remove(function(err, result) {
-          if (err) done(err);
+          if (err) return done(err);
           done();
         });
       });
