@@ -51,6 +51,36 @@ describe("#container", function() {
     });
   });
 
+  describe("#checkpoints", function() {
+    it("should create container checkpoint", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        console.log(err);
+        console.log(data);
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.createCheckpoint(handler);
+    });
+
+    it("should list containers checkpoints", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        console.log(err);
+        console.log(data);
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.listCheckpoint(handler);
+    });
+  });
+
   describe("#archive", function() {
     it("should get an archive inside the container", function(done) {
       var container = docker.getContainer(testContainer);
