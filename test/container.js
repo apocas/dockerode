@@ -56,8 +56,6 @@ describe("#container", function() {
       var container = docker.getContainer(testContainer);
 
       function handler(err, data) {
-        console.log(err);
-        console.log(data);
         expect(err).to.be.null;
         expect(data).to.be.ok;
         done();
@@ -70,8 +68,6 @@ describe("#container", function() {
       var container = docker.getContainer(testContainer);
 
       function handler(err, data) {
-        console.log(err);
-        console.log(data);
         expect(err).to.be.null;
         expect(data).to.be.ok;
         done();
