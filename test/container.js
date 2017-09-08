@@ -21,6 +21,7 @@ describe("#container", function() {
     }, function(err, container) {
       if (err) done(err);
       testContainer = container.id;
+      console.log('Created test container ' + container.id);
       done();
     });
   });
@@ -572,7 +573,7 @@ describe("#container", function() {
 
   describe("#exec", function() {
     it("should run exec on a container", function(done) {
-      this.timeout(10000);
+      this.timeout(20000);
       var options = {
         Cmd: ["echo", "'foo'"]
       };
@@ -599,15 +600,14 @@ describe("#container", function() {
     });
 
     it("should allow exec stream hijacking on a container", function(done) {
-      this.timeout(10000);
+      this.timeout(20000);
       var options = {
         Cmd: ["cat"],
         AttachStdin: true,
         AttachStdout: true,
       };
       var startOpts = {
-        hijack: true,
-        stdin: true,
+        hijack: true
       };
 
       var container = docker.getContainer(testContainer);
