@@ -129,6 +129,87 @@ describe("#swarm", function() {
   });
 
 
+  describe("#Configs", function() {
+    var config;
+    var d;
+
+    it("should create config", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('object');
+        config = data;
+        done();
+      }
+
+      var opts = {
+        "Name": "app-key.conf",
+        "Labels": {
+          "foo": "bar"
+        },
+        "Data": "VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg=="
+      };
+
+      docker.createConfig(opts, handler);
+    });
+
+    it("should list configs", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.a('array');
+        done();
+      }
+
+      docker.listConfigs({}, handler);
+    });
+
+    it("should inspect config", function(done) {
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        d = data;
+        done();
+      }
+      config.inspect(handler);
+    });
+
+
+    it("should update config", function(done) {
+      this.timeout(15000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.empty;
+        done();
+      }
+      var opts = {
+        "Name": "app-key.conf",
+        "version": parseInt(d.Version.Index),
+        "Labels": {
+          "foo": "bar",
+          "foo2": "bar2"
+        },
+        "Data": "VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg=="
+      };
+      config.update(opts, handler);
+    });
+
+    it("should delete config", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        done();
+      }
+
+      config.remove(handler);
+    });
+  });
+
+
   describe("#Services", function() {
     var service;
     var d;
