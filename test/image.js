@@ -21,6 +21,21 @@ describe("#image", function() {
     });
   });
 
+  describe("#distribution", function() {
+    it("should distribution an image", function(done) {
+      this.timeout(30000);
+      var image = docker.getImage(testImage);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      image.distribution(handler);
+    });
+  });
+
   describe("#history", function() {
     it("should get image history", function(done) {
       var image = docker.getImage(testImage);
