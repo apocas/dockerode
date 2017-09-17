@@ -1,11 +1,8 @@
 # dockerode
 
-[![NPM](https://nodei.co/npm/dockerode.png?downloads=true&downloadRank=true)](https://nodei.co/npm/dockerode/)
-[![NPM](https://nodei.co/npm-dl/dockerode.png?months=6&height=3)](https://nodei.co/npm/dockerode/)
-
 Not another Node.js Docker Remote API module.
 
-Why `dockerode` is different from other Docker node.js modules:
+`dockerode` objectives:
 
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
 * **stream demux** - Supports optional demultiplexing.
@@ -13,7 +10,7 @@ Why `dockerode` is different from other Docker node.js modules:
 * **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
 * **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
-* **interfaces** - Features a **callback** and a **promise** based interfaces, making everyone happy :)
+* **interfaces** - Features **callback** and **promise** based interfaces, making everyone happy :)
 
 
 ## Installation
