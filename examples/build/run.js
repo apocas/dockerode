@@ -5,10 +5,14 @@ var docker = new Docker({
 });
 
 
-docker.buildImage('./Dockerfile.tar', {t: 'chrome'}, function(err, stream) {
-  if(err) return;
+docker.buildImage('./Dockerfile.tar', {
+  t: 'chrome'
+}, function(err, stream) {
+  if (err) return;
 
-  stream.pipe(process.stdout, {end: true});
+  stream.pipe(process.stdout, {
+    end: true
+  });
 
   stream.on('end', function() {
     done();
@@ -18,7 +22,10 @@ docker.buildImage('./Dockerfile.tar', {t: 'chrome'}, function(err, stream) {
 function done() {
   docker.createContainer({
     Image: 'chrome',
-    Cmd: ['/bin/bash', '-c', 'xvfb-run -e /dev/stdout --server-args=\'-screen 0, 1024x768x16\' google-chrome -start-maximized http://www.google.com']
+    Cmd: ['/bin/bash', '-c', 'xvfb-run -e /dev/stdout --server-args=\'-screen 0, 1024x768x16\' google-chrome -start-maximized http://www.google.com'],
+    HostConfig: {
+      Privileged: true
+    }
   }, function(err, container) {
     container.attach({
       stream: true,
@@ -26,14 +33,12 @@ function done() {
       stderr: true,
       tty: true
     }, function(err, stream) {
-      if(err) return;
+      if (err) return;
 
       stream.pipe(process.stdout);
 
-      container.start({
-        Privileged: true
-      }, function(err, data) {
-        if(err) return;
+      container.start(function(err, data) {
+        if (err) return;
       });
     });
   });
