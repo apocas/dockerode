@@ -10,8 +10,8 @@ docker.createContainer({
   'Volumes': {
     '/stuff': {}
   },
-  'Hostconfig': {
-    'Binds': ['/home/vagrant:/stuff']
+  'HostConfig': {
+    'Binds': ['/tmp:/stuff']
   }
 }, function(err, container) {
   container.attach({
