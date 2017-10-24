@@ -47,24 +47,29 @@ describe("#plugin", function() {
           'remote': 'vieux/sshfs'
         },
         '_body': [{
-            'Name': 'network',
-            'Description': 'permissions to access a network',
-            'Value': ['host']
+            Name: 'network',
+            Description: 'permissions to access a network',
+            Value: ['host']
           },
           {
-            'Name': 'mount',
-            'Description': 'host path to mount',
-            'Value': ['/var/lib/docker/plugins/']
+            Name: 'mount',
+            Description: 'host path to mount',
+            Value: ['/var/lib/docker/plugins/']
           },
           {
-            'Name': 'device',
-            'Description': 'host device to access',
-            'Value': ['/dev/fuse']
+            Name: 'mount',
+            Description: 'host path to mount',
+            Value: ['']
           },
           {
-            'Name': 'capabilities',
-            'Description': 'list of additional capabilities required',
-            'Value': ['CAP_SYS_ADMIN']
+            Name: 'device',
+            Description: 'host device to access',
+            Value: ['/dev/fuse']
+          },
+          {
+            Name: 'capabilities',
+            Description: 'list of additional capabilities required',
+            Value: ['CAP_SYS_ADMIN']
           }
         ]
       }, function(err, stream) {

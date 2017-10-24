@@ -52,32 +52,6 @@ describe("#container", function() {
     });
   });
 
-  describe("#checkpoints", function() {
-    it("should create container checkpoint", function(done) {
-      var container = docker.getContainer(testContainer);
-
-      function handler(err, data) {
-        expect(err).to.be.null;
-        expect(data).to.be.ok;
-        done();
-      }
-
-      container.createCheckpoint(handler);
-    });
-
-    it("should list containers checkpoints", function(done) {
-      var container = docker.getContainer(testContainer);
-
-      function handler(err, data) {
-        expect(err).to.be.null;
-        expect(data).to.be.ok;
-        done();
-      }
-
-      container.listCheckpoint(handler);
-    });
-  });
-
   describe("#archive", function() {
     it("should get an archive inside the container", function(done) {
       var container = docker.getContainer(testContainer);
@@ -134,6 +108,40 @@ describe("#container", function() {
       }
 
       container.start(handler);
+    });
+  });
+
+  describe("#checkpoints", function() {
+    before(function() {
+      if(process.platform === 'darwin') {
+        this.skip();
+      }
+    });
+
+    it("should create container checkpoint", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.createCheckpoint({
+        'checkpointID': 'testCheckpoint'
+      }, handler);
+    });
+
+    it("should list containers checkpoints", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      container.listCheckpoint(handler);
     });
   });
 
