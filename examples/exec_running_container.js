@@ -11,7 +11,8 @@ var docker = new Docker({
 function runExec(container) {
 
   var options = {
-    Cmd: ['env'],
+    Cmd: ['bash', '-c', 'echo test $VAR'],
+    Env: ['VAR=ttslkfjsdalkfj'],
     AttachStdout: true,
     AttachStderr: true
   };
