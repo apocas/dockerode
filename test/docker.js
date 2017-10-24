@@ -515,6 +515,20 @@ describe("#docker", function() {
     });
   });
 
+  describe("#df", function() {
+    it("should return df", function(done) {
+      this.timeout(5000);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      docker.df(handler);
+    });
+  });
+
   describe("#searchImages", function() {
     it("should return search results", function(done) {
       this.timeout(120000);
