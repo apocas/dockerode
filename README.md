@@ -1,4 +1,4 @@
-# dockerode
+# dockerode [![Build Status](https://travis-ci.org/apocas/dockerode.svg?branch=master)](https://travis-ci.org/apocas/dockerode)
 
 Not another Node.js Docker Remote API module.
 
