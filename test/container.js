@@ -113,7 +113,7 @@ describe("#container", function() {
 
   describe("#checkpoints", function() {
     before(function() {
-      if(process.platform === 'darwin') {
+      if(process.platform === 'darwin' || 'TRAVIS' in process.env && 'CI' in process.env) {
         this.skip();
       }
     });
