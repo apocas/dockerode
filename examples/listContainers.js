@@ -10,9 +10,11 @@ if (!stats.isSocket()) {
 
 var docker = new Docker({ socketPath: socket });
 
-docker.listContainers({all: true}, function(err, containers) {
-  console.log('ALL: ' + containers.length);
-});
+async function main() {
+  const listContainers = await docker.listContainers({all: true});
+}
+main();
+
 
 docker.listContainers({all: false}, function(err, containers) {
   console.log('!ALL: ' + containers.length);
