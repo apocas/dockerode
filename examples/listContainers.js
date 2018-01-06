@@ -8,32 +8,33 @@ if (!stats.isSocket()) {
   throw new Error('Are you sure the docker is running?');
 }
 
-var docker = new Docker({ socketPath: socket });
 
 async function main() {
-  const listContainers = await docker.listContainers({all: true});
+  let docker = new Docker({ socketPath: socket });
+  let container = await docker.getContainer("136448e655d06fdbe70baf86ea5003b9b3d791d615a9a74940f3c990fec804a8")
+  console.log(await container.inspect({all: true}))
 }
 main();
 
 
-docker.listContainers({all: false}, function(err, containers) {
-  console.log('!ALL: ' + containers.length);
-});
+// docker.listContainers({all: false}, function(err, containers) {
+//   console.log('!ALL: ' + containers.length);
+// });
 
-// filter by labels
-var opts = {
-  "limit": 3,
-  "filters": '{"label": ["staging","env=green"]}'
-};
+// // filter by labels
+// var opts = {
+//   "limit": 3,
+//   "filters": '{"label": ["staging","env=green"]}'
+// };
 
-// maps are also supported (** requires docker-modem 0.3+ **)
-opts["filters"] = {
-  "label": [
-    "staging",
-    "env=green"
-  ]
-};
+// // maps are also supported (** requires docker-modem 0.3+ **)
+// opts["filters"] = {
+//   "label": [
+//     "staging",
+//     "env=green"
+//   ]
+// };
 
-docker.listContainers(opts, function(err, containers) {
-  console.log('Containers labeled staging + env=green : ' + containers.length);
-});
+// docker.listContainers(opts, function(err, containers) {
+//   console.log('Containers labeled staging + env=green : ' + containers.length);
+// });
