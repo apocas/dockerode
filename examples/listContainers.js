@@ -8,11 +8,14 @@ if (!stats.isSocket()) {
   throw new Error('Are you sure the docker is running?');
 }
 
-var docker = new Docker({ socketPath: socket });
 
-docker.listContainers({all: true}, function(err, containers) {
-  console.log('ALL: ' + containers.length);
-});
+async function main() {
+  let docker = new Docker({ socketPath: socket });
+  let container = await docker.getContainer("136448e655d06fdbe70baf86ea5003b9b3d791d615a9a74940f3c990fec804a8")
+  console.log(await container.inspect({all: true}))
+}
+main();
+
 
 docker.listContainers({all: false}, function(err, containers) {
   console.log('!ALL: ' + containers.length);
