@@ -19,7 +19,7 @@ Not another Node.js Docker Remote API module.
 
 ## Usage
 
- * Input options are directly passed to Docker. Check [Docker Remote API documentation](https://docs.docker.com/engine/reference/api/docker_remote_api/) for more details.
+ * Input options are directly passed to Docker. Check [Docker API documentation](https://docs.docker.com/engine/api/v1.24/) for more details.
  * Return values are unchanged from Docker, official Docker documentation will also apply to them.
  * Check the tests and examples folder for more examples.
 
