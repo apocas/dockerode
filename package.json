@@ -16,14 +16,14 @@
   ],
   "dependencies": {
     "concat-stream": "~1.5.1",
-    "docker-modem": "^1.0.0",
+    "docker-modem": "^1.0.6",
     "tar-fs": "~1.12.0"
   },
   "devDependencies": {
+    "bluebird": "^3.5.0",
     "chai": "~4.1.0",
-    "mocha": "~5.0.0",
     "memorystream": "~0.3.0",
-    "bluebird": "^3.5.0"
+    "mocha": "^5.0.5"
   },
   "main": "./lib/docker",
   "scripts": {
