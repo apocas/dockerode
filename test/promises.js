@@ -65,7 +65,7 @@ describe("#promises", function() {
         AttachStdout: true,
         AttachStderr: true,
         Tty: true,
-        Cmd: ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
+        Cmd: ['/bin/bash', '-c', 'tail -f /etc/resolv.conf'],
         OpenStdin: false,
         StdinOnce: false
       }).then(function(container) {
@@ -112,7 +112,7 @@ describe("#promises", function() {
         AttachStdout: true,
         AttachStderr: true,
         Tty: true,
-        Cmd: ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
+        Cmd: ['/bin/bash', '-c', 'tail -f /etc/resolv.conf'],
         OpenStdin: false,
         StdinOnce: false
       }).then(function(container) {

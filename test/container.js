@@ -15,7 +15,7 @@ describe("#container", function() {
       AttachStdout: true,
       AttachStderr: true,
       Tty: true,
-      Cmd: ['/bin/bash', '-c', 'tail -f /var/log/dmesg'],
+      Cmd: ['/bin/bash', '-c', 'tail -f /etc/resolv.conf'],
       OpenStdin: false,
       StdinOnce: false
     }, function(err, container) {
@@ -63,7 +63,7 @@ describe("#container", function() {
       }
 
       container.getArchive({
-        'path': '/var/log/dmesg'
+        'path': '/etc/resolv.conf'
       }, handler);
     });
 
