@@ -211,8 +211,8 @@ docker.createContainer({Tty: false, /*... other options */}, function(err, conta
 * `image` - container image
 * `cmd` - command to be executed
 * `stream` - stream(s) which will be used for execution output.
-* `create_options` - options used for container creation. (optional)
-* `start_options` - options used for container start. (optional)
+* `create_options` - (optional) Options used for container creation. Refer to the [DockerEngine ContainerCreate documentation](https://docs.docker.com/engine/api/v1.37/#operation/ContainerCreate) for the possible values
+* `start_options` - (optional) Options used for container start. Refer to the [DockerEngine ContainerCreate documentation](hhttps://docs.docker.com/engine/api/v1.37/#operation/ContainerStart) for the possible values
 * `callback` - callback called when execution ends (optional, promise will be returned if not used).
 
 ``` js
