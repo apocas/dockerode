@@ -340,7 +340,7 @@ describe("#swarm", function() {
     });
 
       it("should delete service", function(done) {
-        this.timeout(5000);
+        this.timeout(30000);
 
         function handler(err, data) {
           expect(err).to.be.null;
