@@ -423,66 +423,66 @@ container.attach({
 
 ### Exec
 
-- exec.start(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ExecStart)
-- exec.resize(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ExecResize)
-- exec.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ExecInspect)
+- exec.start(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ExecStart)
+- exec.resize(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ExecResize)
+- exec.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ExecInspect)
 
 ### Image
 
-- image.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImageInspect)
-- image.history() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImageHistory)
-- image.push(opts, callback, auth) { - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImagePush)
-- image.tag(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImageTag)
-- image.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImageDelete)
-- image.get() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ImageGet)
+- image.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageInspect)
+- image.history() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageHistory)
+- image.push(opts, callback, auth) { - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImagePush)
+- image.tag(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageTag)
+- image.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageDelete)
+- image.get() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageGet)
 
 ### Network
 
-- network.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NetworkInspect)
-- network.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NetworkDelete)
-- network.connect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NetworkConnect)
-- network.disconnect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NetworkDisconnect)
+- network.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkInspect)
+- network.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDelete)
+- network.connect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkConnect)
+- network.disconnect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDisconnect)
 
 ### Node
 
-- node.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NodeInspect)
-- node.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NodeDelete)
-- node.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/NodeUpdate)
+- node.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeInspect)
+- node.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeDelete)
+- node.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeUpdate)
 
 ### Plugin
 
-- plugin.privileges() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/GetPluginPrivileges)
-- plugin.pull(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginPull)
-- plugin.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginInspect)
-- plugin.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginDelete)
-- plugin.enable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginEnable)
-- plugin.disable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginDisable)
-- plugin.update([auth], opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginUpgrade)
-- plugin.push(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginPush)
-- plugin.configure(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/PluginSet)
+- plugin.privileges() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/GetPluginPrivileges)
+- plugin.pull(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPull)
+- plugin.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginInspect)
+- plugin.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDelete)
+- plugin.enable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginEnable)
+- plugin.disable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDisable)
+- plugin.update([auth], opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginUpgrade)
+- plugin.push(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPush)
+- plugin.configure(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginSet)
 
 ### Secret
 
-- secret.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/SecretInspect)
-- secret.remove() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/SecretDelete)
-- secret.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/SecretUpdate)
+- secret.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretInspect)
+- secret.remove() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretDelete)
+- secret.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretUpdate)
 
 ### Service
 
-- service.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ServiceInspect)
-- service.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ServiceDelete)
-- service.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ServiceUpdate)
-- service.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/ServiceLogs)
+- service.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceInspect)
+- service.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceDelete)
+- service.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceUpdate)
+- service.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceLogs)
 
 ### Task
 
-- task.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/TaskInspect)
-- task.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/Session)
+- task.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/TaskInspect)
+- task.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/Session)
 
 ### Volume
 
-- volume.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/VolumeInspect)
-- volume.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.36/#operation/VolumeDelete)
+- volume.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/VolumeInspect)
+- volume.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/VolumeDelete)
 
 
 ## Tests
