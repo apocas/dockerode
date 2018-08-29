@@ -269,7 +269,7 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr
 
 * `repoTag` - container image name (optionally with tag)
   `myrepo/myname:withtag`
-* `opts` - extra options passed to create image.
+* `options` - extra options passed to create image.
 * `callback` - callback called when execution ends.
 
 ``` js
@@ -391,7 +391,7 @@ container.attach({
 - docker.swarmLeave(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SwarmLeave)
 - docker.swarmUpdate(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SwarmUpdate)
 - docker.swarmInspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SwarmInspect)
-- docker.pull(repoTag, opts, callback, auth) - Like Docker's CLI pull
+- docker.pull(repoTag, options, callback, auth) - Like Docker's CLI pull
 - docker.run(image, cmd, stream, createOptions, startOptions) - Like Docker's CLI run
 
 
@@ -431,58 +431,58 @@ container.attach({
 
 - image.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageInspect)
 - image.history() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageHistory)
-- image.push(opts, callback, auth) { - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImagePush)
-- image.tag(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageTag)
-- image.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageDelete)
+- image.push(options, callback, auth) { - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImagePush)
+- image.tag(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageTag)
+- image.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageDelete)
 - image.get() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageGet)
 
 ### Network
 
 - network.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkInspect)
-- network.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDelete)
-- network.connect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkConnect)
-- network.disconnect(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDisconnect)
+- network.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDelete)
+- network.connect(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkConnect)
+- network.disconnect(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NetworkDisconnect)
 
 ### Node
 
 - node.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeInspect)
-- node.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeDelete)
-- node.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeUpdate)
+- node.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeDelete)
+- node.update(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/NodeUpdate)
 
 ### Plugin
 
 - plugin.privileges() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/GetPluginPrivileges)
-- plugin.pull(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPull)
+- plugin.pull(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPull)
 - plugin.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginInspect)
-- plugin.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDelete)
-- plugin.enable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginEnable)
-- plugin.disable(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDisable)
-- plugin.update([auth], opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginUpgrade)
-- plugin.push(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPush)
-- plugin.configure(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginSet)
+- plugin.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDelete)
+- plugin.enable(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginEnable)
+- plugin.disable(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginDisable)
+- plugin.update([auth], options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginUpgrade)
+- plugin.push(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginPush)
+- plugin.configure(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/PluginSet)
 
 ### Secret
 
 - secret.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretInspect)
 - secret.remove() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretDelete)
-- secret.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretUpdate)
+- secret.update(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SecretUpdate)
 
 ### Service
 
 - service.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceInspect)
-- service.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceDelete)
-- service.update(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceUpdate)
-- service.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceLogs)
+- service.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceDelete)
+- service.update(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceUpdate)
+- service.logs(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ServiceLogs)
 
 ### Task
 
 - task.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/TaskInspect)
-- task.logs(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/Session)
+- task.logs(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/Session)
 
 ### Volume
 
 - volume.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/VolumeInspect)
-- volume.remove(opts) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/VolumeDelete)
+- volume.remove(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/VolumeDelete)
 
 
 ## Tests
