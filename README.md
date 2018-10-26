@@ -142,7 +142,7 @@ docker.buildImage({
 
 `buildImage` returns a Promise of NodeJS stream. In case you want to find out when the build has finished, you must follow the progress of the build with the `modem` instance in dockerode:
 
-```
+``` js
 let dockerode = new Dockerode();
 let stream = await dockerode.buildImage(...);
 await new Promise((resolve, reject) => {
