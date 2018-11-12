@@ -268,6 +268,18 @@ describe("#swarm", function() {
       docker.listServices(handler);
     });
 
+    it("should list services using promises", function(done) {
+      this.timeout(5000);
+
+      docker.listServices({}).then(function(services) {
+        expect(services).to.be.a('array');
+        done();
+      }).catch(function(err) {
+        expect(err).to.be.null;
+        done();
+      });
+    });
+
     it("should inspect service", function(done) {
       function handler(err, data) {
         expect(err).to.be.null;
