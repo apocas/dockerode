@@ -176,7 +176,7 @@ docker.createContainer({ /*...*/ Tty: true /*...*/ }, function(err, container) {
   });
 
   /* ... */
-}
+});
 
 //tty:false
 docker.createContainer({ /*...*/ Tty: false /*...*/ }, function(err, container) {
@@ -189,7 +189,7 @@ docker.createContainer({ /*...*/ Tty: false /*...*/ }, function(err, container) 
   });
 
   /* ... */
-}
+});
 
 docker.createImage({fromImage: 'ubuntu'}, function (err, stream) {
   stream.pipe(process.stdout);
