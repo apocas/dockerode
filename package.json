@@ -15,9 +15,9 @@
     "docker.io"
   ],
   "dependencies": {
-    "concat-stream": "~1.6.2",
-    "docker-modem": "^1.0.8",
-    "tar-fs": "~1.16.3"
+    "concat-stream": "~2.0.0",
+    "docker-modem": "^1.0.9",
+    "tar-fs": "~2.0.0"
   },
   "devDependencies": {
     "bluebird": "^3.5.3",
