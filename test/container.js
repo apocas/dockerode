@@ -607,6 +607,28 @@ describe("#container", function() {
       container.exec(options, handler);
     });
 
+    it("should run resolve exec promise with a stream", function(done) {
+      this.timeout(20000);
+      var options = {
+        Cmd: ["echo", "'foo'"]
+      };
+
+      var container = docker.getContainer(testContainer);
+
+      function handler(err, exec) {
+        expect(err).to.be.null;
+
+        exec.start()
+          .then(stream => {
+            expect(stream.pipe).to.be.ok;
+            done();
+          })
+          .catch(done);
+      }
+
+      container.exec(options, handler);
+    });
+
     it("should allow exec stream hijacking on a container", function(done) {
       this.timeout(20000);
       var options = {
