@@ -194,7 +194,7 @@ describe("#docker", function() {
         // search for the image in the RepoTags
         var image;
         for (var i = 0, len = list.length; i < len; i++) {
-          if (list[i].RepoTags.indexOf(repoTag) !== -1) {
+          if (list[i].RepoTags && list[i].RepoTags.indexOf(repoTag) !== -1) {
             // ah ha! repo tags
             return callback(null, docker.getImage(list[i].Id));
           }

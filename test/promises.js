@@ -59,6 +59,8 @@ describe("#promises", function() {
     it("should start->resize->stop->remove a container", function(done) {
       this.timeout(60000);
 
+      var containeri;
+
       docker.createContainer({
         Image: 'ubuntu',
         AttachStdin: false,
@@ -69,16 +71,17 @@ describe("#promises", function() {
         OpenStdin: false,
         StdinOnce: false
       }).then(function(container) {
-        return container.start();
-      }).then(function(container) {
-        return container.resize({
+        containeri = container;
+        return containeri.start();
+      }).then(function(data) {
+        return containeri.resize({
           h: process.stdout.rows,
           w: process.stdout.columns
         });
-      }).then(function(container) {
-        return container.stop();
-      }).then(function(container) {
-        return container.remove();
+      }).then(function(data) {
+        return containeri.stop();
+      }).then(function(data) {
+        return containeri.remove();
       }).then(function(data) {
         done();
       }).catch(function(err) {
@@ -90,7 +93,9 @@ describe("#promises", function() {
     it("should runPromise a command", function(done) {
       this.timeout(30000);
 
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(output) {
+        var data = output[0];
+        var container = output[1];
         expect(container).to.be.ok;
         return container.remove();
       }).then(function(data) {
@@ -106,6 +111,8 @@ describe("#promises", function() {
     it("should start->stop->remove a container with Bluebird", function(done) {
       this.timeout(60000);
 
+      var containeri;
+
       dockerp.createContainer({
         Image: 'ubuntu',
         AttachStdin: false,
@@ -116,11 +123,12 @@ describe("#promises", function() {
         OpenStdin: false,
         StdinOnce: false
       }).then(function(container) {
-        return container.start();
-      }).then(function(container) {
-        return container.stop();
-      }).then(function(container) {
-        return container.remove();
+        containeri = container;
+        return containeri.start();
+      }).then(function(data) {
+        return containeri.stop();
+      }).then(function(data) {
+        return containeri.remove();
       }).then(function(data) {
         done();
       }).catch(function(err) {
