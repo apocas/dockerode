@@ -82,6 +82,7 @@ container.remove(function (err, data) {
 });
 
 // promises are supported
+var auxContainer;
 docker.createContainer({
   Image: 'ubuntu',
   AttachStdin: false,
@@ -92,16 +93,17 @@ docker.createContainer({
   OpenStdin: false,
   StdinOnce: false
 }).then(function(container) {
-  return container.start();
-}).then(function(container) {
-  return container.resize({
+  auxContainer = container;
+  return auxContainer.start();
+}).then(function(data) {
+  return auxContainer.resize({
     h: process.stdout.rows,
     w: process.stdout.columns
   });
-}).then(function(container) {
-  return container.stop();
-}).then(function(container) {
-  return container.remove();
+}).then(function(data) {
+  return auxContainer.stop();
+}).then(function(data) {
+  return auxContainer.remove();
 }).then(function(data) {
   console.log('container removed');
 }).catch(function(err) {
@@ -236,8 +238,10 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, 
 });
 
 //promise
-docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(container) {
-  console.log(container.output.StatusCode);
+docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(data) {
+  var output = data[0];
+  var container = data[1];
+  console.log(output.StatusCode);
   return container.remove();
 }).then(function(data) {
   console.log('container removed');

@@ -93,9 +93,9 @@ describe("#promises", function() {
     it("should runPromise a command", function(done) {
       this.timeout(30000);
 
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(output) {
-        var data = output[0];
-        var container = output[1];
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout).then(function(data) {
+        var output = data[0];
+        var container = data[1];
         expect(container).to.be.ok;
         return container.remove();
       }).then(function(data) {
