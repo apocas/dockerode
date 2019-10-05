@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker Remote API module.",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -20,7 +20,7 @@
     "tar-fs": "~2.0.0"
   },
   "devDependencies": {
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "chai": "~4.1.0",
     "memorystream": "~0.3.0",
     "mocha": "^5.2.0"
@@ -31,7 +31,7 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">= 0.8"
+    "node": ">= 8.0"
   },
   "contributors": [
     {
