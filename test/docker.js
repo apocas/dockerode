@@ -8,7 +8,7 @@ var docker = require('./spec_helper').docker;
 var dockert = require('./spec_helper').dockert;
 
 
-var testImage = 'ubuntu:14.04';
+var testImage = 'ubuntu:latest';
 var testVolume = {
   "Name": "tardis",
   "Driver": "local",

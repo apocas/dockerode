@@ -6,7 +6,7 @@ var dockerp = require('./spec_helper').dockerp;
 var MemoryStream = require('memorystream');
 var Socket = require('net').Socket;
 
-var testImage = 'ubuntu:14.04';
+var testImage = 'ubuntu:latest';
 
 describe("#promises", function() {
 
