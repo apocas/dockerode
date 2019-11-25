@@ -84,11 +84,24 @@ describe("#networks", function() {
       function handler(err, data) {
         expect(err).to.be.null;
         expect(data).to.be.ok;
-        expect(data.Containers).to.not.be.null;
+        expect(data.Containers).to.be.ok;
         done();
       }
 
       network.inspect(handler);
+    });
+
+    it("should inspect a network verbosely when verbose: true", function(done) {
+      var network = testNetwork;
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        expect(data.Containers).to.be.ok;
+        done();
+      }
+
+      network.inspect({ verbose: true }, handler);
     });
   });
 
