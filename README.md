@@ -269,6 +269,20 @@ docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr
 });
 ```
 
+And here is one more complex example using auto-remove and Docker network.
+
+``` js
+docker.run(
+    "some-python-image",
+    ["python", "main.py", arg],
+    process.stdout,
+    { name: "my-python-container", HostConfig: { AutoRemove: true, NetworkMode: "my_network" } },
+    function(err, data, container) {
+        // Do stuff
+    }
+);
+```
+
 ### Equivalent of `docker pull` in `dockerode`:
 
 * `repoTag` - container image name (optionally with tag)
