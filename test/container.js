@@ -701,6 +701,50 @@ describe("#container", function() {
       container.stop(handler);
     });
   });
+
+  describe("#wait", function() {
+    var testWaitContainer
+    before(function(done) {
+      docker.createContainer({
+        Image: 'ubuntu',
+        AttachStdin: false,
+        AttachStdout: true,
+        AttachStderr: true,
+        Tty: true,
+        Cmd: ['/bin/bash', '-c', 'sleep 1'],
+        OpenStdin: false,
+        StdinOnce: false
+      }, function(err, container) {
+        if (err) done(err);
+        testWaitContainer = container.id;
+        console.log('Created test wait container ' + container.id);
+        done();
+      });
+    });
+    it("should accept next-exit condition before start is called", function(done) {
+      this.timeout(30000);
+      var container = docker.getContainer(testWaitContainer);
+
+      container.wait({condition: 'next-exit'}, (err, data) => {
+        expect(err).to.be.null;
+        container.inspect((err, info) => {
+          expect(err).to.be.null;
+          expect(info.State.Running).to.be.false;
+          console.log(info.State.Running)
+          done();
+        })        
+      }) 
+
+      container.start((err) => {
+        expect(err).to.be.null;
+      })
+    });
+    after(function(done) {
+      docker.getContainer(testWaitContainer).remove(function() {
+        done();
+      });
+    })
+  });
 });
 
 describe("#non-responsive container", function() {
