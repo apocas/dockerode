@@ -110,32 +110,6 @@ describe("#docker", function() {
         src: ['Dockerfile']
       }, {}, handler);
     });
-
-    it("should throw error while building image using ENOENT files", function(done) {
-      this.timeout(60000);
-
-      function handler(err, stream) {
-        expect(err).not.to.be.null;
-        expect(stream).to.be.undefined;
-
-        if(stream !== undefined) {
-          stream.pipe(process.stdout, {
-            end: true
-          });
-
-          stream.on('end', function() {
-            done();
-          });
-        } else {
-          done();
-        }
-      }
-
-      docker.buildImage({
-        context: __dirname,
-        src: ['Dockerfile2']
-      }, {}, handler);
-    });
   });
 
 
