@@ -128,6 +128,7 @@ docker.listContainers(function (err, containers) {
 ```
 
 ### Building an Image
+Context: provides the path to the Dockerfile. Additionaly files that are involved in the build *must* be explicitly mentioned in src array, since they are sent to a temp env to build. Example: file for COPY command are extracted from that temporary environment.  
 
 ``` js
 docker.buildImage('archive.tar', {t: imageName}, function (err, response){
