@@ -25,6 +25,7 @@ describe("#docker", function() {
       done();
     });
     it("should use specific cert", function(done) {
+      process.env.DOCKER_CERT_PATH = '/thereisnofolder';
       var ca = 'caaaaa';
       var cert = 'certtttt';
       var key = 'keyyyyy';
