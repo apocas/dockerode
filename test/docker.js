@@ -2,6 +2,7 @@
 
 var Bluebird = require('bluebird'),
   expect = require('chai').expect,
+  assert = require('assert'),
   Docker = require('../lib/docker');
 
 var docker = require('./spec_helper').docker;
@@ -21,6 +22,25 @@ describe("#docker", function() {
     it("should work without options", function(done) {
       var d = new Docker();
       expect(d.modem.socketPath).not.to.be.null;
+      done();
+    });
+    it("should use specific cert", function(done) {
+      var ca = 'caaaaa';
+      var cert = 'certtttt';
+      var key = 'keyyyyy';
+      var d = new Docker({
+        version: 'v1.39',
+        host: '127.0.0.1',
+        port: 2376,
+        ca,
+        cert,
+        key
+      });
+  
+      assert.strictEqual(ca, d.modem.ca);
+      assert.strictEqual(cert, d.modem.cert);
+      assert.strictEqual(key, d.modem.key);
+      console.log(d.modem.socketPath);
       done();
     });
     it("should not send Promise options to docker-modem", function(done) {
