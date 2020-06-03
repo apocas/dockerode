@@ -40,7 +40,6 @@ describe("#docker", function() {
       assert.strictEqual(ca, d.modem.ca);
       assert.strictEqual(cert, d.modem.cert);
       assert.strictEqual(key, d.modem.key);
-      console.log(d.modem.socketPath);
       done();
     });
     it("should not send Promise options to docker-modem", function(done) {
