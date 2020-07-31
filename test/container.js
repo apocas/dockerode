@@ -52,6 +52,19 @@ describe("#container", function() {
     });
   });
 
+  describe("#exists", function() {
+    it("should returns true if a container exists", function(done) {
+      var container = docker.getContainer(testContainer);
+
+      function handler(exists) {
+        expect(exists).to.be.true;
+        done();
+      }
+
+      container.exists(handler);
+    });
+  });
+
   describe("#archive", function() {
     it("should get an archive inside the container", function(done) {
       var container = docker.getContainer(testContainer);

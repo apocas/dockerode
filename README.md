@@ -318,6 +318,30 @@ var auth = { key: 'yJ1J2ZXJhZGRyZXNzIjoitZSI6Im4OCIsImF1dGgiOiIiLCJlbWFpbCI6ImZv
 
 ## Helper functions
 
+* `exists` - check if a container exists or not.
+
+``` js
+var container = docker.getContainer('71501a8ab0f8');
+
+//callback
+container.exists(function(exists) {
+  if(exists) {
+    //this container exists in the host
+  } else {
+    //this container doesn't exist in the host
+  }
+});
+
+//promise
+container.exists().then(function(exists) {
+  if(exists) {
+    //this container exists in the host
+  } else {
+    //this container doesn't exist in the host
+  }
+});
+```
+
 * `followProgress` - allows to fire a callback only in the end of a stream based process. (build, pull, ...)
 
 ``` js
@@ -411,6 +435,7 @@ container.attach({
 ### Container
 
 - container.inspect(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ContainerInspect)
+- container.exists()
 - container.rename(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ContainerRename)
 - container.update(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ContainerUpdate)
 - container.top(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ContainerTop)
