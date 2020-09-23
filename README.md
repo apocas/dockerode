@@ -266,7 +266,7 @@ If a callback isn't provided a promise will be returned.
 docker.run('ubuntu', ['bash', '-c', 'uname -a'], [process.stdout, process.stderr], {Tty:false}, function (err, data, container) {
   //...
 }).on('container', function (container) {
-  container.defaultOptions.start.Binds = ["/tmp:/tmp:rw"];
+  //...
 });
 ```
 
