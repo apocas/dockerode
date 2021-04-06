@@ -388,6 +388,26 @@ describe("#docker", function() {
 
       docker.createVolume(testVolume, handler);
     });
+
+    it("should create and remove a default volume", function(done) {
+      this.timeout(5000);
+
+      function handler(err, volume) {
+        expect(err).to.be.null;
+        expect(volume).to.be.ok;
+
+        volume.inspect(function(err, info) {
+          expect(err).to.be.null;
+
+          volume.remove(function(err, data) {
+            expect(err).to.be.null;
+            done();
+          });
+        });
+      }
+
+      docker.createVolume({}, handler);
+    });
   });
 
   describe("#createContainer", function() {
