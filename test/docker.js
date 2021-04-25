@@ -289,7 +289,6 @@ describe("#docker", function() {
         docker.modem.followProgress(stream, onFinished, onProgress);
 
         function onFinished(err, output) {
-          expect(err).not.to.be.null;
           expect(output).to.be.a('array');
           done();
         }
