@@ -12,6 +12,10 @@ Not another Node.js Docker Remote API module.
 * **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
 * **interfaces** - Features **callback** and **promise** based interfaces, making everyone happy :)
 
+## Ecosystem
+
+ * docker-modem [https://github.com/apocas/docker-modem](https://github.com/apocas/docker-modem) - Docker's API network stack
+ * dockerode-compose [https://github.com/apocas/dockerode-compose](https://github.com/apocas/dockerode-compose) - docker-compose in Node.js
 
 ## Installation
 
