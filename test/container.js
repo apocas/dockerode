@@ -704,7 +704,7 @@ describe("#container", function() {
 
   describe("#wait", function() {
     var testWaitContainer
-    before(function(done) {
+    beforeEach(function(done) {
       docker.createContainer({
         Image: 'ubuntu',
         AttachStdin: false,
@@ -732,14 +732,38 @@ describe("#container", function() {
           expect(info.State.Running).to.be.false;
           console.log(info.State.Running)
           done();
-        })        
-      }) 
+        })
+      })
 
       container.start((err) => {
         expect(err).to.be.null;
       })
     });
-    after(function(done) {
+    it("should allow aborting pending waits", function(done) {
+      // Only supported on recent Node versions:
+      if (!global.AbortController) this.skip();
+      this.timeout(5000);
+      var container = docker.getContainer(testWaitContainer);
+
+      var abortController = new AbortController();
+
+      container.wait({
+        condition: 'next-exit',
+        abortSignal: abortController.signal
+      }, (err, data) => {
+        expect(err.code).to.equal('ABORT_ERR');
+        expect(data).to.be.null;
+        container.inspect((err, info) => {
+          expect(err).to.be.null;
+          expect(info.State.Running).to.be.false;
+          console.log(info.State.Running)
+          done();
+        })
+      });
+
+      abortController.abort();
+    });
+    afterEach(function(done) {
       docker.getContainer(testWaitContainer).remove(function() {
         done();
       });
