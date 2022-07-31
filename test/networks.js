@@ -63,6 +63,7 @@ describe("#networks", function() {
 
   describe("#connect", function() {
     it("should connect a container to a network", function(done) {
+      this.timeout(10000);
       var network = testNetwork;
       var container = testContainer;
 

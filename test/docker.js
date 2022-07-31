@@ -37,7 +37,7 @@ describe("#docker", function() {
         cert,
         key
       });
-  
+
       assert.strictEqual(ca, d.modem.ca);
       assert.strictEqual(cert, d.modem.cert);
       assert.strictEqual(key, d.modem.key);
@@ -152,8 +152,32 @@ describe("#docker", function() {
         src: ['Dockerfile', '.dockerignore', 'test.tar']
       }, {}, handler);
     });
-  });
+    
+    it("should not mutate src array", function(done) {
+      this.timeout(60000);
 
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      const src = ['Dockerfile']
+      docker.buildImage({
+        context: __dirname,
+        src: src
+      }, {}, handler);
+
+      expect(src).to.contain('Dockerfile');
+    });
+  });
 
   describe("#loadImage", function() {
     it("should load image from readable stream", function(done) {
@@ -311,14 +335,13 @@ describe("#docker", function() {
         docker.modem.followProgress(stream, onFinished, onProgress);
 
         function onFinished(err, output) {
-          if (err) return done(err);
           expect(output).to.be.a('array');
           done();
         }
 
         function onProgress(event) {
-          stream.destroy();
           expect(event).to.be.ok;
+          stream.destroy();
         }
       });
     });
@@ -326,6 +349,38 @@ describe("#docker", function() {
 
   describe("#run", function() {
     this.timeout(30000);
+
+    it("should run a command with create options", function(done) {
+      function handler(err, data, container) {
+        expect(err).to.be.null;
+
+        container.inspect(function(err, data) {
+          expect(err).to.be.null;
+
+          container.remove(function(err, data) {
+            expect(err).to.be.null;
+            done();
+          });
+        });
+      }
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, handler);
+    });
+
+    it("should run a command", function(done) {
+      function handler(err, data, container) {
+        expect(err).to.be.null;
+        //container is created
+        expect(container).to.be.ok;
+
+        container.remove(function(err, data) {
+          console.log(data)
+          expect(err).to.be.null;
+          done();
+        });
+      }
+
+      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
+    });
 
     it("should emit partial data", function(done) {
       function handler(err, data, container) {
@@ -338,7 +393,7 @@ describe("#docker", function() {
         });
       }
 
-      var ee = docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
+      var ee = docker.run(testImage, ['bash', '-c', 'uname -a; sleep 5'], process.stdout, handler);
       ee.on('container', function(container) {
         expect(container).to.be.ok;
       });
@@ -357,36 +412,6 @@ describe("#docker", function() {
       });
     });
 
-    it("should run a command", function(done) {
-      function handler(err, data, container) {
-        expect(err).to.be.null;
-        //container is created
-        expect(container).to.be.ok;
-
-        container.remove(function(err, data) {
-          expect(err).to.be.null;
-          done();
-        });
-      }
-
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
-    });
-
-    it("should run a command with create options", function(done) {
-      function handler(err, data, container) {
-        expect(err).to.be.null;
-
-        container.inspect(function(err, data) {
-          expect(err).to.be.null;
-
-          container.remove(function(err, data) {
-            expect(err).to.be.null;
-            done();
-          });
-        });
-      }
-      docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, handler);
-    });
   });
 
   describe("#createVolume", function() {
@@ -409,6 +434,26 @@ describe("#docker", function() {
       }
 
       docker.createVolume(testVolume, handler);
+    });
+
+    it("should create and remove a default volume", function(done) {
+      this.timeout(5000);
+
+      function handler(err, volume) {
+        expect(err).to.be.null;
+        expect(volume).to.be.ok;
+
+        volume.inspect(function(err, info) {
+          expect(err).to.be.null;
+
+          volume.remove(function(err, data) {
+            expect(err).to.be.null;
+            done();
+          });
+        });
+      }
+
+      docker.createVolume({}, handler);
     });
   });
 
