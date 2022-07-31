@@ -37,7 +37,7 @@ describe("#docker", function() {
         cert,
         key
       });
-  
+
       assert.strictEqual(ca, d.modem.ca);
       assert.strictEqual(cert, d.modem.cert);
       assert.strictEqual(key, d.modem.key);
@@ -129,6 +129,31 @@ describe("#docker", function() {
         context: __dirname,
         src: ['Dockerfile']
       }, {}, handler);
+    });
+
+    it("should not mutate src array", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      const src = ['Dockerfile']
+      docker.buildImage({
+        context: __dirname,
+        src: src
+      }, {}, handler);
+
+      expect(src).to.contain('Dockerfile');
     });
   });
 
