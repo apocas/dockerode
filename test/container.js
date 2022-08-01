@@ -9,6 +9,7 @@ describe("#container", function() {
 
   var testContainer;
   before(function(done) {
+    this.timeout(30000);
     docker.createContainer({
       Image: 'ubuntu',
       AttachStdin: false,
