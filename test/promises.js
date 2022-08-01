@@ -67,7 +67,7 @@ describe("#promises", function() {
         AttachStdout: true,
         AttachStderr: true,
         Tty: true,
-        Cmd: ['/bin/bash', '-c', 'tail -f /etc/resolv.conf'],
+        Cmd: ['/bin/bash', '-c', 'sleep 60'],
         OpenStdin: false,
         StdinOnce: false
       }).then(function(container) {
