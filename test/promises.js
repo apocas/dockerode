@@ -75,8 +75,8 @@ describe("#promises", function() {
         return containeri.start();
       }).then(function(data) {
         return containeri.resize({
-          h: process.stdout.rows,
-          w: process.stdout.columns
+          h: 10,
+          w: 10
         });
       }).then(function(data) {
         return containeri.stop();
