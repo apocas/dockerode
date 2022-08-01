@@ -1,14 +1,8 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
-on:
+on: push
   push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
-    
   workflow_dispatch:
 
 jobs:
