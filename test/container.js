@@ -157,8 +157,8 @@ describe("#container", function() {
 
       container.start(function(err, data) {
         var opts = {
-          h: process.stdout.rows,
-          w: process.stdout.columns
+          h: 10,
+          w: 10
         };
         container.resize(opts, handle);
       });
