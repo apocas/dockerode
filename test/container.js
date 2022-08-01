@@ -15,7 +15,7 @@ describe("#container", function() {
       AttachStdout: true,
       AttachStderr: true,
       Tty: true,
-      Cmd: ['/bin/bash', '-c', 'tail -f /etc/resolv.conf'],
+      Cmd: ['/bin/bash', '-c', 'sleep 300'],
       OpenStdin: false,
       StdinOnce: false
     }, function(err, container) {
