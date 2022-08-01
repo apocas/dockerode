@@ -131,6 +131,28 @@ describe("#docker", function() {
       }, {}, handler);
     });
 
+    it("should build image from multiple files while respecting the dockerignore file", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      docker.buildImage({
+        context: __dirname,
+        src: ['Dockerfile', '.dockerignore', 'test.tar']
+      }, {}, handler);
+    });
+    
     it("should not mutate src array", function(done) {
       this.timeout(60000);
 
@@ -156,7 +178,6 @@ describe("#docker", function() {
       expect(src).to.contain('Dockerfile');
     });
   });
-
 
   describe("#loadImage", function() {
     it("should load image from readable stream", function(done) {

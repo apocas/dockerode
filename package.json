@@ -15,6 +15,7 @@
     "docker.io"
   ],
   "dependencies": {
+    "@balena/dockerignore": "^1.0.2",
     "docker-modem": "^3.0.0",
     "tar-fs": "~2.0.1"
   },
