@@ -1,8 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-BOX_NAME = ENV['BOX_NAME'] || "ubuntu/xenial64"
+BOX_NAME = ENV['BOX_NAME'] || "ubuntu/focal64"
 SSH_PRIVKEY_PATH = ENV["SSH_PRIVKEY_PATH"]
+NODE_MAJOR_VERSION = "14"
 
 $script = <<SCRIPT
 user="$1"
@@ -11,23 +12,42 @@ if [ -z "$user" ]; then
 fi
 
 apt-get update -q
-apt-get install -q -y apt-transport-https ca-certificates
 
-apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list
+apt-get install -yq \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    apt-transport-https
+
+curl -sL https://deb.nodesource.com/setup_#{NODE_MAJOR_VERSION}.x | sudo -E bash -
+
+apt-get install -yq \
+  gcc \
+  g++ \
+  make \
+  python-is-python3 \
+  nodejs
+
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt-get update -q
-apt-get install -q -y linux-image-extra-$(uname -r) linux-image-extra-virtual docker-engine
-service docker start
+apt-get install -yq \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  linux-image-extra-virtual
 
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+grep -q docker /etc/group || groupadd docker
+usermod -a -G docker vagrant
 
-apt-get update -q
-apt-get install -q -y nodejs python-software-properties python g++ make software-properties-common
+systemctl start docker
 
-
-usermod -a -G docker ubuntu
-docker pull ubuntu
+docker image pull ubuntu
 
 printf "#"'!'"/bin/bash\ndocker rm -f "'$'"(docker ps -a -q)" > /usr/bin/clearcontainers
 chmod +x /usr/bin/clearcontainers
@@ -46,7 +66,7 @@ end
 
 Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vb, override|
-    override.vm.provision :shell, :inline => $script
+    override.vm.provision :shell, :run => :once, :inline => $script
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
