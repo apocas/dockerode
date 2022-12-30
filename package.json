@@ -23,7 +23,7 @@
     "bluebird": "^3.7.0",
     "chai": "~4.2.0",
     "memorystream": "~0.3.0",
-    "mocha": "^7.1.0"
+    "mocha": "^10.2.0"
   },
   "main": "./lib/docker",
   "scripts": {
