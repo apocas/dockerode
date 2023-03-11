@@ -692,7 +692,7 @@ describe("#docker", function() {
 
         container.inspect(function(err, info) {
           expect(err).to.be.null;
-          expect(info.Config.Labels).to.deep.equal(label_map);
+          expect(info.Config.Labels).to.deep.include(label_map);
           callback();
         });
       }

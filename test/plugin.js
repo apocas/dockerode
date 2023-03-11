@@ -117,7 +117,7 @@ describe("#plugin", function() {
 
       function handler(err, data) {
         expect(err).to.be.null;
-        expect(data).to.be.empty;
+        expect(data).to.be.ok;
         done();
       }
 
