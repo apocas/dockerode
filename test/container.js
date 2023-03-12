@@ -234,7 +234,8 @@ describe("#container", function() {
           stream: true,
           stdin: true,
           stdout: true,
-          stderr: true
+          stderr: true,
+          hijack: true
         };
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
@@ -285,7 +286,8 @@ describe("#container", function() {
           stream: true,
           stdin: true,
           stdout: true,
-          stderr: true
+          stderr: true,
+          hijack: true
         };
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
@@ -396,12 +398,12 @@ describe("#container", function() {
           stream: true,
           stdin: true,
           stdout: true,
-          stderr: true
+          stderr: true,
+          hijack: true
         };
         container.attach(attach_opts, function handler(err, stream) {
           expect(err).to.be.null;
           expect(stream).to.be.ok;
-          expect(stream).to.not.be.an.instanceof(Socket);
 
           var memStream = new MemoryStream();
           var output = '';
