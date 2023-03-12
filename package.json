@@ -27,7 +27,7 @@
   },
   "main": "./lib/docker",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -R spec --exit"
+    "test": "./node_modules/mocha/bin/mocha.js -R spec --exit"
   },
   "license": "Apache-2.0",
   "engines": {
