@@ -90,6 +90,23 @@ describe("#docker", function() {
       docker.buildImage('./test/test.tar', {}, handler);
     });
 
+    it("should build image from file using Promise", function(done) {
+      this.timeout(60000);
+
+      docker.buildImage('./test/test.tar', {}).then((stream) => {
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      })
+      .catch(error => done(error))
+    });
+
     it("should build image from readable stream", function(done) {
       this.timeout(60000);
 
@@ -175,7 +192,27 @@ describe("#docker", function() {
         src: ['Dockerfile', '.dockerignore', 'test.tar']
       }, {}, handler);
     });
-    
+
+    it("should build image from multiple files while respecting the dockerignore file via Promise", function(done) {
+      this.timeout(60000);
+
+      docker.buildImage({
+        context: __dirname,
+        src: ['Dockerfile', '.dockerignore', 'test.tar']
+      }, {}).then((stream) => {
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      })
+      .catch(error => done(error))
+    });
+
     it("should not mutate src array", function(done) {
       this.timeout(60000);
 
