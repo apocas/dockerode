@@ -357,7 +357,7 @@ container.attach({
 
 ## Sponsors
 
-Amazing entities that sponsor my open-source work. Check them out!
+Amazing entities that [sponsor](https://github.com/sponsors/apocas) my open-source work. Check them out!
 
 [![HTTP Toolkit](https://avatars.githubusercontent.com/u/39777515?s=100)](https://github.com/httptoolkit)
 
