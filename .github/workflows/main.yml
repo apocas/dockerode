@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_nodejs:
     runs-on: ubuntu-latest
     
     strategy:
@@ -15,7 +15,6 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
       
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -33,6 +32,22 @@ jobs:
       
       - name: Nodejs Tests
         run: npm test
+
+  build_bun:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+    
+      - name: Provisioning
+        run: |
+          docker --version
+          bun -v
+          docker pull ubuntu
+
+      - name: Bun install
+        run: bun install
 
       - name: Bun Tests
         run: bun run test
