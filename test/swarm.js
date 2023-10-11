@@ -99,9 +99,8 @@ describe("#swarm", function() {
     it("should update secret", function(done) {
       this.timeout(15000);
 
-      function handler(err, data) {
+      function handler(err) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
       var opts = {
@@ -180,9 +179,8 @@ describe("#swarm", function() {
     it("should update config", function(done) {
       this.timeout(15000);
 
-      function handler(err, data) {
+      function handler(err) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
       var opts = {

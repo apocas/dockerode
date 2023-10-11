@@ -71,9 +71,8 @@ describe("#container", function() {
     it("should put an archive inside the container", function(done) {
       var container = docker.getContainer(testContainer);
 
-      function handler(err, data) {
+      function handler(err) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 

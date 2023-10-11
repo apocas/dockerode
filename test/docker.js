@@ -433,7 +433,6 @@ describe("#docker", function() {
         expect(container).to.be.ok;
 
         container.remove(function(err, data) {
-          console.log(data)
           expect(err).to.be.null;
           done();
         });

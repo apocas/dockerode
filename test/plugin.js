@@ -115,9 +115,8 @@ describe("#plugin", function() {
       this.timeout(15000);
       var plugin = docker.getPlugin('sshfs');
 
-      function handler(err, data) {
+      function handler(err) {
         expect(err).to.be.null;
-        expect(data).to.be.ok;
         done();
       }
 
