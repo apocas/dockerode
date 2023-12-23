@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker Remote API module.",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@balena/dockerignore": "^1.0.2",
-    "docker-modem": "^5.0.0",
+    "docker-modem": "^5.0.2",
     "tar-fs": "~2.0.1"
   },
   "devDependencies": {
