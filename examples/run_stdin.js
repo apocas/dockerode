@@ -31,6 +31,9 @@ var previousKey,
     CTRL_Q = '\u0011';
 
 function handler(err, container) {
+  //Check error and thow it 
+  if(err) throw new Error(err);
+
   var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
 
   container.attach(attach_opts, function handler(err, stream) {

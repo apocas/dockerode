@@ -415,6 +415,7 @@ Amazing entities that [sponsor](https://github.com/sponsors/apocas) my open-sour
 - docker.swarmUpdate(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SwarmUpdate)
 - docker.swarmInspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/SwarmInspect)
 - docker.pull(repoTag, options, callback, auth) - Like Docker's CLI pull
+- docker.pullAll(repoTag, options, callback, auth) - Like Docker's CLI pull with "-a"
 - docker.run(image, cmd, stream, createOptions, startOptions) - Like Docker's CLI run
 
 
