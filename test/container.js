@@ -371,7 +371,7 @@ describe("#container", function() {
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(output).to.match(/.*users.*load average.*/);
+              expect(output).to.match(/.*user.*load average.*/);
               done();
             });
           });
@@ -420,7 +420,7 @@ describe("#container", function() {
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(output).to.match(/.*users.*load average.*/);
+              expect(output).to.match(/.*user.*load average.*/);
               done();
             });
           });
@@ -468,7 +468,7 @@ describe("#container", function() {
             container.wait(function(err, data) {
               expect(err).to.be.null;
               expect(data).to.be.ok;
-              expect(output).to.match(/.*users.*load average.*/);
+              expect(output).to.match(/.*user.*load average.*/);
               done();
             });
           });
