@@ -205,7 +205,7 @@ docker.createImage({fromImage: 'ubuntu'}, function (err, stream) {
 //...
 ```
 
-There is also support for [HTTP connection hijacking](https://docs.docker.com/engine/api/v1.22/#32-hijacking),
+There is also support for [HTTP connection hijacking](https://docs.docker.com/engine/api/v1.45/#tag/Container/operation/ContainerAttach),
 which allows for cleaner interactions with commands that work with stdin and stdout separately.
 
 ```js
