@@ -63,7 +63,7 @@ describe('util', function () {
 
     it("should pass the options through when there is no context", function () {
       const dummy = {};
-      util.prepareBuildContext(dummy, function (ctx) {
+      util.prepareBuildContext(dummy, {}, function (ctx) {
         expect(ctx).to.be.equal(dummy);
       })
     });
@@ -86,7 +86,7 @@ describe('util', function () {
             expect(files.length).to.be.equal(2);
             expect(files).to.have.members(['Dockerfile', 'MC-hammer.txt']);
 
-            fs.rm(tmp, { recursive: true });
+            fs.rm(tmp, { recursive: true }, (err) => {});
             done();
           });
       }
@@ -94,6 +94,38 @@ describe('util', function () {
       util.prepareBuildContext({
         context: path.join(__dirname, 'fixtures', 'dockerignore'),
         src: ['Dockerfile', 'MC-hammer.txt', 'ignore-dir', 'foo.txt']
+      }, {}, handler);
+    });
+
+    it("should use the specific Dockerfile.dockerignore over the default in the context dir", function (done) {
+      this.timeout(60000);
+
+      function handler(stream) {
+        expect(stream).to.be.ok;
+
+        const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'dockerode-'));
+        const z = zlib.createGunzip();
+
+        stream
+          .pipe(z)
+          .pipe(tar.extract(tmp), { end: true })
+          .on('finish', function () {
+            const files = fs.readdirSync(tmp);
+
+            expect(files.length).to.be.equal(1);
+            expect(files).to.have.members(['specific.Dockerfile']);
+
+            fs.rm(tmp, { recursive: true }, (err) => {});
+            done();
+          });
+      }
+
+      const context = path.join(__dirname, 'fixtures', 'dockerignore');
+      util.prepareBuildContext({
+        context,
+        src: ['specific.Dockerfile', 'MC-hammer.txt', 'ignore-dir', 'foo.txt']
+      }, {
+        dockerfile: path.join(context, 'specific.Dockerfile')
       }, handler);
     });
   });
