@@ -1,0 +1,4 @@
+# Ignore dirs
+ignore-dir
+# Ignore blobs
+*.txt
