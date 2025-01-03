@@ -237,6 +237,42 @@ describe("#docker", function() {
 
       expect(src).to.contain('Dockerfile');
     });
+
+    it("should build image with buildKit", function (done) {
+      this.timeout(60000);
+      const randomId = Math.random().toString(36).substring(7);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true,
+        });
+
+        stream.on("end", function () {
+          docker.getImage(randomId).inspect((err, image) => {
+            expect(err).to.be.null;
+            expect(image).to.exist;
+            done();
+          });
+        });
+      }
+
+      docker.buildImage(
+        {
+          context: __dirname,
+          src: ["buildkit.Dockerfile"],
+        },
+        {
+          dockerfile: "buildkit.Dockerfile",
+          version: "2",
+          t: randomId,
+          pull: "true",
+        },
+        handler
+      );
+    });
   });
 
   describe("#loadImage", function() {
