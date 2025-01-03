@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker Remote API module.",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"
@@ -18,7 +18,7 @@
     "@balena/dockerignore": "^1.0.2",
     "@grpc/grpc-js": "^1.11.1",
     "@grpc/proto-loader": "^0.7.13",
-    "docker-modem": "file:../docker-modem",
+    "docker-modem": "^5.0.5",
     "protobufjs": "^7.3.2",
     "tar-fs": "~2.0.1",
     "uuid": "^10.0.0"
