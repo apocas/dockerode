@@ -7,7 +7,7 @@ Not another Node.js Docker Remote API module.
 * **streams** - `dockerode` does NOT break any stream, it passes them to you allowing for some stream voodoo.
 * **stream demux** - Supports optional [stream demultiplexing](https://github.com/apocas/dockerode#helper-functions).
 * **entities** - containers, images and execs are defined entities and not random static methods.
-* **run** - `dockerode` allow you to seamless run commands in a container ala `docker run`.
+* **run** - `dockerode` allow you to seamless run commands in a container aka `docker run`.
 * **tests** - `dockerode` really aims to have a good test set, allowing to follow `Docker` changes easily, quickly and painlessly.
 * **feature-rich** - There's a real effort in keeping **All** `Docker` Remote API features implemented and tested.
 * **interfaces** - Features **callback** and **promise** based interfaces, making everyone happy :)
