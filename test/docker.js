@@ -149,6 +149,28 @@ describe("#docker", function() {
       }, { t: 'multiple-files' }, handler);
     });
 
+    it("should build image from multiple files using cache", function(done) {
+      this.timeout(60000);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+
+        stream.pipe(process.stdout, {
+          end: true
+        });
+
+        stream.on('end', function() {
+          done();
+        });
+      }
+
+      docker.buildImage({
+        context: __dirname,
+        src: ['Dockerfile']
+      }, { t: 'multiple-files-cachefrom', 'cachefrom': ['ubuntu:latest'] }, handler);
+    });
+
     it("should build image from multiple files while respecting the .dockerignore file", function(done) {
       this.timeout(60000);
 
