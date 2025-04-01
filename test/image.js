@@ -17,7 +17,7 @@ describe("#image", function() {
         done();
       }
 
-      image.inspect(handler);
+      image.inspect(undefined, handler);
     });
 
     it("should inspect an image with manifest", function (done) {
