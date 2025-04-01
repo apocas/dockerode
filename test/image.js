@@ -17,7 +17,19 @@ describe("#image", function() {
         done();
       }
 
-      image.inspect(handler);
+      image.inspect(undefined, handler);
+    });
+
+    it("should inspect an image with manifest", function (done) {
+      var image = docker.getImage(testImage);
+
+      function handler(err, data) {
+        expect(err).to.be.null;
+        expect(data).to.be.ok;
+        done();
+      }
+
+      image.inspect({manifest: 1}, handler);
     });
   });
 

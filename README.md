@@ -453,7 +453,7 @@ Amazing entities that [sponsor](https://github.com/sponsors/apocas) my open-sour
 
 ### Image
 
-- image.inspect() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageInspect)
+- image.inspect(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.48/#tag/Image/operation/ImageInspect)
 - image.history() - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageHistory)
 - image.push(options, callback, auth) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImagePush)
 - image.tag(options) - [Docker API Endpoint](https://docs.docker.com/engine/api/v1.37/#operation/ImageTag)
