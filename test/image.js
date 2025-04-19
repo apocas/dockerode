@@ -5,10 +5,10 @@ var docker = require('./spec_helper').docker;
 
 var testImage = 'ubuntu:latest';
 
-describe("#image", function() {
+describe("#image", function () {
 
-  describe("#inspect", function() {
-    it("should inspect an image", function(done) {
+  describe("#inspect", function () {
+    it("should inspect an image", function (done) {
       var image = docker.getImage(testImage);
 
       function handler(err, data) {
@@ -17,7 +17,7 @@ describe("#image", function() {
         done();
       }
 
-      image.inspect(undefined, handler);
+      image.inspect(handler);
     });
 
     it("should inspect an image with manifest", function (done) {
@@ -29,12 +29,12 @@ describe("#image", function() {
         done();
       }
 
-      image.inspect({manifest: 1}, handler);
+      image.inspect({ manifest: 1 }, handler);
     });
   });
 
-  describe("#distribution", function() {
-    it("should distribution an image", function(done) {
+  describe("#distribution", function () {
+    it("should distribution an image", function (done) {
       this.timeout(30000);
       var image = docker.getImage(testImage);
 
@@ -48,8 +48,8 @@ describe("#image", function() {
     });
   });
 
-  describe("#history", function() {
-    it("should get image history", function(done) {
+  describe("#history", function () {
+    it("should get image history", function (done) {
       var image = docker.getImage(testImage);
 
       function handler(err, data) {
@@ -63,8 +63,8 @@ describe("#image", function() {
   });
 
 
-  describe("#get", function() {
-    it("should get an image", function(done) {
+  describe("#get", function () {
+    it("should get an image", function (done) {
       this.timeout(120000);
 
       var image = docker.getImage(testImage);

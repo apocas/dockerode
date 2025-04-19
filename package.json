@@ -1,7 +1,7 @@
 {
   "name": "dockerode",
   "description": "Docker Remote API module.",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "author": "Pedro Dias <petermdias@gmail.com>",
   "maintainers": [
     "apocas <petermdias@gmail.com>"

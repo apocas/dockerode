@@ -17,15 +17,15 @@ var testVolume = {
   "Mountpoint": "/var/lib/docker/volumes/tardis"
 };
 
-describe("#docker", function() {
+describe("#docker", function () {
 
-  describe("#constructors", function()  {
-    it("should work without options", function(done) {
+  describe("#constructors", function () {
+    it("should work without options", function (done) {
       var d = new Docker();
       expect(d.modem.socketPath).not.to.be.null;
       done();
     });
-    it("should use specific cert", function(done) {
+    it("should use specific cert", function (done) {
       process.env.DOCKER_CERT_PATH = '/thereisnofolder';
       var ca = 'caaaaa';
       var cert = 'certtttt';
@@ -44,7 +44,7 @@ describe("#docker", function() {
       assert.strictEqual(key, d.modem.key);
       done();
     });
-    it("should not send Promise options to docker-modem", function(done) {
+    it("should not send Promise options to docker-modem", function (done) {
       var d = new Docker({
         'Promise': Bluebird
       });
@@ -53,8 +53,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#checkAuth", function() {
-    it("should fail auth", function(done) {
+  describe("#checkAuth", function () {
+    it("should fail auth", function (done) {
       this.timeout(15000);
 
       function handler(err, data) {
@@ -70,8 +70,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#buildImage", function() {
-    it("should build image from file", function(done) {
+  describe("#buildImage", function () {
+    it("should build image from file", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -82,7 +82,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -90,7 +90,7 @@ describe("#docker", function() {
       docker.buildImage('./test/test.tar', {}, handler);
     });
 
-    it("should build image from file using Promise", function(done) {
+    it("should build image from file using Promise", function (done) {
       this.timeout(60000);
 
       docker.buildImage('./test/test.tar', {}).then((stream) => {
@@ -100,14 +100,14 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       })
-      .catch(error => done(error))
+        .catch(error => done(error))
     });
 
-    it("should build image from readable stream", function(done) {
+    it("should build image from readable stream", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -118,7 +118,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -127,7 +127,7 @@ describe("#docker", function() {
       docker.buildImage(data, handler);
     });
 
-    it("should build image from multiple files", function(done) {
+    it("should build image from multiple files", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -138,7 +138,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -149,7 +149,7 @@ describe("#docker", function() {
       }, { t: 'multiple-files' }, handler);
     });
 
-    it("should build image from multiple files using cache", function(done) {
+    it("should build image from multiple files using cache", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -160,7 +160,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -171,7 +171,7 @@ describe("#docker", function() {
       }, { t: 'multiple-files-cachefrom', 'cachefrom': ['ubuntu:latest'] }, handler);
     });
 
-    it("should build image from multiple files while respecting the .dockerignore file", function(done) {
+    it("should build image from multiple files while respecting the .dockerignore file", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -182,7 +182,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -193,7 +193,7 @@ describe("#docker", function() {
       }, { t: 'honor-dockerignore' }, handler);
     });
 
-    it("should build image from multiple files while respecting the dockerignore file", function(done) {
+    it("should build image from multiple files while respecting the dockerignore file", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -204,7 +204,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -215,7 +215,7 @@ describe("#docker", function() {
       }, {}, handler);
     });
 
-    it("should build image from multiple files while respecting the dockerignore file via Promise", function(done) {
+    it("should build image from multiple files while respecting the dockerignore file via Promise", function (done) {
       this.timeout(60000);
 
       docker.buildImage({
@@ -228,14 +228,14 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       })
-      .catch(error => done(error))
+        .catch(error => done(error))
     });
 
-    it("should not mutate src array", function(done) {
+    it("should not mutate src array", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -246,7 +246,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -273,7 +273,7 @@ describe("#docker", function() {
         });
 
         stream.on("end", function () {
-          docker.getImage(randomId).inspect(undefined, (err, image) => {
+          docker.getImage(randomId).inspect(function (err, image) {
             expect(err).to.be.null;
             expect(image).to.exist;
             done();
@@ -297,8 +297,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#loadImage", function() {
-    it("should load image from readable stream", function(done) {
+  describe("#loadImage", function () {
+    it("should load image from readable stream", function (done) {
       this.timeout(60000);
 
       function handler(err, stream) {
@@ -309,7 +309,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -320,8 +320,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#getEvents", function() {
-    it("should get events", function(done) {
+  describe("#getEvents", function () {
+    it("should get events", function (done) {
       this.timeout(30000);
 
       function handler(err, stream) {
@@ -337,8 +337,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#getPing", function() {
-    it("should ping server", function(done) {
+  describe("#getPing", function () {
+    it("should ping server", function (done) {
       this.timeout(30000);
 
       function handler(err, data) {
@@ -350,8 +350,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#testTimeout", function() {
-    it("should timeout", function(done) {
+  describe("#testTimeout", function () {
+    it("should timeout", function (done) {
       this.timeout(30000);
 
       function handler(err, data) {
@@ -365,14 +365,14 @@ describe("#docker", function() {
     });
   });
 
-  describe('#pull', function() {
+  describe('#pull', function () {
     this.timeout(120000);
 
     // one image with one tag
     var repoTag = testImage;
 
     function locateImage(image, callback) {
-      docker.listImages(function(err, list) {
+      docker.listImages(function (err, list) {
         if (err) return callback(err);
 
         // search for the image in the RepoTags
@@ -398,9 +398,9 @@ describe("#docker", function() {
     });
     */
 
-    it('should pull image from remote source', function(done) {
+    it('should pull image from remote source', function (done) {
       function handler() {
-        locateImage(repoTag, function(err, image) {
+        locateImage(repoTag, function (err, image) {
           if (err) return done(err);
           // found the image via list images
           expect(image).to.be.ok;
@@ -408,15 +408,15 @@ describe("#docker", function() {
         });
       }
 
-      docker.pull(repoTag, function(err, stream) {
+      docker.pull(repoTag, function (err, stream) {
         if (err) return done(err);
         stream.pipe(process.stdout);
         stream.once('end', handler);
       });
     });
 
-    it('should pull image from remote source using followProgress', function(done) {
-      docker.pull(repoTag, function(err, stream) {
+    it('should pull image from remote source using followProgress', function (done) {
+      docker.pull(repoTag, function (err, stream) {
         if (err) return done(err);
         docker.modem.followProgress(stream, onFinished, onProgress);
 
@@ -433,8 +433,8 @@ describe("#docker", function() {
       });
     });
 
-    it('should pull image from remote source using followProgress and firing only in the end', function(done) {
-      docker.pull(repoTag, function(err, stream) {
+    it('should pull image from remote source using followProgress and firing only in the end', function (done) {
+      docker.pull(repoTag, function (err, stream) {
         if (err) return done(err);
         docker.modem.followProgress(stream, onFinished);
 
@@ -447,8 +447,8 @@ describe("#docker", function() {
       });
     });
 
-    it('should pull image from remote source using followProgress and pause', function(done) {
-      docker.pull(repoTag, function(err, stream) {
+    it('should pull image from remote source using followProgress and pause', function (done) {
+      docker.pull(repoTag, function (err, stream) {
         if (err) return done(err);
         docker.modem.followProgress(stream, onFinished, onProgress);
 
@@ -465,17 +465,17 @@ describe("#docker", function() {
     });
   });
 
-  describe("#run", function() {
+  describe("#run", function () {
     this.timeout(30000);
 
-    it("should run a command with create options", function(done) {
+    it("should run a command with create options", function (done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
 
-        container.inspect(function(err, data) {
+        container.inspect(function (err, data) {
           expect(err).to.be.null;
 
-          container.remove(function(err, data) {
+          container.remove(function (err, data) {
             expect(err).to.be.null;
             done();
           });
@@ -484,13 +484,13 @@ describe("#docker", function() {
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, {}, handler);
     });
 
-    it("should run a command", function(done) {
+    it("should run a command", function (done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
         //container is created
         expect(container).to.be.ok;
 
-        container.remove(function(err, data) {
+        container.remove(function (err, data) {
           expect(err).to.be.null;
           done();
         });
@@ -499,31 +499,31 @@ describe("#docker", function() {
       docker.run(testImage, ['bash', '-c', 'uname -a'], process.stdout, handler);
     });
 
-    it("should emit partial data", function(done) {
+    it("should emit partial data", function (done) {
       function handler(err, data, container) {
         expect(err).to.be.null;
         //container is created
         expect(container).to.be.ok;
 
-        container.remove(function(err, data) {
+        container.remove(function (err, data) {
           expect(err).to.be.null;
         });
       }
 
       var ee = docker.run(testImage, ['bash', '-c', 'uname -a; sleep 5'], process.stdout, handler);
-      ee.on('container', function(container) {
+      ee.on('container', function (container) {
         expect(container).to.be.ok;
       });
-      ee.on('stream', function(stream) {
+      ee.on('stream', function (stream) {
         expect(stream).to.be.ok;
       });
-      ee.on('start', function(container) {
+      ee.on('start', function (container) {
         expect(container).to.be.ok;
-        container.inspect(function(err, info) {
+        container.inspect(function (err, info) {
           expect(info.State.Status).to.equal('running');
         });
       });
-      ee.on('data', function(data) {
+      ee.on('data', function (data) {
         expect(data).to.be.ok;
         done();
       });
@@ -531,19 +531,19 @@ describe("#docker", function() {
 
   });
 
-  describe("#createVolume", function() {
-    it("should create and remove a volume", function(done) {
+  describe("#createVolume", function () {
+    it("should create and remove a volume", function (done) {
       this.timeout(5000);
 
       function handler(err, volume) {
         expect(err).to.be.null;
         expect(volume).to.be.ok;
 
-        volume.inspect(function(err, info) {
+        volume.inspect(function (err, info) {
           expect(err).to.be.null;
           expect(info.Name).to.equal(testVolume.Name);
 
-          volume.remove(function(err, data) {
+          volume.remove(function (err, data) {
             expect(err).to.be.null;
             done();
           });
@@ -553,17 +553,17 @@ describe("#docker", function() {
       docker.createVolume(testVolume, handler);
     });
 
-    it("should create and remove a default volume", function(done) {
+    it("should create and remove a default volume", function (done) {
       this.timeout(5000);
 
       function handler(err, volume) {
         expect(err).to.be.null;
         expect(volume).to.be.ok;
 
-        volume.inspect(function(err, info) {
+        volume.inspect(function (err, info) {
           expect(err).to.be.null;
 
-          volume.remove(function(err, data) {
+          volume.remove(function (err, data) {
             expect(err).to.be.null;
             done();
           });
@@ -574,19 +574,19 @@ describe("#docker", function() {
     });
   });
 
-  describe("#createContainer", function() {
-    it("should create and remove a container", function(done) {
+  describe("#createContainer", function () {
+    it("should create and remove a container", function (done) {
       this.timeout(5000);
 
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
 
-        container.inspect(function(err, info) {
+        container.inspect(function (err, info) {
           expect(err).to.be.null;
           expect(info.Name).to.equal('/test');
 
-          container.remove(function(err, data) {
+          container.remove(function (err, data) {
             expect(err).to.be.null;
             done();
           });
@@ -601,8 +601,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#createImage", function() {
-    it("should create an image", function(done) {
+  describe("#createImage", function () {
+    it("should create an image", function (done) {
       this.timeout(120000);
 
       function handler(err, stream) {
@@ -613,7 +613,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -624,8 +624,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#importImage", function() {
-    it("should import an image from a tar archive", function(done) {
+  describe("#importImage", function () {
+    it("should import an image from a tar archive", function (done) {
       this.timeout(120000);
 
       function handler(err, stream) {
@@ -636,7 +636,7 @@ describe("#docker", function() {
           end: true
         });
 
-        stream.on('end', function() {
+        stream.on('end', function () {
           done();
         });
       }
@@ -645,8 +645,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#listContainers", function() {
-    it("should list containers", function(done) {
+  describe("#listContainers", function () {
+    it("should list containers", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -661,8 +661,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#listImages", function() {
-    it("should list images", function(done) {
+  describe("#listImages", function () {
+    it("should list images", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -677,8 +677,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#listVolumes", function() {
-    it("should list volumes", function(done) {
+  describe("#listVolumes", function () {
+    it("should list volumes", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -691,8 +691,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#listNetworks", function() {
-    it("should list networks", function(done) {
+  describe("#listNetworks", function () {
+    it("should list networks", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -705,8 +705,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#version", function() {
-    it("should return version", function(done) {
+  describe("#version", function () {
+    it("should return version", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -719,8 +719,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#df", function() {
-    it("should return df", function(done) {
+  describe("#df", function () {
+    it("should return df", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -733,8 +733,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#searchImages", function() {
-    it("should return search results", function(done) {
+  describe("#searchImages", function () {
+    it("should return search results", function (done) {
       this.timeout(120000);
 
       function handler(err, data) {
@@ -749,8 +749,8 @@ describe("#docker", function() {
     });
   });
 
-  describe("#info", function() {
-    it("should return system info", function(done) {
+  describe("#info", function () {
+    it("should return system info", function (done) {
       this.timeout(5000);
 
       function handler(err, data) {
@@ -763,28 +763,28 @@ describe("#docker", function() {
     });
   });
 
-  describe("#labelsAndFilters", function() {
+  describe("#labelsAndFilters", function () {
     var created_containers = [];
 
     // after fn to cleanup created containers after testsuite execution
-    after(function(done) {
+    after(function (done) {
       this.timeout(10000);
       if (!created_containers.length) return done();
-      created_containers.forEach(function(container, index) {
-        container.remove(function(err, data) {
+      created_containers.forEach(function (container, index) {
+        container.remove(function (err, data) {
           if (index === created_containers.length - 1) return done(err);
         });
       });
     });
 
     // helper fn to create labeled containers and verify through inspection
-    var createLabledContainer = function(label_map, callback) {
+    var createLabledContainer = function (label_map, callback) {
       function handler(err, container) {
         expect(err).to.be.null;
         expect(container).to.be.ok;
         created_containers.push(container);
 
-        container.inspect(function(err, info) {
+        container.inspect(function (err, info) {
           expect(err).to.be.null;
           expect(info.Config.Labels).to.deep.include(label_map);
           callback();
@@ -798,14 +798,14 @@ describe("#docker", function() {
       }, handler);
     };
 
-    it("should create a container with an empty value label", function(done) {
+    it("should create a container with an empty value label", function (done) {
       this.timeout(5000);
       createLabledContainer({
         "dockerode-test-label": ""
       }, done);
     });
 
-    it("should create a container with an assigned value label", function(done) {
+    it("should create a container with an assigned value label", function (done) {
       this.timeout(5000);
       createLabledContainer({
         "dockerode-test-label": "",
@@ -813,33 +813,33 @@ describe("#docker", function() {
       }, done);
     });
 
-    it("should query containers filtering by valueless labels", function(done) {
+    it("should query containers filtering by valueless labels", function (done) {
       docker.listContainers({
         "limit": 3,
         "filters": '{"label": ["dockerode-test-label"]}'
-      }, function(err, data) {
+      }, function (err, data) {
         expect(data.length).to.equal(2);
         done();
       });
     });
 
-    it("should query containers filtering by valued labels", function(done) {
+    it("should query containers filtering by valued labels", function (done) {
       docker.listContainers({
         "limit": 3,
         "filters": '{"label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]}'
-      }, function(err, data) {
+      }, function (err, data) {
         expect(data.length).to.equal(1);
         done();
       });
     });
 
-    it("should query containers filtering by map of valued labels", function(done) {
+    it("should query containers filtering by map of valued labels", function (done) {
       docker.listContainers({
         "limit": 3,
         "filters": {
           "label": ["dockerode-test-label", "dockerode-test-value-label=assigned"]
         }
-      }, function(err, data) {
+      }, function (err, data) {
         expect(data.length).to.equal(1);
         done();
       });
