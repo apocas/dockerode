@@ -273,7 +273,7 @@ describe("#docker", function() {
         });
 
         stream.on("end", function () {
-          docker.getImage(randomId).inspect((err, image) => {
+          docker.getImage(randomId).inspect(undefined, (err, image) => {
             expect(err).to.be.null;
             expect(image).to.exist;
             done();
