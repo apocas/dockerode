@@ -20,8 +20,7 @@
     "@grpc/proto-loader": "^0.7.13",
     "docker-modem": "^5.0.6",
     "protobufjs": "^7.3.2",
-    "tar-fs": "~2.1.2",
-    "uuid": "^10.0.0"
+    "tar-fs": "~2.1.2"
   },
   "devDependencies": {
     "bluebird": "^3.7.0",
