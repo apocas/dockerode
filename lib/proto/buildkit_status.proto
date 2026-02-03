@@ -4,6 +4,7 @@ package moby.buildkit.v1;
 
 // Minimal definitions for decoding BuildKit status messages
 // Based on https://github.com/moby/buildkit/blob/master/api/services/control/control.proto
+// Related to https://github.com/moby/buildkit/blob/master/solver/pb/ops.proto (vertices map to the solver op DAG)
 
 message StatusResponse {
   repeated Vertex vertexes = 1;
