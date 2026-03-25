@@ -295,6 +295,45 @@ describe("#docker", function () {
         handler
       );
     });
+
+    it("should build image with buildKit and support secrets", function (done) {
+      this.timeout(60000);
+      const randomId = Math.random().toString(36).substring(7);
+
+      function handler(err, stream) {
+        expect(err).to.be.null;
+        expect(stream).to.be.ok;
+      
+        stream.pipe(process.stdout, {
+          end: true,
+        });
+
+        stream.on("end", function () {
+          docker.getImage(randomId).inspect(function (err, image) {
+            expect(err).to.be.null;
+            expect(image).to.exist;
+            done();
+          });
+        });
+      }
+
+      docker.buildImage(
+        {
+          context: __dirname,
+          src: ["buildkit-secrets.Dockerfile"],
+        },
+        {
+          dockerfile: "buildkit-secrets.Dockerfile",
+          secrets: {
+            s: Buffer.from("secret message.")
+          },
+          version: "2",
+          t: randomId,
+          pull: "true",
+        },
+        handler
+      );
+    });
   });
 
   describe("#loadImage", function () {
