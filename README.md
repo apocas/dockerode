@@ -158,6 +158,25 @@ await new Promise((resolve, reject) => {
 // Build has finished
 ```
 
+### BuildKit secrets
+
+If the remote Docker daemon supports BuildKit, you can pass secrets to the build:
+
+```js
+const buildOpts = {
+  t: 'myimage',
+  dockerfile: 'Dockerfile',
+  version: '2',
+  secrets: {
+    mysecret: Buffer.from('supersecret')
+  }
+};
+docker.buildImage(tarStream, buildOpts, (err, stream) => { ... });
+```
+
+This uses the session API and requires BuildKit. Secrets are delivered via a small in-session secret provider.
+
+
 
 ### Creating a container:
 
