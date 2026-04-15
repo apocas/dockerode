@@ -16,8 +16,8 @@
   ],
   "dependencies": {
     "@balena/dockerignore": "^1.0.2",
-    "@grpc/grpc-js": "^1.11.1",
-    "@grpc/proto-loader": "^0.7.13",
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0",
     "docker-modem": "^5.0.7",
     "protobufjs": "^7.3.2",
     "tar-fs": "^2.1.4",
