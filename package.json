@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "bluebird": "^3.7.0",
-    "chai": "~6.2.0",
+    "chai": "^4.5.0",
     "memorystream": "~0.3.0",
     "mocha": "^11.7.0"
   },
