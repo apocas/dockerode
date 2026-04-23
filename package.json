@@ -21,7 +21,7 @@
     "docker-modem": "^5.0.7",
     "protobufjs": "^7.3.2",
     "tar-fs": "^2.1.4",
-    "uuid": "^10.0.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "bluebird": "^3.7.0",
