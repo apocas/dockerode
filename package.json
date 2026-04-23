@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "bluebird": "^3.7.0",
-    "chai": "~4.2.0",
+    "chai": "~6.2.2",
     "memorystream": "~0.3.0",
-    "mocha": "^10.2.0"
+    "mocha": "^11.7.5"
   },
   "main": "./lib/docker",
   "scripts": {
