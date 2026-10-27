@@ -19,6 +19,8 @@ Not another Node.js Docker Remote API module.
 
 ## Installation
 
+Requires Node.js 20.19.0 or later on the 20.x release line, or Node.js 22.12.0 or later.
+
 `npm install dockerode`
 
 ## Usage
