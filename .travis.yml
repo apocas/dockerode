@@ -3,7 +3,9 @@ sudo: required
 language: node_js
 
 node_js:
-  - "8"
+  - "20.19.0"
+  - "22.12.0"
+  - "24"
 
 before_script:
   - docker pull ubuntu
