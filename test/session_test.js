@@ -12,8 +12,11 @@ var Health = healthPackage.grpc.health.v1.Health;
 var authPackage = grpc.loadPackageDefinition(protoLoader.loadSync(
   path.resolve(__dirname, '../lib/proto/auth.proto')
 ));
+var secretPackage = grpc.loadPackageDefinition(protoLoader.loadSync(
+  path.resolve(__dirname, '../lib/proto/secrets.proto')
+));
 
-async function withTestSession(run) {
+async function withTestSession(run, secrets) {
   var listener = net.createServer();
   var sockets = new Set();
   var client;
@@ -36,7 +39,7 @@ async function withTestSession(run) {
         sockets.add(socket);
         callback(null, socket);
       });
-    } } }, { username: 'test-user', password: 'test-password' }, function (err, id, close) {
+    } } }, { auth: { username: 'test-user', password: 'test-password' }, secrets: secrets }, function (err, id, close) {
       assert.ifError(err);
       sessionId = id;
       done = close;
@@ -56,6 +59,19 @@ async function withTestSession(run) {
 function check(client) {
   return new Promise(function (resolve, reject) {
     client.check({}, { deadline: Date.now() + 2000 }, function (err, response) {
+      if (err) return reject(err);
+      resolve(response);
+    });
+  });
+}
+
+function getSecret(client, id) {
+  var Secrets = secretPackage.moby.buildkit.secrets.v1.Secrets;
+  var secrets = new Secrets('unused', grpc.credentials.createInsecure(), {
+    channelOverride: client.getChannel()
+  });
+  return new Promise(function (resolve, reject) {
+    secrets.getSecret({ ID: id }, { deadline: Date.now() + 2000 }, function (err, response) {
       if (err) return reject(err);
       resolve(response);
     });
@@ -106,5 +122,44 @@ describe('BuildKit session health', function () {
       });
       assert.deepStrictEqual(response, { Username: 'test-user', Secret: 'test-password' });
     });
+  });
+});
+
+describe('BuildKit session secrets', function () {
+  this.timeout(5000);
+
+  it('should return binary and empty secrets without changing their contents', async function () {
+    var values = { binary: Buffer.from([0, 255, 128, 10]), empty: Buffer.alloc(0) };
+    await withTestSession(async function (client) {
+      assert.deepStrictEqual((await getSecret(client, 'binary')).data, values.binary);
+      assert.deepStrictEqual((await getSecret(client, 'empty')).data, values.empty);
+      assert.strictEqual((await check(client)).status, 'SERVING');
+    }, values);
+  });
+
+  it('should return NOT_FOUND when no secrets were supplied', async function () {
+    await withTestSession(async function (client) {
+      await assert.rejects(getSecret(client, 'missing'), { code: grpc.status.NOT_FOUND });
+      assert.strictEqual((await check(client)).status, 'SERVING');
+    });
+  });
+
+  it('should reject missing and inherited secret IDs', async function () {
+    var values = Object.create({ inherited: Buffer.from('not a build secret') });
+    values.present = Buffer.from('provided secret');
+    await withTestSession(async function (client) {
+      for (var id of ['missing', 'inherited', 'toString', '__proto__']) {
+        await assert.rejects(getSecret(client, id), { code: grpc.status.NOT_FOUND });
+      }
+      assert.deepStrictEqual((await getSecret(client, 'present')).data, values.present);
+    }, values);
+  });
+
+  it('should reject non-Buffer and oversized secrets', async function () {
+    await withTestSession(async function (client) {
+      await assert.rejects(getSecret(client, 'text'), { code: grpc.status.INVALID_ARGUMENT });
+      await assert.rejects(getSecret(client, 'oversized'), { code: grpc.status.INVALID_ARGUMENT });
+      assert.strictEqual((await check(client)).status, 'SERVING');
+    }, { text: 'not a Buffer', oversized: Buffer.alloc(500 * 1024 + 1) });
   });
 });

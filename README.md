@@ -161,6 +161,33 @@ await new Promise((resolve, reject) => {
 ```
 
 
+### BuildKit secrets
+
+Pass a map of secret IDs to Buffers when building with BuildKit (`version: '2'`):
+
+```js
+const stream = await docker.buildImage(tarStream, {
+  t: 'myimage',
+  version: '2',
+  secrets: {
+    mysecret: Buffer.from('supersecret')
+  }
+});
+await new Promise((resolve, reject) => {
+  docker.followProgress(stream, (err, output) => err ? reject(err) : resolve(output));
+});
+```
+
+Use the corresponding ID in the Dockerfile:
+
+```dockerfile
+RUN --mount=type=secret,id=mysecret,required=true some-command --token-file /run/secrets/mysecret
+```
+
+Secrets are delivered through the build session and excluded from the build URL.
+Each secret can contain up to 500 KiB. Avoid printing secrets in build commands,
+since command output is included in build logs.
+
 ### Creating a container:
 
 ``` js
